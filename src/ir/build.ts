@@ -1,5 +1,6 @@
 import type { DMMF } from "@prisma/generator-helper";
 import type { GeneratorConfig } from "../types.js";
+import { computeEqEligibility } from "./eq-eligibility.js";
 import { mapPrismaScalar } from "./type-mapping.js";
 import { rustFieldIdent, toPascalCase } from "./names.js";
 import type {
@@ -96,7 +97,7 @@ export async function buildIR(
   return {
     models,
     enums: [...enumByName.values()],
-    modelEqEligibility: new Map(), // populated in B6
+    modelEqEligibility: computeEqEligibility(models, [...enumByName.values()]),
     inputCycles: new Set(), // populated in B7
     schemaEdition: cfg.edition,
   };
