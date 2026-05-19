@@ -1,0 +1,25 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Firm {
+  id    String @id @db.Uuid
+  name  String
+  users User[]
+}
+
+model User {
+  id     String @id @db.Uuid
+  email  String @unique
+  firm   Firm   @relation(fields: [firmId], references: [id])
+  firmId String @db.Uuid
+  posts  Post[]
+}
+
+model Post {
+  id       String @id @db.Uuid
+  title    String
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String @db.Uuid
+}

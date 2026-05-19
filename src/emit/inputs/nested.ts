@@ -89,9 +89,15 @@ function emitCreateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
   for (const r of ctx.target.relations) {
     if (r.toModel === ctx.source.name) continue;
     if (unchecked) continue;
+    const targetMod = ctx.opts.moduleOf(ctx.target.name);
+    const targetPrefix = targetMod ? `crate::${targetMod}::` : `crate::`;
+    const nested =
+      r.cardinality === "one"
+        ? `CreateNestedOneWithout${ctx.target.name}Input`
+        : `CreateNestedManyWithout${ctx.target.name}Input`;
     w.field(
       `pub ${r.rustName}`,
-      `Option<${ctx.opts.moduleOf(r.toModel) ? `crate::${ctx.opts.moduleOf(r.toModel)}::` : `crate::`}${r.toModel}CreateNestedOneWithout${ctx.target.name}Input>`,
+      `Option<${targetPrefix}${r.toModel}${nested}>`,
     );
   }
   w.close();
@@ -185,10 +191,17 @@ function emitUpdateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
   for (const r of ctx.target.relations) {
     if (r.toModel === ctx.source.name) continue;
     if (unchecked) continue;
-    w.field(
-      `pub ${r.rustName}`,
-      `Option<${ctx.opts.moduleOf(r.toModel) ? `crate::${ctx.opts.moduleOf(r.toModel)}::` : `crate::`}${r.toModel}UpdateOneRequiredWithout${ctx.target.name}NestedInput>`,
-    );
+    const targetMod = ctx.opts.moduleOf(ctx.target.name);
+    const targetPrefix = targetMod ? `crate::${targetMod}::` : `crate::`;
+    let suffix: string;
+    if (r.cardinality === "one") {
+      suffix = r.required
+        ? `UpdateOneRequiredWithout${ctx.target.name}NestedInput`
+        : `UpdateOneWithout${ctx.target.name}NestedInput`;
+    } else {
+      suffix = `UpdateManyWithout${ctx.target.name}NestedInput`;
+    }
+    w.field(`pub ${r.rustName}`, `Option<${targetPrefix}${r.toModel}${suffix}>`);
   }
   w.close();
   w.blank();
