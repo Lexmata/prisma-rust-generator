@@ -47,20 +47,23 @@ function scalarFilterFor(f: FieldIR): string {
   return "()";
 }
 
+export function filterFamilyForRustType(rust: string): string {
+  if (rust === "String") return "String";
+  if (rust === "uuid::Uuid") return "Uuid";
+  if (rust === "i32" || rust === "i16" || rust === "u32") return "Int";
+  if (rust === "i64") return "BigInt";
+  if (rust === "f32" || rust === "f64") return "Float";
+  if (rust.startsWith("rust_decimal") || rust.startsWith("bigdecimal")) return "Decimal";
+  if (rust === "bool") return "Bool";
+  if (rust.startsWith("chrono::") || rust.startsWith("time::")) return "DateTime";
+  if (rust === "serde_json::Value") return "Json";
+  if (rust === "Vec<u8>" || rust === "bytes::Bytes") return "Bytes";
+  return "String";
+}
+
 function mapRustToFilterFamily(rust: string, nullable: boolean): string {
   const suffix = nullable ? "NullableFilter" : "Filter";
-  const path = (family: string): string => `crate::shared::filters::${family}${suffix}`;
-  if (rust === "String") return path("String");
-  if (rust === "uuid::Uuid") return path("Uuid");
-  if (rust === "i32" || rust === "i16" || rust === "u32") return path("Int");
-  if (rust === "i64") return path("BigInt");
-  if (rust === "f32" || rust === "f64") return path("Float");
-  if (rust.startsWith("rust_decimal") || rust.startsWith("bigdecimal")) return path("Decimal");
-  if (rust === "bool") return path("Bool");
-  if (rust.startsWith("chrono::") || rust.startsWith("time::")) return path("DateTime");
-  if (rust === "serde_json::Value") return path("Json");
-  if (rust === "Vec<u8>" || rust === "bytes::Bytes") return path("Bytes");
-  return path("String");
+  return `crate::shared::filters::${filterFamilyForRustType(rust)}${suffix}`;
 }
 
 function relationFilterFor(r: RelationIR, moduleOf: ModuleResolver): string {
