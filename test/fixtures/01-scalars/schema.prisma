@@ -1,0 +1,24 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model AllScalars {
+  id         String   @id @db.Uuid
+  text       String
+  varChar    String   @db.VarChar(80)
+  count      Int
+  smallCount Int      @db.SmallInt
+  big        BigInt
+  ratio      Float
+  real       Float    @db.Real
+  amount     Decimal
+  active     Boolean
+  createdAt  DateTime
+  dateOnly   DateTime @db.Date
+  timeOnly   DateTime @db.Time
+  withTz     DateTime @db.Timestamptz
+  withoutTz  DateTime @db.Timestamp
+  meta       Json
+  blob       Bytes
+}

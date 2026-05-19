@@ -71,8 +71,10 @@ describe("emitModelWhereInput", () => {
       moduleOf: (n) => (n === "Firm" ? "firms" : "cases"),
     });
     expect(out).toContain("pub struct UserWhereInput {");
-    expect(out).toContain("pub id: Option<UuidFilter>,");
-    expect(out).toContain("pub deleted_at: Option<DateTimeNullableFilter>,");
+    expect(out).toContain("pub id: Option<crate::shared::filters::UuidFilter>,");
+    expect(out).toContain(
+      "pub deleted_at: Option<crate::shared::filters::DateTimeNullableFilter>,",
+    );
     expect(out).toContain("pub firm: Option<crate::firms::FirmRelationFilter>,");
     expect(out).toContain("pub cases: Option<crate::cases::CaseListRelationFilter>,");
     expect(out).toContain(`#[serde(rename = "AND")]`);
