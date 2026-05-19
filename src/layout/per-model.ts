@@ -11,6 +11,7 @@ import { emitSelectInput, emitIncludeInput } from "../emit/inputs/select-include
 import { emitCreateInputs } from "../emit/inputs/create.js";
 import { emitUpdateInputs } from "../emit/inputs/update.js";
 import { emitNestedInputsForModel } from "../emit/inputs/nested.js";
+import { emitAggregateInputs } from "../emit/inputs/aggregate.js";
 import { emitEnumFilter } from "../emit/filters/enum.js";
 import { emitSharedScalarFilters } from "../emit/filters/scalar.js";
 import { emitCommonSharedTypes } from "../emit/shared/common.js";
@@ -82,6 +83,9 @@ export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> 
         vis: cfg.moduleVisibility,
         moduleOf,
       }),
+    );
+    parts.push(
+      emitAggregateInputs(m, { serde: cfg.serde, vis: cfg.moduleVisibility }),
     );
     files.set(`models/${toSnakeCase(m.name)}.rs`, parts.join("\n"));
   }

@@ -234,6 +234,54 @@ pub struct UserScalarWhereInput {
     pub not: Option<Vec<UserScalarWhereInput>>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FirmCountAggregateInput {
+    pub id: Option<bool>,
+    pub name: Option<bool>,
+    #[serde(rename = "_all")]
+    pub aggregate_all: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FirmAvgAggregateInput {}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FirmSumAggregateInput {}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FirmMinAggregateInput {
+    pub id: Option<bool>,
+    pub name: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FirmMaxAggregateInput {
+    pub id: Option<bool>,
+    pub name: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FirmOrderByWithAggregationInput {
+    pub id: Option<crate::shared::filters::SortOrder>,
+    pub name: Option<crate::shared::filters::SortOrder>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<FirmCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<FirmAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<FirmSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<FirmMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<FirmMaxAggregateInput>,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct User {
@@ -549,6 +597,58 @@ pub struct PostScalarWhereInput {
     pub not: Option<Vec<PostScalarWhereInput>>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserCountAggregateInput {
+    pub id: Option<bool>,
+    pub email: Option<bool>,
+    pub firm_id: Option<bool>,
+    #[serde(rename = "_all")]
+    pub aggregate_all: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserAvgAggregateInput {}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserSumAggregateInput {}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserMinAggregateInput {
+    pub id: Option<bool>,
+    pub email: Option<bool>,
+    pub firm_id: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserMaxAggregateInput {
+    pub id: Option<bool>,
+    pub email: Option<bool>,
+    pub firm_id: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserOrderByWithAggregationInput {
+    pub id: Option<crate::shared::filters::SortOrder>,
+    pub email: Option<crate::shared::filters::SortOrder>,
+    pub firm_id: Option<crate::shared::filters::SortOrder>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<UserCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<UserAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<UserSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<UserMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<UserMaxAggregateInput>,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Post {
@@ -742,4 +842,56 @@ pub struct UserUpdateOneRequiredWithoutPostNestedInput {
 pub struct UserUpdateToOneWithWhereWithoutPostInput {
     pub r#where: Option<Box<crate::schema::UserWhereInput>>,
     pub data: Box<crate::schema::UserUpdateWithoutPostInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostCountAggregateInput {
+    pub id: Option<bool>,
+    pub title: Option<bool>,
+    pub author_id: Option<bool>,
+    #[serde(rename = "_all")]
+    pub aggregate_all: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostAvgAggregateInput {}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostSumAggregateInput {}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostMinAggregateInput {
+    pub id: Option<bool>,
+    pub title: Option<bool>,
+    pub author_id: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostMaxAggregateInput {
+    pub id: Option<bool>,
+    pub title: Option<bool>,
+    pub author_id: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostOrderByWithAggregationInput {
+    pub id: Option<crate::shared::filters::SortOrder>,
+    pub title: Option<crate::shared::filters::SortOrder>,
+    pub author_id: Option<crate::shared::filters::SortOrder>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<PostCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<PostAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<PostSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<PostMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<PostMaxAggregateInput>,
 }

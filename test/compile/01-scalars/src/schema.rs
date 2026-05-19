@@ -273,3 +273,121 @@ pub struct AllScalarsUncheckedUpdateManyInput {
     pub meta: Option<crate::shared::filters::JsonFieldUpdateOperationsInput>,
     pub blob: Option<crate::shared::filters::BytesFieldUpdateOperationsInput>,
 }
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsCountAggregateInput {
+    pub id: Option<bool>,
+    pub text: Option<bool>,
+    pub var_char: Option<bool>,
+    pub count: Option<bool>,
+    pub small_count: Option<bool>,
+    pub big: Option<bool>,
+    pub ratio: Option<bool>,
+    pub real: Option<bool>,
+    pub amount: Option<bool>,
+    pub active: Option<bool>,
+    pub created_at: Option<bool>,
+    pub date_only: Option<bool>,
+    pub time_only: Option<bool>,
+    pub with_tz: Option<bool>,
+    pub without_tz: Option<bool>,
+    pub meta: Option<bool>,
+    pub blob: Option<bool>,
+    #[serde(rename = "_all")]
+    pub aggregate_all: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsAvgAggregateInput {
+    pub count: Option<bool>,
+    pub small_count: Option<bool>,
+    pub big: Option<bool>,
+    pub ratio: Option<bool>,
+    pub real: Option<bool>,
+    pub amount: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsSumAggregateInput {
+    pub count: Option<bool>,
+    pub small_count: Option<bool>,
+    pub big: Option<bool>,
+    pub ratio: Option<bool>,
+    pub real: Option<bool>,
+    pub amount: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsMinAggregateInput {
+    pub id: Option<bool>,
+    pub text: Option<bool>,
+    pub var_char: Option<bool>,
+    pub count: Option<bool>,
+    pub small_count: Option<bool>,
+    pub big: Option<bool>,
+    pub ratio: Option<bool>,
+    pub real: Option<bool>,
+    pub amount: Option<bool>,
+    pub active: Option<bool>,
+    pub created_at: Option<bool>,
+    pub date_only: Option<bool>,
+    pub time_only: Option<bool>,
+    pub with_tz: Option<bool>,
+    pub without_tz: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsMaxAggregateInput {
+    pub id: Option<bool>,
+    pub text: Option<bool>,
+    pub var_char: Option<bool>,
+    pub count: Option<bool>,
+    pub small_count: Option<bool>,
+    pub big: Option<bool>,
+    pub ratio: Option<bool>,
+    pub real: Option<bool>,
+    pub amount: Option<bool>,
+    pub active: Option<bool>,
+    pub created_at: Option<bool>,
+    pub date_only: Option<bool>,
+    pub time_only: Option<bool>,
+    pub with_tz: Option<bool>,
+    pub without_tz: Option<bool>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsOrderByWithAggregationInput {
+    pub id: Option<crate::shared::filters::SortOrder>,
+    pub text: Option<crate::shared::filters::SortOrder>,
+    pub var_char: Option<crate::shared::filters::SortOrder>,
+    pub count: Option<crate::shared::filters::SortOrder>,
+    pub small_count: Option<crate::shared::filters::SortOrder>,
+    pub big: Option<crate::shared::filters::SortOrder>,
+    pub ratio: Option<crate::shared::filters::SortOrder>,
+    pub real: Option<crate::shared::filters::SortOrder>,
+    pub amount: Option<crate::shared::filters::SortOrder>,
+    pub active: Option<crate::shared::filters::SortOrder>,
+    pub created_at: Option<crate::shared::filters::SortOrder>,
+    pub date_only: Option<crate::shared::filters::SortOrder>,
+    pub time_only: Option<crate::shared::filters::SortOrder>,
+    pub with_tz: Option<crate::shared::filters::SortOrder>,
+    pub without_tz: Option<crate::shared::filters::SortOrder>,
+    pub meta: Option<crate::shared::filters::SortOrder>,
+    pub blob: Option<crate::shared::filters::SortOrder>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<AllScalarsCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<AllScalarsAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<AllScalarsSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<AllScalarsMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<AllScalarsMaxAggregateInput>,
+}
