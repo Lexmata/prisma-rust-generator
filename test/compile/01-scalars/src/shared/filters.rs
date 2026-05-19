@@ -265,3 +265,215 @@ pub enum JsonNullableFilter {
     IsNull(bool),
     Not(Box<JsonNullableFilter>),
 }
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct StringFieldUpdateOperationsInput {
+    pub set: Option<String>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableStringFieldUpdateOperationsInput {
+    pub set: Option<Option<String>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct IntFieldUpdateOperationsInput {
+    pub set: Option<i32>,
+    pub increment: Option<i32>,
+    pub decrement: Option<i32>,
+    pub multiply: Option<i32>,
+    pub divide: Option<i32>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableIntFieldUpdateOperationsInput {
+    pub set: Option<Option<i32>>,
+    pub increment: Option<i32>,
+    pub decrement: Option<i32>,
+    pub multiply: Option<i32>,
+    pub divide: Option<i32>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BigIntFieldUpdateOperationsInput {
+    pub set: Option<i64>,
+    pub increment: Option<i64>,
+    pub decrement: Option<i64>,
+    pub multiply: Option<i64>,
+    pub divide: Option<i64>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableBigIntFieldUpdateOperationsInput {
+    pub set: Option<Option<i64>>,
+    pub increment: Option<i64>,
+    pub decrement: Option<i64>,
+    pub multiply: Option<i64>,
+    pub divide: Option<i64>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FloatFieldUpdateOperationsInput {
+    pub set: Option<f64>,
+    pub increment: Option<f64>,
+    pub decrement: Option<f64>,
+    pub multiply: Option<f64>,
+    pub divide: Option<f64>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableFloatFieldUpdateOperationsInput {
+    pub set: Option<Option<f64>>,
+    pub increment: Option<f64>,
+    pub decrement: Option<f64>,
+    pub multiply: Option<f64>,
+    pub divide: Option<f64>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DecimalFieldUpdateOperationsInput {
+    pub set: Option<rust_decimal::Decimal>,
+    pub increment: Option<rust_decimal::Decimal>,
+    pub decrement: Option<rust_decimal::Decimal>,
+    pub multiply: Option<rust_decimal::Decimal>,
+    pub divide: Option<rust_decimal::Decimal>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableDecimalFieldUpdateOperationsInput {
+    pub set: Option<Option<rust_decimal::Decimal>>,
+    pub increment: Option<rust_decimal::Decimal>,
+    pub decrement: Option<rust_decimal::Decimal>,
+    pub multiply: Option<rust_decimal::Decimal>,
+    pub divide: Option<rust_decimal::Decimal>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BoolFieldUpdateOperationsInput {
+    pub set: Option<bool>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableBoolFieldUpdateOperationsInput {
+    pub set: Option<Option<bool>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DateTimeFieldUpdateOperationsInput {
+    pub set: Option<chrono::DateTime<chrono::Utc>>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableDateTimeFieldUpdateOperationsInput {
+    pub set: Option<Option<chrono::DateTime<chrono::Utc>>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UuidFieldUpdateOperationsInput {
+    pub set: Option<uuid::Uuid>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableUuidFieldUpdateOperationsInput {
+    pub set: Option<Option<uuid::Uuid>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BytesFieldUpdateOperationsInput {
+    pub set: Option<Vec<u8>>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableBytesFieldUpdateOperationsInput {
+    pub set: Option<Option<Vec<u8>>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct JsonFieldUpdateOperationsInput {
+    pub set: Option<serde_json::Value>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct NullableJsonFieldUpdateOperationsInput {
+    pub set: Option<Option<serde_json::Value>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct StringListFieldUpdateOperationsInput {
+    pub set: Option<Vec<String>>,
+    pub push: Option<crate::shared::filters::OneOrMany<String>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct IntListFieldUpdateOperationsInput {
+    pub set: Option<Vec<i32>>,
+    pub push: Option<crate::shared::filters::OneOrMany<i32>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BigIntListFieldUpdateOperationsInput {
+    pub set: Option<Vec<i64>>,
+    pub push: Option<crate::shared::filters::OneOrMany<i64>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FloatListFieldUpdateOperationsInput {
+    pub set: Option<Vec<f64>>,
+    pub push: Option<crate::shared::filters::OneOrMany<f64>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DecimalListFieldUpdateOperationsInput {
+    pub set: Option<Vec<rust_decimal::Decimal>>,
+    pub push: Option<crate::shared::filters::OneOrMany<rust_decimal::Decimal>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BoolListFieldUpdateOperationsInput {
+    pub set: Option<Vec<bool>>,
+    pub push: Option<crate::shared::filters::OneOrMany<bool>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DateTimeListFieldUpdateOperationsInput {
+    pub set: Option<Vec<chrono::DateTime<chrono::Utc>>>,
+    pub push: Option<crate::shared::filters::OneOrMany<chrono::DateTime<chrono::Utc>>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UuidListFieldUpdateOperationsInput {
+    pub set: Option<Vec<uuid::Uuid>>,
+    pub push: Option<crate::shared::filters::OneOrMany<uuid::Uuid>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BytesListFieldUpdateOperationsInput {
+    pub set: Option<Vec<Vec<u8>>>,
+    pub push: Option<crate::shared::filters::OneOrMany<Vec<u8>>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct JsonListFieldUpdateOperationsInput {
+    pub set: Option<Vec<serde_json::Value>>,
+    pub push: Option<crate::shared::filters::OneOrMany<serde_json::Value>>,
+}

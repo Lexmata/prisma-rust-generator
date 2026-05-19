@@ -11,6 +11,7 @@ import { emitSelectInput, emitIncludeInput } from "../emit/inputs/select-include
 import { emitEnumFilter } from "../emit/filters/enum.js";
 import { emitSharedScalarFilters } from "../emit/filters/scalar.js";
 import { emitCommonSharedTypes } from "../emit/shared/common.js";
+import { emitFieldUpdateOps } from "../emit/inputs/field-update-ops.js";
 import type { ModuleResolver } from "../emit/type-ref.js";
 
 export function emitSingle(ir: IR, cfg: GeneratorConfig): Map<string, string> {
@@ -20,6 +21,7 @@ export function emitSingle(ir: IR, cfg: GeneratorConfig): Map<string, string> {
   if (cfg.serde) parts.push(`use serde::{Deserialize, Serialize};\n`);
   parts.push(emitCommonSharedTypes({ serde: cfg.serde, vis: cfg.moduleVisibility }));
   parts.push(emitSharedScalarFilters({ serde: cfg.serde, vis: cfg.moduleVisibility }));
+  parts.push(emitFieldUpdateOps({ serde: cfg.serde, vis: cfg.moduleVisibility }));
 
   for (const e of ir.enums) {
     parts.push(emitEnum(e, { serde: cfg.serde, vis: cfg.moduleVisibility }));
