@@ -1,0 +1,2 @@
+model User { id String @id }
+enum Role { ADMIN MEMBER }
