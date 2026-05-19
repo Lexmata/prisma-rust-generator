@@ -6,7 +6,7 @@ export default [
     files: ["src/**/*.ts", "test/**/*.ts"],
     languageOptions: {
       parser: tsparser,
-      parserOptions: { project: "./tsconfig.json", ecmaVersion: 2022, sourceType: "module" },
+      parserOptions: { project: "./tsconfig.eslint.json", ecmaVersion: 2022, sourceType: "module" },
     },
     plugins: { "@typescript-eslint": tseslint },
     rules: {
