@@ -11,6 +11,7 @@ import { emitPerModel } from "./layout/per-model.js";
 import { emitSingle } from "./layout/single.js";
 import { runRustfmt, RustfmtUnavailableError } from "./fmt.js";
 import { pruneStaleFiles } from "./prune.js";
+import { mapInPool } from "./parallel/pool.js";
 
 export async function generate(opts: GeneratorOptions): Promise<void> {
   const cfg = parseGeneratorConfig(opts);
@@ -27,13 +28,13 @@ export async function generate(opts: GeneratorOptions): Promise<void> {
         ? emitPerModel(ir, cfg)
         : emitSingle(ir, cfg);
 
-  const writtenPaths: string[] = [];
-  for (const [rel, content] of files) {
+  const entries = [...files.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  const writtenPaths = await mapInPool(entries, cfg.concurrency, async ([rel, content]) => {
     const abs = join(cfg.output, rel);
     await mkdir(dirname(abs), { recursive: true });
     await writeFile(abs, content, "utf8");
-    writtenPaths.push(abs);
-  }
+    return abs;
+  });
 
   if (cfg.runRustfmt) {
     try {
