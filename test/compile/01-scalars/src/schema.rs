@@ -67,3 +67,7 @@ pub struct AllScalarsListRelationFilter {
     pub every: Option<Box<crate::schema::AllScalarsWhereInput>>,
     pub none: Option<Box<crate::schema::AllScalarsWhereInput>>,
 }
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsWhereUniqueInput {}

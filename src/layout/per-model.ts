@@ -5,6 +5,7 @@ import { emitModel } from "../emit/model.js";
 import { emitEnum } from "../emit/enums.js";
 import { emitModelWhereInput } from "../emit/filters/model.js";
 import { emitRelationFilters } from "../emit/filters/relation.js";
+import { emitWhereUniqueInput } from "../emit/inputs/where-unique.js";
 import { emitEnumFilter } from "../emit/filters/enum.js";
 import { emitSharedScalarFilters } from "../emit/filters/scalar.js";
 import { emitCommonSharedTypes } from "../emit/shared/common.js";
@@ -45,6 +46,9 @@ export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> 
         serde: cfg.serde,
         vis: cfg.moduleVisibility,
       }),
+    );
+    parts.push(
+      emitWhereUniqueInput(m, { serde: cfg.serde, vis: cfg.moduleVisibility }),
     );
     files.set(`models/${toSnakeCase(m.name)}.rs`, parts.join("\n"));
   }
