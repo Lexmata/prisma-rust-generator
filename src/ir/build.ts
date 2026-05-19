@@ -98,7 +98,10 @@ export async function buildIR(
     models,
     enums: [...enumByName.values()],
     modelEqEligibility: computeEqEligibility(models, [...enumByName.values()]),
-    inputCycles: new Set(), // populated in B7
+    // inputCycles is computed from the input-type reference graph in Phase E.
+    // Until input emitters land, leave empty — model-WhereInput cycles are handled
+    // directly by Boxing relation filter fields per spec §7.4.
+    inputCycles: new Set(),
     schemaEdition: cfg.edition,
   };
 }
