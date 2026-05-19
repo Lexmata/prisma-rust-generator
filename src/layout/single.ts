@@ -8,6 +8,9 @@ import { emitRelationFilters } from "../emit/filters/relation.js";
 import { emitWhereUniqueInput } from "../emit/inputs/where-unique.js";
 import { emitOrderByWithRelationInput } from "../emit/inputs/order-by.js";
 import { emitSelectInput, emitIncludeInput } from "../emit/inputs/select-include.js";
+import { emitCreateInputs } from "../emit/inputs/create.js";
+import { emitUpdateInputs } from "../emit/inputs/update.js";
+import { emitNestedInputsForModel } from "../emit/inputs/nested.js";
 import { emitEnumFilter } from "../emit/filters/enum.js";
 import { emitSharedScalarFilters } from "../emit/filters/scalar.js";
 import { emitCommonSharedTypes } from "../emit/shared/common.js";
@@ -16,6 +19,7 @@ import type { ModuleResolver } from "../emit/type-ref.js";
 
 export function emitSingle(ir: IR, cfg: GeneratorConfig): Map<string, string> {
   const moduleOf: ModuleResolver = () => "";
+  const allModels = new Map(ir.models.map((m) => [m.name, m]));
 
   const parts: string[] = [emitFileHeader(cfg)];
   if (cfg.serde) parts.push(`use serde::{Deserialize, Serialize};\n`);
@@ -65,6 +69,19 @@ export function emitSingle(ir: IR, cfg: GeneratorConfig): Map<string, string> {
     );
     parts.push(
       emitIncludeInput(m, { serde: cfg.serde, vis: cfg.moduleVisibility, moduleOf }),
+    );
+    parts.push(
+      emitCreateInputs(m, { serde: cfg.serde, vis: cfg.moduleVisibility, moduleOf }),
+    );
+    parts.push(
+      emitUpdateInputs(m, { serde: cfg.serde, vis: cfg.moduleVisibility, moduleOf }),
+    );
+    parts.push(
+      emitNestedInputsForModel(m, allModels, {
+        serde: cfg.serde,
+        vis: cfg.moduleVisibility,
+        moduleOf,
+      }),
     );
   }
 

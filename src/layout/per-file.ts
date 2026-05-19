@@ -8,6 +8,9 @@ import { emitRelationFilters } from "../emit/filters/relation.js";
 import { emitWhereUniqueInput } from "../emit/inputs/where-unique.js";
 import { emitOrderByWithRelationInput } from "../emit/inputs/order-by.js";
 import { emitSelectInput, emitIncludeInput } from "../emit/inputs/select-include.js";
+import { emitCreateInputs } from "../emit/inputs/create.js";
+import { emitUpdateInputs } from "../emit/inputs/update.js";
+import { emitNestedInputsForModel } from "../emit/inputs/nested.js";
 import { emitEnumFilter } from "../emit/filters/enum.js";
 import { emitSharedScalarFilters } from "../emit/filters/scalar.js";
 import { emitCommonSharedTypes } from "../emit/shared/common.js";
@@ -18,6 +21,7 @@ export function emitPerFile(ir: IR, cfg: GeneratorConfig): Map<string, string> {
   const files = new Map<string, string>();
   const moduleOf = makeModuleResolver(ir);
   const modules = collectModules(ir);
+  const allModels = new Map(ir.models.map((m) => [m.name, m]));
 
   for (const module of modules) {
     const modelsInModule = ir.models.filter((m) => m.module === module);
@@ -73,6 +77,19 @@ export function emitPerFile(ir: IR, cfg: GeneratorConfig): Map<string, string> {
       );
       parts.push(
         emitIncludeInput(m, { serde: cfg.serde, vis: cfg.moduleVisibility, moduleOf }),
+      );
+      parts.push(
+        emitCreateInputs(m, { serde: cfg.serde, vis: cfg.moduleVisibility, moduleOf }),
+      );
+      parts.push(
+        emitUpdateInputs(m, { serde: cfg.serde, vis: cfg.moduleVisibility, moduleOf }),
+      );
+      parts.push(
+        emitNestedInputsForModel(m, allModels, {
+          serde: cfg.serde,
+          vis: cfg.moduleVisibility,
+          moduleOf,
+        }),
       );
     }
     files.set(`${module}.rs`, parts.join("\n"));

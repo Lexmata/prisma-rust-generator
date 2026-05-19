@@ -119,3 +119,157 @@ pub struct AllScalarsSelect {
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AllScalarsInclude {}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsCreateInput {
+    pub id: String,
+    pub text: String,
+    pub var_char: String,
+    pub count: i32,
+    pub small_count: i32,
+    pub big: i64,
+    pub ratio: f64,
+    pub real: f64,
+    pub amount: rust_decimal::Decimal,
+    pub active: bool,
+    pub created_at: chrono::DateTime<chrono::Utc>,
+    pub date_only: chrono::DateTime<chrono::Utc>,
+    pub time_only: chrono::DateTime<chrono::Utc>,
+    pub with_tz: chrono::DateTime<chrono::Utc>,
+    pub without_tz: chrono::DateTime<chrono::Utc>,
+    pub meta: serde_json::Value,
+    pub blob: Vec<u8>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsUncheckedCreateInput {
+    pub id: String,
+    pub text: String,
+    pub var_char: String,
+    pub count: i32,
+    pub small_count: i32,
+    pub big: i64,
+    pub ratio: f64,
+    pub real: f64,
+    pub amount: rust_decimal::Decimal,
+    pub active: bool,
+    pub created_at: chrono::DateTime<chrono::Utc>,
+    pub date_only: chrono::DateTime<chrono::Utc>,
+    pub time_only: chrono::DateTime<chrono::Utc>,
+    pub with_tz: chrono::DateTime<chrono::Utc>,
+    pub without_tz: chrono::DateTime<chrono::Utc>,
+    pub meta: serde_json::Value,
+    pub blob: Vec<u8>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsCreateManyInput {
+    pub id: String,
+    pub text: String,
+    pub var_char: String,
+    pub count: i32,
+    pub small_count: i32,
+    pub big: i64,
+    pub ratio: f64,
+    pub real: f64,
+    pub amount: rust_decimal::Decimal,
+    pub active: bool,
+    pub created_at: chrono::DateTime<chrono::Utc>,
+    pub date_only: chrono::DateTime<chrono::Utc>,
+    pub time_only: chrono::DateTime<chrono::Utc>,
+    pub with_tz: chrono::DateTime<chrono::Utc>,
+    pub without_tz: chrono::DateTime<chrono::Utc>,
+    pub meta: serde_json::Value,
+    pub blob: Vec<u8>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsUpdateInput {
+    pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub text: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub var_char: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub count: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
+    pub small_count: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
+    pub big: Option<crate::shared::filters::BigIntFieldUpdateOperationsInput>,
+    pub ratio: Option<crate::shared::filters::FloatFieldUpdateOperationsInput>,
+    pub real: Option<crate::shared::filters::FloatFieldUpdateOperationsInput>,
+    pub amount: Option<crate::shared::filters::DecimalFieldUpdateOperationsInput>,
+    pub active: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
+    pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub date_only: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub time_only: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub with_tz: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub without_tz: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub meta: Option<crate::shared::filters::JsonFieldUpdateOperationsInput>,
+    pub blob: Option<crate::shared::filters::BytesFieldUpdateOperationsInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsUncheckedUpdateInput {
+    pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub text: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub var_char: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub count: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
+    pub small_count: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
+    pub big: Option<crate::shared::filters::BigIntFieldUpdateOperationsInput>,
+    pub ratio: Option<crate::shared::filters::FloatFieldUpdateOperationsInput>,
+    pub real: Option<crate::shared::filters::FloatFieldUpdateOperationsInput>,
+    pub amount: Option<crate::shared::filters::DecimalFieldUpdateOperationsInput>,
+    pub active: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
+    pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub date_only: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub time_only: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub with_tz: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub without_tz: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub meta: Option<crate::shared::filters::JsonFieldUpdateOperationsInput>,
+    pub blob: Option<crate::shared::filters::BytesFieldUpdateOperationsInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsUpdateManyMutationInput {
+    pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub text: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub var_char: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub count: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
+    pub small_count: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
+    pub big: Option<crate::shared::filters::BigIntFieldUpdateOperationsInput>,
+    pub ratio: Option<crate::shared::filters::FloatFieldUpdateOperationsInput>,
+    pub real: Option<crate::shared::filters::FloatFieldUpdateOperationsInput>,
+    pub amount: Option<crate::shared::filters::DecimalFieldUpdateOperationsInput>,
+    pub active: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
+    pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub date_only: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub time_only: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub with_tz: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub without_tz: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub meta: Option<crate::shared::filters::JsonFieldUpdateOperationsInput>,
+    pub blob: Option<crate::shared::filters::BytesFieldUpdateOperationsInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsUncheckedUpdateManyInput {
+    pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub text: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub var_char: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
+    pub count: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
+    pub small_count: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
+    pub big: Option<crate::shared::filters::BigIntFieldUpdateOperationsInput>,
+    pub ratio: Option<crate::shared::filters::FloatFieldUpdateOperationsInput>,
+    pub real: Option<crate::shared::filters::FloatFieldUpdateOperationsInput>,
+    pub amount: Option<crate::shared::filters::DecimalFieldUpdateOperationsInput>,
+    pub active: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
+    pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub date_only: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub time_only: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub with_tz: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub without_tz: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+    pub meta: Option<crate::shared::filters::JsonFieldUpdateOperationsInput>,
+    pub blob: Option<crate::shared::filters::BytesFieldUpdateOperationsInput>,
+}
