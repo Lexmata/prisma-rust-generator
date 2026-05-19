@@ -1,8 +1,10 @@
 import { RustWriter } from "../rust-writer.js";
+import type { GeneratorConfig } from "../../types.js";
 
 export interface SharedFilterOpts {
   serde: boolean;
   vis: "pub" | "pub(crate)";
+  cfg: GeneratorConfig;
 }
 
 interface FilterSpec {
@@ -12,22 +14,36 @@ interface FilterSpec {
   hasMode?: boolean;
 }
 
-const SPECS: readonly FilterSpec[] = [
-  { family: "String", ty: "String", ops: ["Lt", "Lte", "Gt", "Gte", "Contains", "StartsWith", "EndsWith"], hasMode: true },
-  { family: "Int", ty: "i32", ops: ["Lt", "Lte", "Gt", "Gte"] },
-  { family: "BigInt", ty: "i64", ops: ["Lt", "Lte", "Gt", "Gte"] },
-  { family: "Float", ty: "f64", ops: ["Lt", "Lte", "Gt", "Gte"] },
-  { family: "Decimal", ty: "rust_decimal::Decimal", ops: ["Lt", "Lte", "Gt", "Gte"] },
-  { family: "DateTime", ty: "chrono::DateTime<chrono::Utc>", ops: ["Lt", "Lte", "Gt", "Gte"] },
-  { family: "Uuid", ty: "uuid::Uuid", ops: [], hasMode: true },
-  { family: "Bytes", ty: "Vec<u8>", ops: [] },
-  { family: "Bool", ty: "bool", ops: [] },
-  { family: "Json", ty: "serde_json::Value", ops: [] },
-];
+function buildSpecs(cfg: GeneratorConfig): readonly FilterSpec[] {
+  const datetime =
+    cfg.dateTimeCrate === "time" ? "time::OffsetDateTime" : "chrono::DateTime<chrono::Utc>";
+  const decimal =
+    cfg.decimalCrate === "bigdecimal" ? "bigdecimal::BigDecimal" : "rust_decimal::Decimal";
+  const bytes = cfg.bytesCrate === "bytes" ? "bytes::Bytes" : "Vec<u8>";
+  const json = cfg.jsonCrate === "string" ? "String" : "serde_json::Value";
+  return [
+    {
+      family: "String",
+      ty: "String",
+      ops: ["Lt", "Lte", "Gt", "Gte", "Contains", "StartsWith", "EndsWith"],
+      hasMode: true,
+    },
+    { family: "Int", ty: "i32", ops: ["Lt", "Lte", "Gt", "Gte"] },
+    { family: "BigInt", ty: "i64", ops: ["Lt", "Lte", "Gt", "Gte"] },
+    { family: "Float", ty: "f64", ops: ["Lt", "Lte", "Gt", "Gte"] },
+    { family: "Decimal", ty: decimal, ops: ["Lt", "Lte", "Gt", "Gte"] },
+    { family: "DateTime", ty: datetime, ops: ["Lt", "Lte", "Gt", "Gte"] },
+    { family: "Uuid", ty: "uuid::Uuid", ops: [], hasMode: true },
+    { family: "Bytes", ty: bytes, ops: [] },
+    { family: "Bool", ty: "bool", ops: [] },
+    { family: "Json", ty: json, ops: [] },
+  ];
+}
 
 export function emitSharedScalarFilters(opts: SharedFilterOpts): string {
   const w = new RustWriter();
-  for (const s of SPECS) {
+  const specs = buildSpecs(opts.cfg);
+  for (const s of specs) {
     emitOne(w, s, false, opts);
     emitOne(w, s, true, opts);
     w.blank();

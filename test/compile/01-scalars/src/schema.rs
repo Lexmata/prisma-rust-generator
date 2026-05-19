@@ -120,7 +120,7 @@ pub struct AllScalarsSelect {
 #[serde(rename_all = "camelCase")]
 pub struct AllScalarsInclude {}
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AllScalarsCreateInput {
     pub id: String,
@@ -142,7 +142,7 @@ pub struct AllScalarsCreateInput {
     pub blob: Vec<u8>,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AllScalarsUncheckedCreateInput {
     pub id: String,
@@ -164,7 +164,7 @@ pub struct AllScalarsUncheckedCreateInput {
     pub blob: Vec<u8>,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AllScalarsCreateManyInput {
     pub id: String,

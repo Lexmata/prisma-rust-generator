@@ -25,8 +25,8 @@ export function emitSingle(ir: IR, cfg: GeneratorConfig): Map<string, string> {
   const parts: string[] = [emitFileHeader(cfg)];
   if (cfg.serde) parts.push(`use serde::{Deserialize, Serialize};\n`);
   parts.push(emitCommonSharedTypes({ serde: cfg.serde, vis: cfg.moduleVisibility }));
-  parts.push(emitSharedScalarFilters({ serde: cfg.serde, vis: cfg.moduleVisibility }));
-  parts.push(emitFieldUpdateOps({ serde: cfg.serde, vis: cfg.moduleVisibility }));
+  parts.push(emitSharedScalarFilters({ serde: cfg.serde, vis: cfg.moduleVisibility, cfg }));
+  parts.push(emitFieldUpdateOps({ serde: cfg.serde, vis: cfg.moduleVisibility, cfg }));
 
   for (const e of ir.enums) {
     parts.push(emitEnum(e, { serde: cfg.serde, vis: cfg.moduleVisibility }));

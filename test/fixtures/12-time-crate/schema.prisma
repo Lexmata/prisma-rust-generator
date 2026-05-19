@@ -1,0 +1,13 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model TimeRow {
+  id        String   @id @db.Uuid
+  createdAt DateTime
+  dateOnly  DateTime @db.Date
+  timeOnly  DateTime @db.Time
+  withTz    DateTime @db.Timestamptz
+  withoutTz DateTime @db.Timestamp
+}

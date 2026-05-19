@@ -1,4 +1,5 @@
 import { RustWriter } from "../rust-writer.js";
+import type { GeneratorConfig } from "../../types.js";
 
 interface OpSpec {
   family: string;
@@ -6,30 +7,40 @@ interface OpSpec {
   numeric: boolean;
 }
 
-const SPECS: readonly OpSpec[] = [
-  { family: "String", ty: "String", numeric: false },
-  { family: "Int", ty: "i32", numeric: true },
-  { family: "BigInt", ty: "i64", numeric: true },
-  { family: "Float", ty: "f64", numeric: true },
-  { family: "Decimal", ty: "rust_decimal::Decimal", numeric: true },
-  { family: "Bool", ty: "bool", numeric: false },
-  { family: "DateTime", ty: "chrono::DateTime<chrono::Utc>", numeric: false },
-  { family: "Uuid", ty: "uuid::Uuid", numeric: false },
-  { family: "Bytes", ty: "Vec<u8>", numeric: false },
-  { family: "Json", ty: "serde_json::Value", numeric: false },
-];
+function buildSpecs(cfg: GeneratorConfig): readonly OpSpec[] {
+  const datetime =
+    cfg.dateTimeCrate === "time" ? "time::OffsetDateTime" : "chrono::DateTime<chrono::Utc>";
+  const decimal =
+    cfg.decimalCrate === "bigdecimal" ? "bigdecimal::BigDecimal" : "rust_decimal::Decimal";
+  const bytes = cfg.bytesCrate === "bytes" ? "bytes::Bytes" : "Vec<u8>";
+  const json = cfg.jsonCrate === "string" ? "String" : "serde_json::Value";
+  return [
+    { family: "String", ty: "String", numeric: false },
+    { family: "Int", ty: "i32", numeric: true },
+    { family: "BigInt", ty: "i64", numeric: true },
+    { family: "Float", ty: "f64", numeric: true },
+    { family: "Decimal", ty: decimal, numeric: true },
+    { family: "Bool", ty: "bool", numeric: false },
+    { family: "DateTime", ty: datetime, numeric: false },
+    { family: "Uuid", ty: "uuid::Uuid", numeric: false },
+    { family: "Bytes", ty: bytes, numeric: false },
+    { family: "Json", ty: json, numeric: false },
+  ];
+}
 
 export function emitFieldUpdateOps(opts: {
   serde: boolean;
   vis: "pub" | "pub(crate)";
+  cfg: GeneratorConfig;
 }): string {
   const w = new RustWriter();
-  for (const s of SPECS) {
+  const specs = buildSpecs(opts.cfg);
+  for (const s of specs) {
     emitStruct(w, s, false, opts);
     emitStruct(w, s, true, opts);
     w.blank();
   }
-  for (const s of SPECS) {
+  for (const s of specs) {
     emitListStruct(w, s, opts);
     w.blank();
   }

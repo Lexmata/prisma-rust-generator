@@ -79,7 +79,9 @@ function nestedCreateRefForRelation(
 }
 
 function openInput(w: RustWriter, opts: CreateOpts, name: string): void {
-  const derives = ["Debug", "Clone", "Default", "PartialEq"];
+  // Create inputs commonly carry required scalar/enum fields with no natural
+  // Default, so we drop Default here. Callers construct explicitly.
+  const derives = ["Debug", "Clone", "PartialEq"];
   if (opts.serde) derives.push("Serialize", "Deserialize");
   w.deriveLine(derives);
   if (opts.serde) w.line(`#[serde(rename_all = "camelCase")]`);

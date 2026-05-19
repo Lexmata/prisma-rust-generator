@@ -102,8 +102,8 @@ export function emitPerFile(ir: IR, cfg: GeneratorConfig): Map<string, string> {
   const sharedParts: string[] = [emitFileHeader(cfg)];
   if (cfg.serde) sharedParts.push(`use serde::{Deserialize, Serialize};\n`);
   sharedParts.push(emitCommonSharedTypes({ serde: cfg.serde, vis: cfg.moduleVisibility }));
-  sharedParts.push(emitSharedScalarFilters({ serde: cfg.serde, vis: cfg.moduleVisibility }));
-  sharedParts.push(emitFieldUpdateOps({ serde: cfg.serde, vis: cfg.moduleVisibility }));
+  sharedParts.push(emitSharedScalarFilters({ serde: cfg.serde, vis: cfg.moduleVisibility, cfg }));
+  sharedParts.push(emitFieldUpdateOps({ serde: cfg.serde, vis: cfg.moduleVisibility, cfg }));
   files.set("shared/filters.rs", sharedParts.join("\n"));
 
   files.set(

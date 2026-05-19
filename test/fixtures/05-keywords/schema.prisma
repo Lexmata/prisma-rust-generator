@@ -1,0 +1,11 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Item {
+  id    String @id @db.Uuid
+  type  String
+  match String
+  ref   String
+}

@@ -70,8 +70,15 @@ function emitRelationVariants(w: RustWriter, ctx: Ctx): void {
   void opts;
 }
 
-function openInput(w: RustWriter, opts: NestedOpts, name: string): void {
-  const derives = ["Debug", "Clone", "Default", "PartialEq"];
+function openInput(
+  w: RustWriter,
+  opts: NestedOpts,
+  name: string,
+  withDefault = true,
+): void {
+  const derives = ["Debug", "Clone"];
+  if (withDefault) derives.push("Default");
+  derives.push("PartialEq");
   if (opts.serde) derives.push("Serialize", "Deserialize");
   w.deriveLine(derives);
   if (opts.serde) w.line(`#[serde(rename_all = "camelCase")]`);
@@ -80,7 +87,7 @@ function openInput(w: RustWriter, opts: NestedOpts, name: string): void {
 
 function emitCreateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
   const name = `${ctx.relation.toModel}${unchecked ? "Unchecked" : ""}CreateWithout${ctx.source.name}Input`;
-  openInput(w, ctx.opts, name);
+  openInput(w, ctx.opts, name, false);
   for (const f of ctx.target.scalarFields) {
     if (!unchecked && f.isFk) continue;
     if (f.hasDefault) continue;
@@ -106,7 +113,7 @@ function emitCreateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
 
 function emitCreateOrConnectWithout(w: RustWriter, ctx: Ctx): void {
   const name = `${ctx.relation.toModel}CreateOrConnectWithout${ctx.source.name}Input`;
-  openInput(w, ctx.opts, name);
+  openInput(w, ctx.opts, name, false);
   w.field(`pub r#where`, `Box<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>`);
   w.field(
     `pub create`,
@@ -160,7 +167,7 @@ function emitCreateNestedMany(w: RustWriter, ctx: Ctx): void {
 
 function emitCreateManyEnvelope(w: RustWriter, ctx: Ctx): void {
   const name = `${ctx.relation.toModel}CreateMany${ctx.source.name}InputEnvelope`;
-  openInput(w, ctx.opts, name);
+  openInput(w, ctx.opts, name, true);
   w.field(
     `pub data`,
     `Vec<${ctx.prefix}${ctx.relation.toModel}CreateMany${ctx.source.name}Input>`,
@@ -172,7 +179,7 @@ function emitCreateManyEnvelope(w: RustWriter, ctx: Ctx): void {
 
 function emitCreateManyAInput(w: RustWriter, ctx: Ctx): void {
   const name = `${ctx.relation.toModel}CreateMany${ctx.source.name}Input`;
-  openInput(w, ctx.opts, name);
+  openInput(w, ctx.opts, name, false);
   for (const f of ctx.target.scalarFields) {
     if (f.hasDefault) continue;
     w.field(`pub ${f.rustName}`, scalarTypeForCreate(f));
@@ -209,7 +216,7 @@ function emitUpdateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
 
 function emitUpsertWithout(w: RustWriter, ctx: Ctx): void {
   const name = `${ctx.relation.toModel}UpsertWithout${ctx.source.name}Input`;
-  openInput(w, ctx.opts, name);
+  openInput(w, ctx.opts, name, false);
   w.field(
     `pub update`,
     `Box<${ctx.prefix}${ctx.relation.toModel}UpdateWithout${ctx.source.name}Input>`,
@@ -284,7 +291,7 @@ function emitUpdateOneOptional(w: RustWriter, ctx: Ctx): void {
 
 function emitUpdateToOneWithWhere(w: RustWriter, ctx: Ctx): void {
   const name = `${ctx.relation.toModel}UpdateToOneWithWhereWithout${ctx.source.name}Input`;
-  openInput(w, ctx.opts, name);
+  openInput(w, ctx.opts, name, false);
   w.field(
     `pub r#where`,
     `Option<Box<${ctx.prefix}${ctx.relation.toModel}WhereInput>>`,
@@ -355,7 +362,7 @@ function emitUpsertWithWhereUniqueSidecar(_w: RustWriter, _ctx: Ctx): void {
 
 function emitUpdateWithWhereUnique(w: RustWriter, ctx: Ctx): void {
   const upsertName = `${ctx.relation.toModel}UpsertWithWhereUniqueWithout${ctx.source.name}Input`;
-  openInput(w, ctx.opts, upsertName);
+  openInput(w, ctx.opts, upsertName, false);
   w.field(
     `pub r#where`,
     `Box<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>`,
@@ -372,7 +379,7 @@ function emitUpdateWithWhereUnique(w: RustWriter, ctx: Ctx): void {
   w.blank();
 
   const name = `${ctx.relation.toModel}UpdateWithWhereUniqueWithout${ctx.source.name}Input`;
-  openInput(w, ctx.opts, name);
+  openInput(w, ctx.opts, name, false);
   w.field(
     `pub r#where`,
     `Box<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>`,
@@ -387,7 +394,7 @@ function emitUpdateWithWhereUnique(w: RustWriter, ctx: Ctx): void {
 
 function emitUpdateManyWithWhere(w: RustWriter, ctx: Ctx): void {
   const name = `${ctx.relation.toModel}UpdateManyWithWhereWithout${ctx.source.name}Input`;
-  openInput(w, ctx.opts, name);
+  openInput(w, ctx.opts, name, false);
   w.field(
     `pub r#where`,
     `Box<${ctx.prefix}${ctx.relation.toModel}ScalarWhereInput>`,

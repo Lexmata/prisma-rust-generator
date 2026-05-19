@@ -21,5 +21,19 @@ export function emitEnum(e: EnumIR, opts: EnumEmitOptions): string {
     w.variant(v.rustName);
   }
   w.close();
+  w.blank();
+
+  for (const nullable of [false, true]) {
+    const name = `${nullable ? "Nullable" : ""}${e.name}FieldUpdateOperationsInput`;
+    const opDerives = ["Debug", "Clone", "Default", "PartialEq"];
+    if (opts.serde) opDerives.push("Serialize", "Deserialize");
+    w.deriveLine(opDerives);
+    if (opts.serde) w.line(`#[serde(rename_all = "camelCase")]`);
+    w.openStruct(opts.vis, name);
+    const setType = nullable ? `Option<Option<${e.name}>>` : `Option<${e.name}>`;
+    w.field(`pub set`, setType);
+    w.close();
+    w.blank();
+  }
   return w.toString();
 }

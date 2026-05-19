@@ -1,0 +1,22 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+enum Role {
+  Admin
+  Member
+  Viewer
+}
+
+enum CaseStatus {
+  IN_REVIEW
+  QUALIFIED
+  REJECTED
+}
+
+model User {
+  id     String     @id @db.Uuid
+  role   Role
+  status CaseStatus @default(IN_REVIEW)
+}
