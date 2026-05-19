@@ -1,0 +1,73 @@
+// Notifications, notification preferences, batch notification jobs.
+
+enum NotificationType {
+  FORM_LINK_SENT
+  FORM_SUBMITTED
+  FORM_VERIFIED
+  FORM_REJECTED
+  ASSESSMENT_COMPLETED
+  LINK_EXPIRING
+  LINK_EXPIRED
+}
+
+enum DeliveryStatus {
+  PENDING
+  SENT
+  DELIVERED
+  FAILED
+  BOUNCED
+}
+
+model Notification {
+  id           String           @id @default(uuid()) @map("id") @db.Uuid
+  firmId       String           @map("firm_id") @db.Uuid
+  firm         Firm             @relation(fields: [firmId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId       String           @map("user_id") @db.Uuid
+  user         User             @relation("notificationRecipient", fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  type         NotificationType @map("type")
+  title        String           @map("title") @db.VarChar(255)
+  message      String           @map("message") @db.Text
+  resourceType String?          @map("resource_type") @db.VarChar(100)
+  resourceId   String?          @map("resource_id") @db.Uuid
+  isRead       Boolean          @default(false) @map("is_read") @db.Boolean
+  readAt       DateTime?        @map("read_at") @db.Timestamp(6)
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([userId, isRead], map: "notification_user_read_idx")
+  @@index([firmId], map: "notification_firm_id_idx")
+  @@map("notifications")
+}
+
+model NotificationPreference {
+  id           String           @id @default(uuid()) @map("id") @db.Uuid
+  userId       String           @map("user_id") @db.Uuid
+  user         User             @relation("notificationPreference", fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  type         NotificationType @map("type")
+  emailEnabled Boolean          @default(true) @map("email_enabled") @db.Boolean
+  inAppEnabled Boolean          @default(true) @map("in_app_enabled") @db.Boolean
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@unique([userId, type], map: "notification_preference_user_type_unique")
+  @@map("notification_preferences")
+}
+
+model EmailDelivery {
+  id             String         @id @default(uuid()) @map("id") @db.Uuid
+  firmId         String         @map("firm_id") @db.Uuid
+  firm           Firm           @relation(fields: [firmId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  recipientEmail String         @map("recipient_email") @db.VarChar(255)
+  subject        String         @map("subject") @db.VarChar(500)
+  templateType   String         @map("template_type") @db.VarChar(100)
+  /// @ent.json object - params to reconstruct email for retry (e.g. clientName, token, expiresAt, firmName for FORM_LINK)
+  templateParams Json?          @map("template_params") @db.JsonB
+  status         DeliveryStatus @default(PENDING) @map("status")
+  sentAt         DateTime?      @map("sent_at") @db.Timestamp(6)
+  failureReason  String?        @map("failure_reason") @db.Text
+  retryCount     Int            @default(0) @map("retry_count") @db.Integer
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([firmId], map: "email_delivery_firm_id_idx")
+  @@index([status], map: "email_delivery_status_idx")
+  @@map("email_deliveries")
+}

@@ -2,6 +2,7 @@ import { RustWriter } from "../rust-writer.js";
 import type { FieldIR, ModelIR, RelationIR } from "../../ir/types.js";
 import { filterFamilyForRustType } from "../filters/model.js";
 import type { ModuleResolver } from "../type-ref.js";
+import { toPascalCase } from "../../ir/names.js";
 
 export interface UpdateOpts {
   serde: boolean;
@@ -79,13 +80,14 @@ function nestedUpdateRefForRelation(
 ): string {
   const mod = moduleOf(source.name);
   const prefix = mod ? `crate::${mod}::` : `crate::`;
+  const without = `${source.name}${toPascalCase(r.prismaName)}`;
   let suffix: string;
   if (r.cardinality === "one") {
     suffix = r.required
-      ? `UpdateOneRequiredWithout${source.name}NestedInput`
-      : `UpdateOneWithout${source.name}NestedInput`;
+      ? `UpdateOneRequiredWithout${without}NestedInput`
+      : `UpdateOneWithout${without}NestedInput`;
   } else {
-    suffix = `UpdateManyWithout${source.name}NestedInput`;
+    suffix = `UpdateManyWithout${without}NestedInput`;
   }
   return `Option<${prefix}${r.toModel}${suffix}>`;
 }

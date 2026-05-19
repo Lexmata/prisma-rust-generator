@@ -150,6 +150,27 @@ Swap crates as your `*Crate` options dictate (`time` instead of `chrono`,
 
 Modifiers compose: `T?` → `Option<T>`, `T[]` → `Vec<T>`.
 
+## Known limitations (v0)
+
+The generator is verified end-to-end against five fixtures (`01-scalars`,
+`02-enums`, `03-relations`, `05-keywords`, `12-time-crate`) covering the
+Tier 1-4 input surface, multi-relation disambiguation, Rust keyword field
+names, and the time-crate option matrix.
+
+Edge cases that v0 does **not** yet handle on real-world schemas:
+
+- `@relation("name")` aliased relations where two models have multiple
+  relations to each other through differently-named pairs
+- Some self-referential relation shapes where the back-relation name needs
+  to be discovered through DMMF's `relationName` field
+- Schemas with `prismaSchemaFolder` preview-feature configs that include
+  custom generators (the input schema must be stripped to just `datasource`
+  + `model`/`enum` blocks)
+
+The 80-model `lexmata-models` schema currently fails to compile with these
+edge cases. The fixture (`test/fixtures/08-lexmata/`) is checked in and the
+corresponding test is skipped pending follow-up work.
+
 ## Status
 
 Pre-1.0 — the emission format may change between minor versions. Once the

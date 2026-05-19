@@ -1,0 +1,86 @@
+// External platform integrations (Filevine, MyCase, etc.).
+
+enum ExternalPlatform {
+  ADVITA
+  CLIO
+  FILEVINE
+  LITIFY
+  SALESFORCE
+  OTHER
+}
+
+enum ExternalSyncStatus {
+  PENDING
+  SYNCING
+  SYNCED
+  ERROR
+  DISABLED
+}
+
+enum ExternalSyncFrequency {
+  MANUAL
+  HOURLY
+  DAILY
+  WEEKLY
+}
+
+model ApiIntegration {
+  id              Int     @id @default(autoincrement()) @map("id")
+  clientId        String  @unique(map: "api_integration_client_id_uindex") @map("client_id") @db.Uuid
+  /// Ciphertext produced by the backend's envelope encryption. Consumers
+  /// MUST NEVER write plaintext. Same pattern as
+  /// `AdvitaConnection.apiKeyEncrypted`.
+  apiKeyEncrypted String  @map("api_key_encrypted") @db.Text
+  returnUrl       String? @map("return_url") @db.VarChar(255)
+  integrationType String  @default("standard") @map("integration_type") @db.VarChar(15)
+  /// @ent.json object
+  credentials     Json?   @map("credentials")
+  ocr             Boolean @default(false) @map("ocr")
+  docrioAwsPrefix String? @map("docrio_aws_prefix") @db.VarChar(255)
+
+  @@map("api_integrations")
+}
+
+model ExternalPlatformConnection {
+  id                   String                  @id @default(uuid()) @map("id") @db.Uuid
+  firmId               String                  @map("firm_id") @db.Uuid
+  firm                 Firm                    @relation(fields: [firmId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  platform             ExternalPlatform        @map("platform")
+  /// Optional label for custom integrations when platform is OTHER.
+  platformLabel        String?                 @map("platform_label") @db.VarChar(100)
+  /// AES-256-GCM encrypted blob from backend crypto wrapper.
+  /// Never store plaintext API keys/tokens in this column.
+  credentialsEncrypted String                  @map("credentials_encrypted") @db.Text
+  syncStatus           ExternalSyncStatus      @default(PENDING) @map("sync_status")
+  lastSyncAt           DateTime?               @map("last_sync_at") @db.Timestamp(6)
+  lastSyncError        String?                 @map("last_sync_error") @db.Text
+  syncFrequency        ExternalSyncFrequency   @default(MANUAL) @map("sync_frequency")
+  /// @ent.json object
+  /// Expected contract: { externalFieldKey: internalFieldKey }.
+  fieldMapping         Json?                   @map("field_mapping") @db.JsonB
+  entityMappings       ExternalEntityMapping[]
+  createdAt            DateTime                @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt            DateTime                @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([firmId], map: "external_platform_connection_firm_id_idx")
+  @@index([syncStatus], map: "external_platform_connection_sync_status_idx")
+  @@map("external_platform_connections")
+}
+
+model ExternalEntityMapping {
+  id                 String                     @id @default(uuid()) @map("id") @db.Uuid
+  connectionId       String                     @map("connection_id") @db.Uuid
+  connection         ExternalPlatformConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  externalEntityType String                     @map("external_entity_type") @db.VarChar(100)
+  externalEntityId   String                     @map("external_entity_id") @db.VarChar(255)
+  internalEntityType String                     @map("internal_entity_type") @db.VarChar(100)
+  internalEntityId   String                     @map("internal_entity_id") @db.VarChar(255)
+  lastSyncAt         DateTime?                  @map("last_sync_at") @db.Timestamp(6)
+  createdAt          DateTime                   @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime                   @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@unique([connectionId, externalEntityType, externalEntityId], map: "external_entity_mapping_external_unique")
+  @@index([connectionId], map: "external_entity_mapping_connection_id_idx")
+  @@index([internalEntityType, internalEntityId], map: "external_entity_mapping_internal_idx")
+  @@map("external_entity_mappings")
+}

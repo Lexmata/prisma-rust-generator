@@ -20,8 +20,22 @@ export async function runFixture(
 ): Promise<void> {
   const fixtureDir = resolve(__dirname, "..", "fixtures", name);
   const outDir = resolve(__dirname, "..", "compile", name, "src");
-  const schemaPath = join(fixtureDir, "schema.prisma");
-  const schema = await readFile(schemaPath, "utf8");
+  const single = join(fixtureDir, "schema.prisma");
+  let schemaPath: string;
+  let schema: string;
+  try {
+    schema = await readFile(single, "utf8");
+    schemaPath = single;
+  } catch {
+    const { readdir } = await import("node:fs/promises");
+    const files = (await readdir(fixtureDir))
+      .filter((f) => f.endsWith(".prisma"))
+      .sort();
+    schema = (
+      await Promise.all(files.map((f) => readFile(join(fixtureDir, f), "utf8")))
+    ).join("\n\n");
+    schemaPath = fixtureDir;
+  }
 
   const dmmf = await getDMMF({ datamodel: schema });
   const fileMap = await buildFileMap(schemaPath);
@@ -43,11 +57,10 @@ export async function runFixture(
 
 export async function rustVerify(name: string): Promise<void> {
   const dir = resolve(__dirname, "..", "compile", name);
-  await exec("cargo", ["fmt", "--all", "--", "--check"], { cwd: dir });
-  await exec("cargo", ["clippy", "--all-targets", "--", "-D", "warnings"], {
-    cwd: dir,
-  });
-  await exec("cargo", ["check", "--all-targets"], { cwd: dir });
+  const big = { cwd: dir, maxBuffer: 256 * 1024 * 1024 };
+  await exec("cargo", ["fmt", "--all", "--", "--check"], big);
+  await exec("cargo", ["clippy", "--all-targets", "--", "-D", "warnings"], big);
+  await exec("cargo", ["check", "--all-targets"], big);
 }
 
 const DEFAULT_CFG: GeneratorConfig = {

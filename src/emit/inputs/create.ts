@@ -1,6 +1,7 @@
 import { RustWriter } from "../rust-writer.js";
 import type { FieldIR, ModelIR, RelationIR } from "../../ir/types.js";
 import { renderScalarFieldType, type ModuleResolver } from "../type-ref.js";
+import { toPascalCase } from "../../ir/names.js";
 
 export interface CreateOpts {
   serde: boolean;
@@ -69,10 +70,11 @@ function nestedCreateRefForRelation(
 ): string {
   const mod = moduleOf(source.name);
   const prefix = mod ? `crate::${mod}::` : `crate::`;
+  const without = `${source.name}${toPascalCase(r.prismaName)}`;
   const suffix =
     r.cardinality === "one"
-      ? `CreateNestedOneWithout${source.name}Input`
-      : `CreateNestedManyWithout${source.name}Input`;
+      ? `CreateNestedOneWithout${without}Input`
+      : `CreateNestedManyWithout${without}Input`;
   const ty = `${prefix}${r.toModel}${suffix}`;
   void required;
   return `Option<${ty}>`;

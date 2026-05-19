@@ -1,0 +1,125 @@
+// AdvitaMD records integration: tracking, mappings, and sync state.
+
+enum AdvitaRecordType {
+  MEDICAL_RECORDS
+  BILLS
+  MEDICAL_RECORDS_AND_BILLS
+}
+
+enum AdvitaSyncStatus {
+  PENDING
+  SYNCED
+  ERROR
+}
+
+enum AdvitaTrackingStatus {
+  ORDERED
+  IN_PROGRESS
+  RECEIVED
+  ON_HOLD
+  CANCELLED
+  ATTENTION_NEEDED
+  OVERDUE
+}
+
+/// Stores per-firm Advita API credentials. apiKeyEncrypted uses AES-256-GCM
+/// with a key sourced from AWS SSM Parameter Store (never in code or env vars).
+model AdvitaConnection {
+  id                String           @id @default(uuid()) @map("id") @db.Uuid
+  firmId            String           @unique @map("firm_id") @db.Uuid
+  firm              Firm             @relation(fields: [firmId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  advitaFirmNo      Int              @map("advita_firm_no") @db.Integer
+  advitaContactNo   Int              @map("advita_contact_no") @db.Integer
+  apiKeyEncrypted   String           @map("api_key_encrypted") @db.Text
+  advitaApiUrl      String           @map("advita_api_url") @db.VarChar(255)
+  isActive          Boolean          @default(true) @map("is_active") @db.Boolean
+  lastSyncAt        DateTime?        @map("last_sync_at") @db.Timestamp(6)
+  lastSyncError     String?          @map("last_sync_error") @db.Text
+  syncAttempts      Int              @default(0) @map("sync_attempts") @db.Integer
+  defaultRecordType AdvitaRecordType @default(MEDICAL_RECORDS) @map("default_record_type")
+  defaultPriority   Int              @default(0) @map("default_priority") @db.Integer
+  autoSummarize     Boolean          @default(true) @map("auto_summarize") @db.Boolean
+  createdAt         DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt         DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([firmId], map: "advita_connection_firm_id_idx")
+  @@map("advita_connections")
+}
+
+model AdvitaCaseMapping {
+  id            String                  @id @default(uuid()) @map("id") @db.Uuid
+  caseId        String                  @map("case_id") @db.Uuid
+  case          Case                    @relation(fields: [caseId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  firmId        String                  @map("firm_id") @db.Uuid
+  firm          Firm                    @relation(fields: [firmId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  advitaCaseNo  Int                     @map("advita_case_no") @db.Integer
+  syncStatus    AdvitaSyncStatus        @default(PENDING) @map("sync_status")
+  lastSyncAt    DateTime?               @map("last_sync_at") @db.Timestamp(6)
+  lastSyncError String?                 @map("last_sync_error") @db.Text
+  syncAttempts  Int                     @default(0) @map("sync_attempts") @db.Integer
+  createdAt     DateTime                @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime                @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  trackings     AdvitaTrackingMapping[]
+
+  @@unique([caseId, firmId], map: "advita_case_mapping_case_firm_unique")
+  @@index([firmId], map: "advita_case_mapping_firm_id_idx")
+  @@index([advitaCaseNo], map: "advita_case_mapping_advita_case_no_idx")
+  @@map("advita_case_mappings")
+}
+
+/// firmId is denormalized from caseMapping for query performance — the monitor
+/// and webhook services filter by firm without joining through caseMapping.
+/// Application-level validation ensures firmId matches caseMapping.firmId.
+model AdvitaTrackingMapping {
+  id               String               @id @default(uuid()) @map("id") @db.Uuid
+  caseMappingId    String               @map("case_mapping_id") @db.Uuid
+  caseMapping      AdvitaCaseMapping    @relation(fields: [caseMappingId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  firmId           String               @map("firm_id") @db.Uuid
+  firm             Firm                 @relation(fields: [firmId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  advitaTrackingNo Int                  @map("advita_tracking_no") @db.Integer
+  advitaPartNo     Int                  @default(0) @map("advita_part_no") @db.Integer
+  recType          AdvitaRecordType     @default(MEDICAL_RECORDS) @map("rec_type")
+  status           AdvitaTrackingStatus @default(ORDERED) @map("status")
+  statusCode       Int                  @default(0) @map("status_code") @db.Integer
+  orderedAt        DateTime             @default(now()) @map("ordered_at") @db.Timestamp(6)
+  dueDate          DateTime?            @map("due_date") @db.Timestamp(6)
+  providerName     String?              @map("provider_name") @db.VarChar(255)
+  providerLocNo    Int?                 @map("provider_loc_no") @db.Integer
+  documentId       String?              @map("document_id") @db.Uuid
+  document         Document?            @relation(fields: [documentId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  totalCost        Decimal?             @map("total_cost") @db.Decimal(16, 2)
+  lastCheckedAt    DateTime?            @map("last_checked_at") @db.Timestamp(6)
+  createdAt        DateTime             @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt        DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@unique([advitaTrackingNo, advitaPartNo], map: "advita_tracking_no_part_unique")
+  @@index([caseMappingId], map: "advita_tracking_case_mapping_id_idx")
+  @@index([firmId], map: "advita_tracking_firm_id_idx")
+  @@index([status], map: "advita_tracking_status_idx")
+  @@index([documentId], map: "advita_tracking_document_id_idx")
+  @@map("advita_tracking_mappings")
+}
+
+model AdvitaLocationCache {
+  id              String   @id @default(uuid()) @map("id") @db.Uuid
+  advitaLocNo     Int      @unique @map("advita_loc_no") @db.Integer
+  locName         String   @map("loc_name") @db.VarChar(255)
+  streetAddress   String?  @map("street_address") @db.VarChar(255)
+  city            String?  @map("city") @db.VarChar(100)
+  state           String?  @map("state") @db.VarChar(50)
+  zip             String?  @map("zip") @db.VarChar(20)
+  department      String?  @map("department") @db.VarChar(100)
+  phone           String?  @map("phone") @db.VarChar(50)
+  fax             String?  @map("fax") @db.VarChar(50)
+  email           String?  @map("email") @db.VarChar(100)
+  locType         String?  @map("loc_type") @db.VarChar(50)
+  doctorName      String?  @map("doctor_name") @db.VarChar(100)
+  doctorSpecialty String?  @map("doctor_specialty") @db.VarChar(100)
+  cachedAt        DateTime @default(now()) @map("cached_at") @db.Timestamp(6)
+  expiresAt       DateTime @map("expires_at") @db.Timestamp(6)
+
+  @@index([locName], map: "advita_location_cache_loc_name_idx")
+  @@index([city, state], map: "advita_location_cache_city_state_idx")
+  @@index([expiresAt], map: "advita_location_cache_expires_at_idx")
+  @@map("advita_location_caches")
+}

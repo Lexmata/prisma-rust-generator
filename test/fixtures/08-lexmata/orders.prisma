@@ -1,0 +1,161 @@
+// Orders, provider orders, locations and submission audit log.
+
+model Mr8OrderStatus {
+  id             Int       @id @default(autoincrement()) @map("id")
+  firmId         Int?      @map("firm_id")
+  orderId        Int?      @map("order_id")
+  trackingId     Int?      @map("tracking_id")
+  providerName   String?   @map("provider_name") @db.VarChar(255)
+  matterNumber   String?   @map("matter_number") @db.VarChar(32)
+  patientName    String?   @map("patient_name") @db.VarChar(64)
+  processorName  String?   @map("processor_name") @db.VarChar(64)
+  processorEmail String?   @map("processor_email") @db.VarChar(50)
+  orderStatus    String?   @map("order_status") @db.VarChar(128)
+  providerStatus String?   @map("provider_status") @db.VarChar(128)
+  orderedBy      String?   @map("ordered_by") @db.VarChar(64)
+  orderDate      DateTime? @map("order_date") @db.Timestamp(6)
+  lastStatusDate DateTime? @map("last_status_date") @db.Timestamp(6)
+
+  @@index([matterNumber], map: "mr8_order_status_matter_number_index")
+  @@index([patientName], map: "mr8_order_status_patient_name_index")
+  @@index([providerName], map: "mr8_order_status_provider_name_index")
+  @@map("mr8_order_statuses")
+}
+
+model Order {
+  id                Int             @id @default(autoincrement()) @map("id")
+  orderUniqueId     String?         @map("order_unique_id") @db.VarChar(255)
+  orderIdMr8        Int?            @map("order_id_mr8") @db.Integer
+  orderId           String          @unique(map: "orders_order_uuid_uindex") @map("order_id") @db.Uuid
+  orderIdUuid       String?         @default(dbgenerated("uuid_to_text(order_id)")) @map("order_id_uuid") @db.VarChar(36)
+  clientId          String          @map("client_id") @db.Uuid
+  clientIdUuid      String?         @default(dbgenerated("uuid_to_text(client_id)")) @map("client_id_uuid") @db.VarChar(36)
+  firmId            Int?            @map("firm_id")
+  orderDate         DateTime        @map("order_date") @db.Timestamp(6)
+  caseNumber        String?         @map("case_number") @db.VarChar(64)
+  caseName          String?         @map("case_name") @db.VarChar(50)
+  claimNumber       String?         @map("claim_number") @db.VarChar(50)
+  lossDate          DateTime?       @map("loss_date") @db.Date
+  state             String?         @map("state") @db.VarChar(2)
+  county            Int?            @map("county") @db.Integer
+  parties           String?         @map("parties")
+  federal           Boolean         @default(false) @map("federal")
+  patientId         String?         @map("patient_id") @db.VarChar(32)
+  patientFirstName  String?         @map("patient_first_name") @db.VarChar(32)
+  patientMiddleName String?         @map("patient_middle_name") @db.VarChar(32)
+  patientLastName   String?         @map("patient_last_name") @db.VarChar(32)
+  patientDob        DateTime        @map("patient_dob") @db.Date
+  patientNotes      String?         @map("patient_notes") @db.VarChar(2048)
+  patientAddress    String?         @map("patient_address")
+  patientCity       String?         @map("patient_city") @db.VarChar(50)
+  patientState      String?         @map("patient_state") @db.VarChar(2)
+  patientZip        String?         @map("patient_zip") @db.VarChar(10)
+  /// @ent.json object
+  orderJson         Json?           @map("order_json")
+  source            String          @default("web") @map("source") @db.VarChar(3)
+  submitter         String?         @map("submitter") @db.VarChar(100)
+  ordersDocuments   OrderDocument[]
+  providerOrders    ProviderOrder[]
+
+  @@index([clientId], map: "api_integration_orders_client_id_fk")
+  @@map("orders")
+}
+
+model OrderDocument {
+  id             String    @id @map("id") @db.Uuid
+  idUuid         String?   @default(dbgenerated("uuid_to_text(id)")) @map("id_uuid") @db.VarChar(36)
+  orderId        Int       @map("order_id")
+  fileName       String    @map("file_name") @db.VarChar(200)
+  mimeType       String    @map("mime_type") @db.VarChar(255)
+  fileSize       Int       @map("file_size") @db.Integer
+  pageCount      Int?      @map("page_count") @db.Integer
+  uploadedAt     DateTime  @default(now()) @map("uploaded_at") @db.Timestamp(6)
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamp(6)
+  deleteDocument Boolean?  @map("delete_document")
+  orders         Order     @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "document_orders_id_fk")
+
+  @@index([orderId], map: "document_order_number_index")
+  @@map("orders_documents")
+}
+
+// Intentionally singular `@@map`: this is a log table — the head noun
+// "log" is singular and "orders" is a domain qualifier. Exempt from
+// LD-24's pluralisation sweep by design.
+model OrderSubmittedLog {
+  id              Int      @id @default(autoincrement()) @map("id")
+  orderId         Int      @map("order_id")
+  clientId        String?  @map("client_id") @db.Uuid
+  clientIdUuid    String?  @default(dbgenerated("uuid_to_text(client_id)")) @map("client_id_uuid") @db.VarChar(36)
+  orderStatus     String   @map("order_status") @db.VarChar(25)
+  /// @ent.json object
+  providerDetails Json?    @map("provider_details")
+  submittedAt     DateTime @map("submitted_at") @db.Timestamp(6)
+
+  @@index([clientId], map: "client_id")
+  @@index([orderId], map: "orders_submitted_log_order_id_index")
+  @@map("orders_submitted_log")
+}
+
+model ProviderLocation {
+  id                     Int     @id @default(autoincrement()) @map("id")
+  locationNumberMr8      Int?    @map("location_number_mr8")
+  providerName           String  @map("provider_name") @db.VarChar(255)
+  streetAddress          String? @map("street_address") @db.VarChar(255)
+  city                   String? @map("city") @db.VarChar(50)
+  state                  String? @map("state") @db.VarChar(50)
+  zip                    String? @map("zip") @db.VarChar(50)
+  country                String? @map("country") @db.VarChar(100)
+  mainPhone              String? @map("main_phone")
+  mainPhoneE164          String? @map("main_phone_e164")
+  mainPhoneExt           String? @map("main_phone_ext")
+  mainPhoneExtraInfo     String? @map("main_phone_extra_info")
+  altPhone               String? @map("alt_phone") @db.VarChar(50)
+  altPhoneE164           String? @map("alt_phone_e164")
+  altPhoneExt            String? @map("alt_phone_ext")
+  altPhoneExtraInfo      String? @map("alt_phone_extra_info")
+  tollFreePhone          String? @map("toll_free_phone") @db.VarChar(50)
+  tollFreePhoneE164      String? @map("toll_free_phone_e164")
+  tollFreePhoneExt       String? @map("toll_free_phone_ext") @db.VarChar(5)
+  tollFreePhoneExtraInfo String? @map("toll_free_phone_extra_info")
+  fax                    String? @map("fax")
+  faxE164                String? @map("fax_e164")
+  faxExt                 String? @map("fax_ext")
+  faxExtraInfo           String? @map("fax_extra_info")
+  email                  String? @map("email") @db.VarChar(100)
+  additionalInfo         String? @map("additional_info")
+  departmentName         String? @map("department_name") @db.VarChar(50)
+  orderPreference        String? @map("order_preference") @db.VarChar(50)
+  webUrl                 String? @map("web_url") @db.VarChar(255)
+  doctorFirstName        String? @map("doctor_first_name") @db.VarChar(50)
+  doctorMiddleName       String? @map("doctor_middle_name") @db.VarChar(50)
+  doctorLastName         String? @map("doctor_last_name") @db.VarChar(50)
+  doctorTitle            String? @map("doctor_title") @db.VarChar(50)
+  doctorSpeciality       String? @map("doctor_speciality") @db.VarChar(50)
+  dataVerificationNeeded Boolean @default(false) @map("data_verification_needed")
+
+  @@index([providerName, city, state, zip], map: "provider_locations_provider_name_city_state_zip_index")
+  @@map("provider_locations")
+}
+
+model ProviderOrder {
+  id                 Int       @id @default(autoincrement()) @map("id")
+  orderId            Int       @map("order_id")
+  providerLocationId Int?      @map("provider_location_id")
+  providerName       String?   @map("provider_name") @db.VarChar(255)
+  providerAddress    String?   @map("provider_address") @db.VarChar(255)
+  providerCity       String?   @map("provider_city") @db.VarChar(50)
+  providerState      String?   @map("provider_state") @db.VarChar(2)
+  providerZip        String?   @map("provider_zip") @db.VarChar(10)
+  providerPhone      String?   @map("provider_phone") @db.VarChar(50)
+  providerFax        String?   @map("provider_fax") @db.VarChar(50)
+  serviceStart       DateTime? @map("service_start") @db.Date
+  serviceEnd         DateTime? @map("service_end") @db.Date
+  /// @ent.json object
+  orderFlags         Json?     @map("order_flags")
+  /// @ent.json object
+  recordTypes        Json?     @map("record_types")
+  providerNotes      String?   @map("provider_notes") @db.VarChar(2048)
+  orders             Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("provider_orders")
+}

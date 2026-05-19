@@ -72,7 +72,7 @@ pub struct FirmInclude {
 pub struct FirmCreateInput {
     pub id: String,
     pub name: String,
-    pub users: Option<crate::schema::UserCreateNestedManyWithoutFirmInput>,
+    pub users: Option<crate::schema::UserCreateNestedManyWithoutFirmUsersInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -94,7 +94,7 @@ pub struct FirmCreateManyInput {
 pub struct FirmUpdateInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub name: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub users: Option<crate::schema::UserUpdateManyWithoutFirmNestedInput>,
+    pub users: Option<crate::schema::UserUpdateManyWithoutFirmUsersNestedInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -120,15 +120,15 @@ pub struct FirmUncheckedUpdateManyInput {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserCreateWithoutFirmInput {
+pub struct UserCreateWithoutFirmUsersInput {
     pub id: String,
     pub email: String,
-    pub posts: Option<crate::schema::PostCreateNestedManyWithoutUserInput>,
+    pub posts: Option<crate::schema::PostCreateNestedManyWithoutUserPostsInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUncheckedCreateWithoutFirmInput {
+pub struct UserUncheckedCreateWithoutFirmUsersInput {
     pub id: String,
     pub email: String,
     pub firm_id: String,
@@ -136,22 +136,22 @@ pub struct UserUncheckedCreateWithoutFirmInput {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserCreateOrConnectWithoutFirmInput {
+pub struct UserCreateOrConnectWithoutFirmUsersInput {
     pub r#where: Box<crate::schema::UserWhereUniqueInput>,
-    pub create: Box<crate::schema::UserCreateWithoutFirmInput>,
+    pub create: Box<crate::schema::UserCreateWithoutFirmUsersInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUpdateWithoutFirmInput {
+pub struct UserUpdateWithoutFirmUsersInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub email: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub posts: Option<crate::schema::PostUpdateManyWithoutUserNestedInput>,
+    pub posts: Option<crate::schema::PostUpdateManyWithoutUserPostsNestedInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUncheckedUpdateWithoutFirmInput {
+pub struct UserUncheckedUpdateWithoutFirmUsersInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub email: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub firm_id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
@@ -159,24 +159,24 @@ pub struct UserUncheckedUpdateWithoutFirmInput {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserCreateNestedManyWithoutFirmInput {
+pub struct UserCreateNestedManyWithoutFirmUsersInput {
     pub create:
-        Option<crate::shared::filters::OneOrMany<crate::schema::UserCreateWithoutFirmInput>>,
-    pub connect_or_create: Option<Vec<crate::schema::UserCreateOrConnectWithoutFirmInput>>,
-    pub create_many: Option<Box<crate::schema::UserCreateManyFirmInputEnvelope>>,
+        Option<crate::shared::filters::OneOrMany<crate::schema::UserCreateWithoutFirmUsersInput>>,
+    pub connect_or_create: Option<Vec<crate::schema::UserCreateOrConnectWithoutFirmUsersInput>>,
+    pub create_many: Option<Box<crate::schema::UserCreateManyFirmUsersInputEnvelope>>,
     pub connect: Option<crate::shared::filters::OneOrMany<crate::schema::UserWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserCreateManyFirmInputEnvelope {
-    pub data: Vec<crate::schema::UserCreateManyFirmInput>,
+pub struct UserCreateManyFirmUsersInputEnvelope {
+    pub data: Vec<crate::schema::UserCreateManyFirmUsersInput>,
     pub skip_duplicates: Option<bool>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserCreateManyFirmInput {
+pub struct UserCreateManyFirmUsersInput {
     pub id: String,
     pub email: String,
     pub firm_id: String,
@@ -184,38 +184,38 @@ pub struct UserCreateManyFirmInput {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUpdateManyWithoutFirmNestedInput {
+pub struct UserUpdateManyWithoutFirmUsersNestedInput {
     pub create:
-        Option<crate::shared::filters::OneOrMany<crate::schema::UserCreateWithoutFirmInput>>,
-    pub connect_or_create: Option<Vec<crate::schema::UserCreateOrConnectWithoutFirmInput>>,
-    pub upsert: Option<Vec<crate::schema::UserUpsertWithWhereUniqueWithoutFirmInput>>,
-    pub create_many: Option<Box<crate::schema::UserCreateManyFirmInputEnvelope>>,
+        Option<crate::shared::filters::OneOrMany<crate::schema::UserCreateWithoutFirmUsersInput>>,
+    pub connect_or_create: Option<Vec<crate::schema::UserCreateOrConnectWithoutFirmUsersInput>>,
+    pub upsert: Option<Vec<crate::schema::UserUpsertWithWhereUniqueWithoutFirmUsersInput>>,
+    pub create_many: Option<Box<crate::schema::UserCreateManyFirmUsersInputEnvelope>>,
     pub set: Option<Vec<crate::schema::UserWhereUniqueInput>>,
     pub disconnect: Option<Vec<crate::schema::UserWhereUniqueInput>>,
     pub delete: Option<Vec<crate::schema::UserWhereUniqueInput>>,
     pub connect: Option<Vec<crate::schema::UserWhereUniqueInput>>,
-    pub update: Option<Vec<crate::schema::UserUpdateWithWhereUniqueWithoutFirmInput>>,
-    pub update_many: Option<Vec<crate::schema::UserUpdateManyWithWhereWithoutFirmInput>>,
+    pub update: Option<Vec<crate::schema::UserUpdateWithWhereUniqueWithoutFirmUsersInput>>,
+    pub update_many: Option<Vec<crate::schema::UserUpdateManyWithWhereWithoutFirmUsersInput>>,
     pub delete_many: Option<Vec<crate::schema::UserScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUpsertWithWhereUniqueWithoutFirmInput {
+pub struct UserUpsertWithWhereUniqueWithoutFirmUsersInput {
     pub r#where: Box<crate::schema::UserWhereUniqueInput>,
-    pub update: Box<crate::schema::UserUpdateWithoutFirmInput>,
-    pub create: Box<crate::schema::UserCreateWithoutFirmInput>,
+    pub update: Box<crate::schema::UserUpdateWithoutFirmUsersInput>,
+    pub create: Box<crate::schema::UserCreateWithoutFirmUsersInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUpdateWithWhereUniqueWithoutFirmInput {
+pub struct UserUpdateWithWhereUniqueWithoutFirmUsersInput {
     pub r#where: Box<crate::schema::UserWhereUniqueInput>,
-    pub data: Box<crate::schema::UserUpdateWithoutFirmInput>,
+    pub data: Box<crate::schema::UserUpdateWithoutFirmUsersInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUpdateManyWithWhereWithoutFirmInput {
+pub struct UserUpdateManyWithWhereWithoutFirmUsersInput {
     pub r#where: Box<crate::schema::UserScalarWhereInput>,
     pub data: Box<crate::schema::UserUpdateManyMutationInput>,
 }
@@ -363,8 +363,8 @@ pub struct UserInclude {
 pub struct UserCreateInput {
     pub id: String,
     pub email: String,
-    pub firm: Option<crate::schema::FirmCreateNestedOneWithoutUserInput>,
-    pub posts: Option<crate::schema::PostCreateNestedManyWithoutUserInput>,
+    pub firm: Option<crate::schema::FirmCreateNestedOneWithoutUserFirmInput>,
+    pub posts: Option<crate::schema::PostCreateNestedManyWithoutUserPostsInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -388,8 +388,8 @@ pub struct UserCreateManyInput {
 pub struct UserUpdateInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub email: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::schema::FirmUpdateOneRequiredWithoutUserNestedInput>,
-    pub posts: Option<crate::schema::PostUpdateManyWithoutUserNestedInput>,
+    pub firm: Option<crate::schema::FirmUpdateOneRequiredWithoutUserFirmNestedInput>,
+    pub posts: Option<crate::schema::PostUpdateManyWithoutUserPostsNestedInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -417,82 +417,82 @@ pub struct UserUncheckedUpdateManyInput {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmCreateWithoutUserInput {
+pub struct FirmCreateWithoutUserFirmInput {
     pub id: String,
     pub name: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmUncheckedCreateWithoutUserInput {
+pub struct FirmUncheckedCreateWithoutUserFirmInput {
     pub id: String,
     pub name: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmCreateOrConnectWithoutUserInput {
+pub struct FirmCreateOrConnectWithoutUserFirmInput {
     pub r#where: Box<crate::schema::FirmWhereUniqueInput>,
-    pub create: Box<crate::schema::FirmCreateWithoutUserInput>,
+    pub create: Box<crate::schema::FirmCreateWithoutUserFirmInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmUpdateWithoutUserInput {
+pub struct FirmUpdateWithoutUserFirmInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub name: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmUncheckedUpdateWithoutUserInput {
+pub struct FirmUncheckedUpdateWithoutUserFirmInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub name: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmCreateNestedOneWithoutUserInput {
-    pub create: Option<Box<crate::schema::FirmCreateWithoutUserInput>>,
-    pub connect_or_create: Option<Box<crate::schema::FirmCreateOrConnectWithoutUserInput>>,
+pub struct FirmCreateNestedOneWithoutUserFirmInput {
+    pub create: Option<Box<crate::schema::FirmCreateWithoutUserFirmInput>>,
+    pub connect_or_create: Option<Box<crate::schema::FirmCreateOrConnectWithoutUserFirmInput>>,
     pub connect: Option<Box<crate::schema::FirmWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmUpsertWithoutUserInput {
-    pub update: Box<crate::schema::FirmUpdateWithoutUserInput>,
-    pub create: Box<crate::schema::FirmCreateWithoutUserInput>,
+pub struct FirmUpsertWithoutUserFirmInput {
+    pub update: Box<crate::schema::FirmUpdateWithoutUserFirmInput>,
+    pub create: Box<crate::schema::FirmCreateWithoutUserFirmInput>,
     pub r#where: Option<Box<crate::schema::FirmWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmUpdateOneRequiredWithoutUserNestedInput {
-    pub create: Option<Box<crate::schema::FirmCreateWithoutUserInput>>,
-    pub connect_or_create: Option<Box<crate::schema::FirmCreateOrConnectWithoutUserInput>>,
-    pub upsert: Option<Box<crate::schema::FirmUpsertWithoutUserInput>>,
+pub struct FirmUpdateOneRequiredWithoutUserFirmNestedInput {
+    pub create: Option<Box<crate::schema::FirmCreateWithoutUserFirmInput>>,
+    pub connect_or_create: Option<Box<crate::schema::FirmCreateOrConnectWithoutUserFirmInput>>,
+    pub upsert: Option<Box<crate::schema::FirmUpsertWithoutUserFirmInput>>,
     pub connect: Option<Box<crate::schema::FirmWhereUniqueInput>>,
-    pub update: Option<Box<crate::schema::FirmUpdateToOneWithWhereWithoutUserInput>>,
+    pub update: Option<Box<crate::schema::FirmUpdateToOneWithWhereWithoutUserFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmUpdateToOneWithWhereWithoutUserInput {
+pub struct FirmUpdateToOneWithWhereWithoutUserFirmInput {
     pub r#where: Option<Box<crate::schema::FirmWhereInput>>,
-    pub data: Box<crate::schema::FirmUpdateWithoutUserInput>,
+    pub data: Box<crate::schema::FirmUpdateWithoutUserFirmInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostCreateWithoutUserInput {
+pub struct PostCreateWithoutUserPostsInput {
     pub id: String,
     pub title: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostUncheckedCreateWithoutUserInput {
+pub struct PostUncheckedCreateWithoutUserPostsInput {
     pub id: String,
     pub title: String,
     pub author_id: String,
@@ -500,21 +500,21 @@ pub struct PostUncheckedCreateWithoutUserInput {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostCreateOrConnectWithoutUserInput {
+pub struct PostCreateOrConnectWithoutUserPostsInput {
     pub r#where: Box<crate::schema::PostWhereUniqueInput>,
-    pub create: Box<crate::schema::PostCreateWithoutUserInput>,
+    pub create: Box<crate::schema::PostCreateWithoutUserPostsInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostUpdateWithoutUserInput {
+pub struct PostUpdateWithoutUserPostsInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub title: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostUncheckedUpdateWithoutUserInput {
+pub struct PostUncheckedUpdateWithoutUserPostsInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub title: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub author_id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
@@ -522,24 +522,24 @@ pub struct PostUncheckedUpdateWithoutUserInput {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostCreateNestedManyWithoutUserInput {
+pub struct PostCreateNestedManyWithoutUserPostsInput {
     pub create:
-        Option<crate::shared::filters::OneOrMany<crate::schema::PostCreateWithoutUserInput>>,
-    pub connect_or_create: Option<Vec<crate::schema::PostCreateOrConnectWithoutUserInput>>,
-    pub create_many: Option<Box<crate::schema::PostCreateManyUserInputEnvelope>>,
+        Option<crate::shared::filters::OneOrMany<crate::schema::PostCreateWithoutUserPostsInput>>,
+    pub connect_or_create: Option<Vec<crate::schema::PostCreateOrConnectWithoutUserPostsInput>>,
+    pub create_many: Option<Box<crate::schema::PostCreateManyUserPostsInputEnvelope>>,
     pub connect: Option<crate::shared::filters::OneOrMany<crate::schema::PostWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostCreateManyUserInputEnvelope {
-    pub data: Vec<crate::schema::PostCreateManyUserInput>,
+pub struct PostCreateManyUserPostsInputEnvelope {
+    pub data: Vec<crate::schema::PostCreateManyUserPostsInput>,
     pub skip_duplicates: Option<bool>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostCreateManyUserInput {
+pub struct PostCreateManyUserPostsInput {
     pub id: String,
     pub title: String,
     pub author_id: String,
@@ -547,38 +547,38 @@ pub struct PostCreateManyUserInput {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostUpdateManyWithoutUserNestedInput {
+pub struct PostUpdateManyWithoutUserPostsNestedInput {
     pub create:
-        Option<crate::shared::filters::OneOrMany<crate::schema::PostCreateWithoutUserInput>>,
-    pub connect_or_create: Option<Vec<crate::schema::PostCreateOrConnectWithoutUserInput>>,
-    pub upsert: Option<Vec<crate::schema::PostUpsertWithWhereUniqueWithoutUserInput>>,
-    pub create_many: Option<Box<crate::schema::PostCreateManyUserInputEnvelope>>,
+        Option<crate::shared::filters::OneOrMany<crate::schema::PostCreateWithoutUserPostsInput>>,
+    pub connect_or_create: Option<Vec<crate::schema::PostCreateOrConnectWithoutUserPostsInput>>,
+    pub upsert: Option<Vec<crate::schema::PostUpsertWithWhereUniqueWithoutUserPostsInput>>,
+    pub create_many: Option<Box<crate::schema::PostCreateManyUserPostsInputEnvelope>>,
     pub set: Option<Vec<crate::schema::PostWhereUniqueInput>>,
     pub disconnect: Option<Vec<crate::schema::PostWhereUniqueInput>>,
     pub delete: Option<Vec<crate::schema::PostWhereUniqueInput>>,
     pub connect: Option<Vec<crate::schema::PostWhereUniqueInput>>,
-    pub update: Option<Vec<crate::schema::PostUpdateWithWhereUniqueWithoutUserInput>>,
-    pub update_many: Option<Vec<crate::schema::PostUpdateManyWithWhereWithoutUserInput>>,
+    pub update: Option<Vec<crate::schema::PostUpdateWithWhereUniqueWithoutUserPostsInput>>,
+    pub update_many: Option<Vec<crate::schema::PostUpdateManyWithWhereWithoutUserPostsInput>>,
     pub delete_many: Option<Vec<crate::schema::PostScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostUpsertWithWhereUniqueWithoutUserInput {
+pub struct PostUpsertWithWhereUniqueWithoutUserPostsInput {
     pub r#where: Box<crate::schema::PostWhereUniqueInput>,
-    pub update: Box<crate::schema::PostUpdateWithoutUserInput>,
-    pub create: Box<crate::schema::PostCreateWithoutUserInput>,
+    pub update: Box<crate::schema::PostUpdateWithoutUserPostsInput>,
+    pub create: Box<crate::schema::PostCreateWithoutUserPostsInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostUpdateWithWhereUniqueWithoutUserInput {
+pub struct PostUpdateWithWhereUniqueWithoutUserPostsInput {
     pub r#where: Box<crate::schema::PostWhereUniqueInput>,
-    pub data: Box<crate::schema::PostUpdateWithoutUserInput>,
+    pub data: Box<crate::schema::PostUpdateWithoutUserPostsInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostUpdateManyWithWhereWithoutUserInput {
+pub struct PostUpdateManyWithWhereWithoutUserPostsInput {
     pub r#where: Box<crate::schema::PostScalarWhereInput>,
     pub data: Box<crate::schema::PostUpdateManyMutationInput>,
 }
@@ -722,7 +722,7 @@ pub struct PostInclude {
 pub struct PostCreateInput {
     pub id: String,
     pub title: String,
-    pub author: Option<crate::schema::UserCreateNestedOneWithoutPostInput>,
+    pub author: Option<crate::schema::UserCreateNestedOneWithoutPostAuthorInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -746,7 +746,7 @@ pub struct PostCreateManyInput {
 pub struct PostUpdateInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub title: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub author: Option<crate::schema::UserUpdateOneRequiredWithoutPostNestedInput>,
+    pub author: Option<crate::schema::UserUpdateOneRequiredWithoutPostAuthorNestedInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -774,15 +774,15 @@ pub struct PostUncheckedUpdateManyInput {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserCreateWithoutPostInput {
+pub struct UserCreateWithoutPostAuthorInput {
     pub id: String,
     pub email: String,
-    pub firm: Option<crate::schema::FirmCreateNestedOneWithoutUserInput>,
+    pub firm: Option<crate::schema::FirmCreateNestedOneWithoutUserFirmInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUncheckedCreateWithoutPostInput {
+pub struct UserUncheckedCreateWithoutPostAuthorInput {
     pub id: String,
     pub email: String,
     pub firm_id: String,
@@ -790,22 +790,22 @@ pub struct UserUncheckedCreateWithoutPostInput {
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserCreateOrConnectWithoutPostInput {
+pub struct UserCreateOrConnectWithoutPostAuthorInput {
     pub r#where: Box<crate::schema::UserWhereUniqueInput>,
-    pub create: Box<crate::schema::UserCreateWithoutPostInput>,
+    pub create: Box<crate::schema::UserCreateWithoutPostAuthorInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUpdateWithoutPostInput {
+pub struct UserUpdateWithoutPostAuthorInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub email: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::schema::FirmUpdateOneRequiredWithoutUserNestedInput>,
+    pub firm: Option<crate::schema::FirmUpdateOneRequiredWithoutUserFirmNestedInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUncheckedUpdateWithoutPostInput {
+pub struct UserUncheckedUpdateWithoutPostAuthorInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub email: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub firm_id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
@@ -813,35 +813,35 @@ pub struct UserUncheckedUpdateWithoutPostInput {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserCreateNestedOneWithoutPostInput {
-    pub create: Option<Box<crate::schema::UserCreateWithoutPostInput>>,
-    pub connect_or_create: Option<Box<crate::schema::UserCreateOrConnectWithoutPostInput>>,
+pub struct UserCreateNestedOneWithoutPostAuthorInput {
+    pub create: Option<Box<crate::schema::UserCreateWithoutPostAuthorInput>>,
+    pub connect_or_create: Option<Box<crate::schema::UserCreateOrConnectWithoutPostAuthorInput>>,
     pub connect: Option<Box<crate::schema::UserWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUpsertWithoutPostInput {
-    pub update: Box<crate::schema::UserUpdateWithoutPostInput>,
-    pub create: Box<crate::schema::UserCreateWithoutPostInput>,
+pub struct UserUpsertWithoutPostAuthorInput {
+    pub update: Box<crate::schema::UserUpdateWithoutPostAuthorInput>,
+    pub create: Box<crate::schema::UserCreateWithoutPostAuthorInput>,
     pub r#where: Option<Box<crate::schema::UserWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUpdateOneRequiredWithoutPostNestedInput {
-    pub create: Option<Box<crate::schema::UserCreateWithoutPostInput>>,
-    pub connect_or_create: Option<Box<crate::schema::UserCreateOrConnectWithoutPostInput>>,
-    pub upsert: Option<Box<crate::schema::UserUpsertWithoutPostInput>>,
+pub struct UserUpdateOneRequiredWithoutPostAuthorNestedInput {
+    pub create: Option<Box<crate::schema::UserCreateWithoutPostAuthorInput>>,
+    pub connect_or_create: Option<Box<crate::schema::UserCreateOrConnectWithoutPostAuthorInput>>,
+    pub upsert: Option<Box<crate::schema::UserUpsertWithoutPostAuthorInput>>,
     pub connect: Option<Box<crate::schema::UserWhereUniqueInput>>,
-    pub update: Option<Box<crate::schema::UserUpdateToOneWithWhereWithoutPostInput>>,
+    pub update: Option<Box<crate::schema::UserUpdateToOneWithWhereWithoutPostAuthorInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserUpdateToOneWithWhereWithoutPostInput {
+pub struct UserUpdateToOneWithWhereWithoutPostAuthorInput {
     pub r#where: Option<Box<crate::schema::UserWhereInput>>,
-    pub data: Box<crate::schema::UserUpdateWithoutPostInput>,
+    pub data: Box<crate::schema::UserUpdateWithoutPostAuthorInput>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
