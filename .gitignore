@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.worktrees/
+.DS_Store
+*.log
+test/snapshots/__tmp__/
+test/compile/**/target/
+test/compile/**/Cargo.lock
+coverage/
+docs/superpowers/
