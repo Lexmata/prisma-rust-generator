@@ -77,8 +77,6 @@ function nestedCreateRefForRelation(
       : `CreateNestedManyWithout${without}Input`;
   const ty = `${prefix}${r.toModel}${suffix}`;
   void required;
-  // Box the nested type to break drop-check cycles in deeply recursive
-  // input graphs.
   return `Option<Box<${ty}>>`;
 }
 

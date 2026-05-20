@@ -1,6 +1,6 @@
 import type { IR } from "../ir/types.js";
 import type { GeneratorConfig } from "../types.js";
-import { emitFileHeader } from "./header.js";
+import { CRATE_RECURSION_LIMIT_ATTR, emitFileHeader } from "./header.js";
 import { emitModel } from "../emit/model.js";
 import { emitEnum } from "../emit/enums.js";
 import { emitModelWhereInput } from "../emit/filters/model.js";
@@ -23,8 +23,7 @@ export function emitSingle(ir: IR, cfg: GeneratorConfig): Map<string, string> {
   const moduleOf: ModuleResolver = () => "";
   const allModels = new Map(ir.models.map((m) => [m.name, m]));
 
-  const parts: string[] = [emitFileHeader(cfg)];
-  parts.push(`#![recursion_limit = "1024"]`);
+  const parts: string[] = [emitFileHeader(cfg), CRATE_RECURSION_LIMIT_ATTR];
   if (cfg.serde) parts.push(`use serde::{Deserialize, Serialize};\n`);
   parts.push(emitCommonSharedTypes({ serde: cfg.serde, vis: cfg.moduleVisibility }));
   parts.push(emitSharedScalarFilters({ serde: cfg.serde, vis: cfg.moduleVisibility, cfg }));

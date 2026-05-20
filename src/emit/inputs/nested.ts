@@ -4,15 +4,6 @@ import { renderScalarFieldType, type ModuleResolver } from "../type-ref.js";
 import { toPascalCase } from "../../ir/names.js";
 import { filterFamilyForRustType } from "../filters/model.js";
 
-// Disambiguator used in nested-input names. When a model has multiple relations
-// to the same target (e.g. CaseTask.creator: User and CaseTask.assignee: User),
-// `{Source}` alone is insufficient to uniquely name the input type. Append the
-// PascalCased source-side relation field name so each (source, relation) pair
-// gets a unique name.
-function rel(source: ModelIR, r: RelationIR): string {
-  return `${source.name}${toPascalCase(r.prismaName)}`;
-}
-
 export interface NestedOpts {
   serde: boolean;
   vis: "pub" | "pub(crate)";
@@ -30,6 +21,12 @@ interface Ctx {
   // are emitted once per target model regardless of the source: WhereInput,
   // WhereUniqueInput, ScalarWhereInput, UpdateManyMutationInput.
   targetPrefix: string;
+  // relSuffix: `{Source}{PascalCase(relation.prismaName)}` — the disambiguator
+  // appended to nested-input names so multiple relations from the same source
+  // to the same target (e.g. CaseTask.creator/assignee both pointing at User)
+  // produce unique types. Computed once per relation; emitters reference it
+  // 5-12 times so caching avoids re-running toPascalCase on every field.
+  relSuffix: string;
   opts: NestedOpts;
 }
 
@@ -46,7 +43,8 @@ export function emitNestedInputsForModel(
     if (!target) continue;
     const targetMod = opts.moduleOf(target.name);
     const targetPrefix = targetMod ? `crate::${targetMod}::` : `crate::`;
-    const ctx: Ctx = { source: m, target, relation: r, prefix, targetPrefix, opts };
+    const relSuffix = `${m.name}${toPascalCase(r.prismaName)}`;
+    const ctx: Ctx = { source: m, target, relation: r, prefix, targetPrefix, relSuffix, opts };
     emitRelationVariants(w, ctx);
   }
   return w.toString();
@@ -93,10 +91,12 @@ function openInput(
   w.openStruct(opts.vis, name);
 }
 
-// Returns the type of a relation field inside a CreateWithout body — the
-// inner reference points to a nested type emitted from the target model's
-// perspective, so it lives in the target's module. Boxed to break drop-check
-// cycles on deep, mutually recursive input graphs.
+// Relation fields in nested input types (here and in create.ts/update.ts top
+// levels) are Boxed because the input graph is mutually recursive across many
+// models — without Box the compiler's drop-check walk overflows even at the
+// 1024 recursion_limit on densely connected schemas. The inner reference
+// points to a nested type emitted from the target model's perspective, so it
+// lives in the target's module.
 function innerNestedCreateRef(
   ctx: Ctx,
   r: RelationIR,
@@ -126,7 +126,7 @@ function innerNestedUpdateRef(
 }
 
 function emitCreateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
-  const name = `${ctx.relation.toModel}${unchecked ? "Unchecked" : ""}CreateWithout${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}${unchecked ? "Unchecked" : ""}CreateWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name, false);
   for (const f of ctx.target.scalarFields) {
     if (!unchecked && f.isFk) continue;
@@ -143,27 +143,27 @@ function emitCreateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
 }
 
 function emitCreateOrConnectWithout(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}CreateOrConnectWithout${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}CreateOrConnectWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name, false);
   w.field(`pub r#where`, `Box<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>`);
   w.field(
     `pub create`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${rel(ctx.source, ctx.relation)}Input>`,
+    `Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${ctx.relSuffix}Input>`,
   );
   w.close();
   w.blank();
 }
 
 function emitCreateNestedOne(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}CreateNestedOneWithout${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}CreateNestedOneWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name);
   w.field(
     `pub create`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub connect_or_create`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub connect`,
@@ -174,19 +174,19 @@ function emitCreateNestedOne(w: RustWriter, ctx: Ctx): void {
 }
 
 function emitCreateNestedMany(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}CreateNestedManyWithout${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}CreateNestedManyWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name);
   w.field(
     `pub create`,
-    `Option<crate::shared::filters::OneOrMany<${ctx.prefix}${ctx.relation.toModel}CreateWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<crate::shared::filters::OneOrMany<${ctx.prefix}${ctx.relation.toModel}CreateWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub connect_or_create`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub create_many`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateMany${rel(ctx.source, ctx.relation)}InputEnvelope>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateMany${ctx.relSuffix}InputEnvelope>>`,
   );
   w.field(
     `pub connect`,
@@ -197,11 +197,11 @@ function emitCreateNestedMany(w: RustWriter, ctx: Ctx): void {
 }
 
 function emitCreateManyEnvelope(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}CreateMany${rel(ctx.source, ctx.relation)}InputEnvelope`;
+  const name = `${ctx.relation.toModel}CreateMany${ctx.relSuffix}InputEnvelope`;
   openInput(w, ctx.opts, name, true);
   w.field(
     `pub data`,
-    `Vec<${ctx.prefix}${ctx.relation.toModel}CreateMany${rel(ctx.source, ctx.relation)}Input>`,
+    `Vec<${ctx.prefix}${ctx.relation.toModel}CreateMany${ctx.relSuffix}Input>`,
   );
   w.field(`pub skip_duplicates`, `Option<bool>`);
   w.close();
@@ -209,7 +209,7 @@ function emitCreateManyEnvelope(w: RustWriter, ctx: Ctx): void {
 }
 
 function emitCreateManyAInput(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}CreateMany${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}CreateMany${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name, false);
   for (const f of ctx.target.scalarFields) {
     if (f.hasDefault) continue;
@@ -220,7 +220,7 @@ function emitCreateManyAInput(w: RustWriter, ctx: Ctx): void {
 }
 
 function emitUpdateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
-  const name = `${ctx.relation.toModel}${unchecked ? "Unchecked" : ""}UpdateWithout${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}${unchecked ? "Unchecked" : ""}UpdateWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name);
   for (const f of ctx.target.scalarFields) {
     if (!unchecked && f.isFk) continue;
@@ -236,15 +236,15 @@ function emitUpdateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
 }
 
 function emitUpsertWithout(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}UpsertWithout${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}UpsertWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name, false);
   w.field(
     `pub update`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}UpdateWithout${rel(ctx.source, ctx.relation)}Input>`,
+    `Box<${ctx.prefix}${ctx.relation.toModel}UpdateWithout${ctx.relSuffix}Input>`,
   );
   w.field(
     `pub create`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${rel(ctx.source, ctx.relation)}Input>`,
+    `Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${ctx.relSuffix}Input>`,
   );
   w.field(
     `pub r#where`,
@@ -255,19 +255,19 @@ function emitUpsertWithout(w: RustWriter, ctx: Ctx): void {
 }
 
 function emitUpdateOneRequired(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}UpdateOneRequiredWithout${rel(ctx.source, ctx.relation)}NestedInput`;
+  const name = `${ctx.relation.toModel}UpdateOneRequiredWithout${ctx.relSuffix}NestedInput`;
   openInput(w, ctx.opts, name);
   w.field(
     `pub create`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub connect_or_create`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub upsert`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}UpsertWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}UpsertWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub connect`,
@@ -275,26 +275,26 @@ function emitUpdateOneRequired(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub update`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}UpdateToOneWithWhereWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}UpdateToOneWithWhereWithout${ctx.relSuffix}Input>>`,
   );
   w.close();
   w.blank();
 }
 
 function emitUpdateOneOptional(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}UpdateOneWithout${rel(ctx.source, ctx.relation)}NestedInput`;
+  const name = `${ctx.relation.toModel}UpdateOneWithout${ctx.relSuffix}NestedInput`;
   openInput(w, ctx.opts, name);
   w.field(
     `pub create`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub connect_or_create`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub upsert`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}UpsertWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}UpsertWithout${ctx.relSuffix}Input>>`,
   );
   w.field(`pub disconnect`, `Option<bool>`);
   w.field(`pub delete`, `Option<bool>`);
@@ -304,14 +304,14 @@ function emitUpdateOneOptional(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub update`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}UpdateToOneWithWhereWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}UpdateToOneWithWhereWithout${ctx.relSuffix}Input>>`,
   );
   w.close();
   w.blank();
 }
 
 function emitUpdateToOneWithWhere(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}UpdateToOneWithWhereWithout${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}UpdateToOneWithWhereWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name, false);
   w.field(
     `pub r#where`,
@@ -319,30 +319,30 @@ function emitUpdateToOneWithWhere(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub data`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}UpdateWithout${rel(ctx.source, ctx.relation)}Input>`,
+    `Box<${ctx.prefix}${ctx.relation.toModel}UpdateWithout${ctx.relSuffix}Input>`,
   );
   w.close();
   w.blank();
 }
 
 function emitUpdateManyNested(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}UpdateManyWithout${rel(ctx.source, ctx.relation)}NestedInput`;
+  const name = `${ctx.relation.toModel}UpdateManyWithout${ctx.relSuffix}NestedInput`;
   openInput(w, ctx.opts, name);
   w.field(
     `pub create`,
-    `Option<crate::shared::filters::OneOrMany<${ctx.prefix}${ctx.relation.toModel}CreateWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<crate::shared::filters::OneOrMany<${ctx.prefix}${ctx.relation.toModel}CreateWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub connect_or_create`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}CreateOrConnectWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub upsert`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}UpsertWithWhereUniqueWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}UpsertWithWhereUniqueWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub create_many`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateMany${rel(ctx.source, ctx.relation)}InputEnvelope>>`,
+    `Option<Box<${ctx.prefix}${ctx.relation.toModel}CreateMany${ctx.relSuffix}InputEnvelope>>`,
   );
   w.field(
     `pub set`,
@@ -362,11 +362,11 @@ function emitUpdateManyNested(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub update`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}UpdateWithWhereUniqueWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}UpdateWithWhereUniqueWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub update_many`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}UpdateManyWithWhereWithout${rel(ctx.source, ctx.relation)}Input>>`,
+    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}UpdateManyWithWhereWithout${ctx.relSuffix}Input>>`,
   );
   w.field(
     `pub delete_many`,
@@ -376,7 +376,7 @@ function emitUpdateManyNested(w: RustWriter, ctx: Ctx): void {
 }
 
 function emitUpdateWithWhereUnique(w: RustWriter, ctx: Ctx): void {
-  const upsertName = `${ctx.relation.toModel}UpsertWithWhereUniqueWithout${rel(ctx.source, ctx.relation)}Input`;
+  const upsertName = `${ctx.relation.toModel}UpsertWithWhereUniqueWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, upsertName, false);
   w.field(
     `pub r#where`,
@@ -384,16 +384,16 @@ function emitUpdateWithWhereUnique(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub update`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}UpdateWithout${rel(ctx.source, ctx.relation)}Input>`,
+    `Box<${ctx.prefix}${ctx.relation.toModel}UpdateWithout${ctx.relSuffix}Input>`,
   );
   w.field(
     `pub create`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${rel(ctx.source, ctx.relation)}Input>`,
+    `Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${ctx.relSuffix}Input>`,
   );
   w.close();
   w.blank();
 
-  const name = `${ctx.relation.toModel}UpdateWithWhereUniqueWithout${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}UpdateWithWhereUniqueWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name, false);
   w.field(
     `pub r#where`,
@@ -401,14 +401,14 @@ function emitUpdateWithWhereUnique(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub data`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}UpdateWithout${rel(ctx.source, ctx.relation)}Input>`,
+    `Box<${ctx.prefix}${ctx.relation.toModel}UpdateWithout${ctx.relSuffix}Input>`,
   );
   w.close();
   w.blank();
 }
 
 function emitUpdateManyWithWhere(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}UpdateManyWithWhereWithout${rel(ctx.source, ctx.relation)}Input`;
+  const name = `${ctx.relation.toModel}UpdateManyWithWhereWithout${ctx.relSuffix}Input`;
   openInput(w, ctx.opts, name, false);
   w.field(
     `pub r#where`,

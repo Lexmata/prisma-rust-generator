@@ -17,7 +17,7 @@ export function emitModelWhereInput(m: ModelIR, opts: WhereInputOpts): string {
   w.openStruct(opts.vis, `${m.name}WhereInput`);
 
   for (const f of m.scalarFields) {
-    w.field(`pub ${f.rustName}`, `Option<${scalarFilterFor(f)}>`);
+    w.field(`pub ${f.rustName}`, `Option<${scalarFilterRefFor(f)}>`);
   }
   for (const r of m.relations) {
     w.field(`pub ${r.rustName}`, `Option<${relationFilterFor(r, opts.moduleOf)}>`);
@@ -35,7 +35,10 @@ export function emitModelWhereInput(m: ModelIR, opts: WhereInputOpts): string {
   return w.toString();
 }
 
-function scalarFilterFor(f: FieldIR): string {
+// Shared between WhereInput (this file) and ScalarWhereInput (scalar-where.ts).
+// The two must stay in lock-step on filter naming, so they reference the same
+// helper rather than duplicating the logic.
+export function scalarFilterRefFor(f: FieldIR): string {
   if (f.type.kind === "enumRef") {
     const suffix = f.optional ? "NullableFilter" : "Filter";
     const mod = f.type.module ? `crate::${f.type.module}::` : `crate::`;

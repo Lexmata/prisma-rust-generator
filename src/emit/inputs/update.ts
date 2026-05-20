@@ -16,9 +16,9 @@ export function emitUpdateInputs(m: ModelIR, opts: UpdateOpts): string {
   w.blank();
   emitUnchecked(w, m, opts);
   w.blank();
-  emitUpdateMany(w, m);
+  emitUpdateMany(w, m, opts);
   w.blank();
-  emitUncheckedUpdateMany(w, m);
+  emitUncheckedUpdateMany(w, m, opts);
   return w.toString();
 }
 
@@ -42,8 +42,8 @@ function emitUnchecked(w: RustWriter, m: ModelIR, opts: UpdateOpts): void {
   w.close();
 }
 
-function emitUpdateMany(w: RustWriter, m: ModelIR): void {
-  openInputDefault(w, `${m.name}UpdateManyMutationInput`);
+function emitUpdateMany(w: RustWriter, m: ModelIR, opts: UpdateOpts): void {
+  openInput(w, opts, `${m.name}UpdateManyMutationInput`);
   for (const f of m.scalarFields) {
     if (f.isFk) continue;
     w.field(`pub ${f.rustName}`, opInputType(f));
@@ -51,8 +51,8 @@ function emitUpdateMany(w: RustWriter, m: ModelIR): void {
   w.close();
 }
 
-function emitUncheckedUpdateMany(w: RustWriter, m: ModelIR): void {
-  openInputDefault(w, `${m.name}UncheckedUpdateManyInput`);
+function emitUncheckedUpdateMany(w: RustWriter, m: ModelIR, opts: UpdateOpts): void {
+  openInput(w, opts, `${m.name}UncheckedUpdateManyInput`);
   for (const f of m.scalarFields) {
     w.field(`pub ${f.rustName}`, opInputType(f));
   }
@@ -89,8 +89,6 @@ function nestedUpdateRefForRelation(
   } else {
     suffix = `UpdateManyWithout${without}NestedInput`;
   }
-  // Box the nested type to break drop-check cycles in deeply recursive
-  // input graphs.
   return `Option<Box<${prefix}${r.toModel}${suffix}>>`;
 }
 
@@ -102,8 +100,3 @@ function openInput(w: RustWriter, opts: UpdateOpts, name: string): void {
   w.openStruct(opts.vis, name);
 }
 
-function openInputDefault(w: RustWriter, name: string): void {
-  w.deriveLine(["Debug", "Clone", "Default", "PartialEq", "Serialize", "Deserialize"]);
-  w.line(`#[serde(rename_all = "camelCase")]`);
-  w.openStruct("pub", name);
-}

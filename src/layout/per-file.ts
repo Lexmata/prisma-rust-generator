@@ -1,6 +1,6 @@
 import type { IR } from "../ir/types.js";
 import type { GeneratorConfig } from "../types.js";
-import { emitFileHeader } from "./header.js";
+import { CRATE_RECURSION_LIMIT_ATTR, emitFileHeader } from "./header.js";
 import { emitModel } from "../emit/model.js";
 import { emitEnum } from "../emit/enums.js";
 import { emitModelWhereInput } from "../emit/filters/model.js";
@@ -119,10 +119,7 @@ export function emitPerFile(ir: IR, cfg: GeneratorConfig): Map<string, string> {
   );
 
   const rootName = cfg.moduleName ? "mod.rs" : "lib.rs";
-  const lib: string[] = [emitFileHeader(cfg)];
-  // Deeply nested input graphs (highly-connected Prisma schemas) push the
-  // compiler's drop-check and serde-derive recursion past the default 256.
-  lib.push(`#![recursion_limit = "1024"]`);
+  const lib: string[] = [emitFileHeader(cfg), CRATE_RECURSION_LIMIT_ATTR];
   for (const mod of [...modules].sort()) lib.push(`pub mod ${mod};`);
   lib.push(`pub mod shared;`);
   lib.push(`pub use shared::*;`);

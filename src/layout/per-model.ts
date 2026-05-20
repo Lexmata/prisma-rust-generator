@@ -1,6 +1,6 @@
 import type { IR } from "../ir/types.js";
 import type { GeneratorConfig } from "../types.js";
-import { emitFileHeader } from "./header.js";
+import { CRATE_RECURSION_LIMIT_ATTR, emitFileHeader } from "./header.js";
 import { emitModel } from "../emit/model.js";
 import { emitEnum } from "../emit/enums.js";
 import { emitModelWhereInput } from "../emit/filters/model.js";
@@ -135,8 +135,7 @@ export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> 
   }
 
   const rootName = cfg.moduleName ? "mod.rs" : "lib.rs";
-  const lib: string[] = [emitFileHeader(cfg)];
-  lib.push(`#![recursion_limit = "1024"]`);
+  const lib: string[] = [emitFileHeader(cfg), CRATE_RECURSION_LIMIT_ATTR];
   if (ir.models.length > 0) lib.push(`pub mod models;`);
   if (ir.enums.length > 0) lib.push(`pub mod enums;`);
   lib.push(`pub mod shared;`);

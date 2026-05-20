@@ -1,17 +1,16 @@
 import { RustWriter } from "../rust-writer.js";
-import type { FieldIR, ModelIR } from "../../ir/types.js";
-import { filterFamilyForRustType } from "../filters/model.js";
+import type { ModelIR } from "../../ir/types.js";
+import { scalarFilterRefFor } from "../filters/model.js";
 
 export interface ScalarWhereOpts {
   serde: boolean;
   vis: "pub" | "pub(crate)";
 }
 
-// Emits `{Model}ScalarWhereInput` — a per-target-model type, NOT per-relation.
-// Referenced from nested update-many inputs (`UpdateManyWithWhereWithout*Input`)
-// via the target model's module path. Emitting it per-relation would produce
-// duplicate definitions in the same file when several relations target the
-// same model.
+// `{Model}ScalarWhereInput` is a per-target-model type, NOT per-relation. It is
+// referenced from nested update-many inputs via the target model's module path;
+// emitting it per-relation would produce duplicate definitions in the same file
+// when several relations target the same model.
 export function emitModelScalarWhereInput(
   m: ModelIR,
   opts: ScalarWhereOpts,
@@ -24,30 +23,17 @@ export function emitModelScalarWhereInput(
   if (opts.serde) w.line(`#[serde(rename_all = "camelCase")]`);
   w.openStruct(opts.vis, name);
   for (const f of m.scalarFields) {
-    const filter = scalarFilterRefFor(f);
-    w.field(`pub ${f.rustName}`, `Option<${filter}>`);
+    w.field(`pub ${f.rustName}`, `Option<${scalarFilterRefFor(f)}>`);
   }
-  if (opts.serde) w.line(`#[serde(rename = "AND")]`);
-  w.field(`pub and`, `Option<Vec<${name}>>`);
-  if (opts.serde) w.line(`#[serde(rename = "OR")]`);
-  w.field(`pub or`, `Option<Vec<${name}>>`);
-  if (opts.serde) w.line(`#[serde(rename = "NOT")]`);
-  w.field(`pub not`, `Option<Vec<${name}>>`);
+  for (const [rust, prisma] of [
+    ["and", "AND"],
+    ["or", "OR"],
+    ["not", "NOT"],
+  ] as const) {
+    if (opts.serde) w.line(`#[serde(rename = "${prisma}")]`);
+    w.field(`pub ${rust}`, `Option<Vec<${name}>>`);
+  }
   w.close();
   w.blank();
   return w.toString();
-}
-
-function scalarFilterRefFor(f: FieldIR): string {
-  if (f.type.kind === "scalar") {
-    const family = filterFamilyForRustType(f.type.rust);
-    const suffix = f.optional ? "NullableFilter" : "Filter";
-    return `crate::shared::filters::${family}${suffix}`;
-  }
-  if (f.type.kind === "enumRef") {
-    const mod = f.type.module ? `crate::${f.type.module}::` : `crate::`;
-    const suffix = f.optional ? "NullableFilter" : "Filter";
-    return `${mod}${f.type.enumName}${suffix}`;
-  }
-  return "()";
 }
