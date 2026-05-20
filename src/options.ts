@@ -91,7 +91,7 @@ function pickBool(v: unknown, def: boolean): boolean {
 }
 function pickInt(v: unknown, def: number): number {
   if (v == null) return def;
-  const n = typeof v === "string" ? parseInt(v, 10) : Number(v);
+  const n = typeof v === "string" ? Number.parseInt(v, 10) : Number(v);
   if (!Number.isFinite(n)) throw new Error(`expected integer, got ${String(v)}`);
   return n;
 }

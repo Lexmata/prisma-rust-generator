@@ -5,14 +5,13 @@ export async function mapInPool<I, O>(
 ): Promise<O[]> {
   if (concurrency <= 1 || items.length < 4) {
     const out: O[] = [];
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
+    for (const [i, item] of items.entries()) {
       if (item === undefined) continue;
       out.push(await fn(item, i));
     }
     return out;
   }
-  const results = new Array<O>(items.length);
+  const results: O[] = Array.from({ length: items.length });
   let next = 0;
   const workers = Array.from(
     { length: Math.min(concurrency, items.length) },

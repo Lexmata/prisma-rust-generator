@@ -31,12 +31,12 @@ export async function runRustfmt(opts: RunRustfmtOpts): Promise<void> {
           "files",
           ...shard,
         ]);
-      } catch (e) {
-        const err = e as { code?: string; stderr?: string };
+      } catch (error) {
+        const err = error as { code?: string; stderr?: string };
         if (err.code === "ENOENT") {
-          throw new RustfmtUnavailableError(opts.binary, e);
+          throw new RustfmtUnavailableError(opts.binary, error);
         }
-        errors.push({ stderr: err.stderr ?? String(e), files: shard });
+        errors.push({ stderr: err.stderr ?? String(error), files: shard });
       }
     }),
   );

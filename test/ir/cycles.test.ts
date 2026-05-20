@@ -21,7 +21,7 @@ describe("findInputCycles", () => {
   it("does not flag acyclic nodes", () => {
     const edges = new Map<string, Set<string>>([
       ["A", new Set(["B"])],
-      ["B", new Set([])],
+      ["B", new Set()],
     ]);
     const cycles = findInputCycles(edges);
     expect(cycles.size).toBe(0);

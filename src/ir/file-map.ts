@@ -6,7 +6,7 @@ const DECL_RE = /^\s*(model|enum)\s+([A-Za-z_][A-Za-z0-9_]*)\s*\{/gm;
 // File stems may contain characters valid in filenames but not in Rust module
 // idents (hyphens, leading underscores). Normalize to a snake_case-ish form.
 function normalizeStem(stem: string): string {
-  return stem.replace(/^_+/, "").replace(/[^A-Za-z0-9_]+/g, "_").toLowerCase();
+  return stem.replace(/^_+/, "").replaceAll(/[^A-Za-z0-9_]+/g, "_").toLowerCase();
 }
 
 export async function buildFileMap(schemaPath: string): Promise<Map<string, string>> {
@@ -39,5 +39,5 @@ async function collectPrismaFiles(p: string): Promise<string[]> {
     if (e.isDirectory()) files.push(...(await collectPrismaFiles(full)));
     else if (e.isFile() && full.endsWith(".prisma")) files.push(full);
   }
-  return files.sort();
+  return files.toSorted();
 }

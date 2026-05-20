@@ -62,8 +62,8 @@ export function toSnakeCase(input: string): string {
   //   (a) lowercase|digit -> uppercase boundaries (fooBar -> foo_Bar)
   //   (b) consecutive-uppercase -> uppercase+lowercase boundaries (URLEntry -> URL_Entry)
   let s = input.replace(/^_+/, "");
-  s = s.replace(/([a-z0-9])([A-Z])/g, "$1_$2");
-  s = s.replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2");
+  s = s.replaceAll(/([a-z0-9])([A-Z])/g, "$1_$2");
+  s = s.replaceAll(/([A-Z]+)([A-Z][a-z])/g, "$1_$2");
   return s.toLowerCase();
 }
 

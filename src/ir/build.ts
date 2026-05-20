@@ -27,7 +27,7 @@ export async function buildIR(
       variants: e.values.map((v) => ({
         prismaName: v.name,
         rustName: toPascalCase(v.name),
-        serdeRename: v.name !== toPascalCase(v.name) ? v.name : null,
+        serdeRename: v.name === toPascalCase(v.name) ? null : v.name,
         docs: splitDocs(v.dbName ?? null),
       })),
       docs: splitDocs(e.documentation ?? null),
@@ -42,18 +42,25 @@ export async function buildIR(
     const relations: RelationIR[] = [];
 
     for (const f of m.fields) {
-      if (f.kind === "scalar") {
+      switch (f.kind) {
+      case "scalar": {
         const native = extractNativeType(f);
         const t = mapPrismaScalar(f.type, native, cfg);
         scalarFields.push(makeField(f, t));
-      } else if (f.kind === "enum") {
+      
+      break;
+      }
+      case "enum": {
         const ref: RustTypeRef = {
           kind: "enumRef",
           enumName: f.type,
           module: enumByName.get(f.type)?.module ?? "shared",
         };
         scalarFields.push(makeField(f, ref));
-      } else if (f.kind === "object") {
+      
+      break;
+      }
+      case "object": {
         // Relation field — recorded separately, not as a scalar field
         relations.push({
           prismaName: f.name,
@@ -66,6 +73,10 @@ export async function buildIR(
           backRelationName: null, // resolved later (cross-link pass / emit time)
           docs: splitDocs(f.documentation ?? null),
         });
+      
+      break;
+      }
+      // No default
       }
     }
 
