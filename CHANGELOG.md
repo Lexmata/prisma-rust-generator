@@ -7,32 +7,55 @@ source will be a major-version bump.
 
 ## Unreleased
 
-### Breaking — generated output
+_No changes yet._
 
-- **All relation fields in `*CreateInput` / `*UpdateInput` (top-level and
-  nested `CreateWithout`/`UpdateWithout` bodies) are now wrapped in
-  `Box<>`.** Densely connected schemas (the 80-model lexmata fixture, for
-  example) push Rust's drop-check and serde-derive recursion past the
-  default 256, and Box plus `#![recursion_limit = "1024"]` is the
-  combination needed to compile.
-  - Migration: wrap relation values in `Box::new(...)` when constructing
-    these inputs. The plain `T` form no longer compiles.
-- **`{Model}ScalarWhereInput` is now emitted once per target model
-  instead of once per (source, relation) pair.** The previous form
-  produced duplicate definitions when several source models had
-  many-relations to the same target.
-  - Migration: drop the `Without{Source}{Relation}` infix from references
-    — `User3ScalarWhereInput` (or similar) becomes `UserScalarWhereInput`.
-- **Generated `lib.rs` (or `mod.rs`) now carries
-  `#![recursion_limit = "1024"]`.** Required to compile densely connected
-  schemas; harmless on small ones.
-  - No consumer action required; only tools that parse the generated
-    crate need to expect this inner attribute.
+## 0.1.0 — 2026-05-19
+
+First tagged release. Sets the baseline emission shape that subsequent
+0.x releases will iterate on. Notes below describe what the generated
+Rust looks like as of this release; anyone who was tracking the
+`develop` branch before this tag should diff their consumer code
+against these points.
+
+### Generated output
+
+- **ORM-agnostic Rust types**: model structs, enums, scalar/enum/relation
+  filters, and the full Prisma input surface — `Where`, `WhereUnique`,
+  `OrderBy`, `Select`, `Include`, `Create*`, `Update*`, the nested
+  relation inputs (`CreateNestedOne`/`Many`, `UpdateNested`, `Upsert`,
+  `CreateOrConnect`, `UpdateWithWhereUnique`, `ScalarWhere`, etc.),
+  per-scalar field-update operations, and aggregation inputs
+  (`Count`/`Avg`/`Sum`/`Min`/`Max` + `OrderByWithAggregation`).
+- **Three output layouts**: `per-file` (default — mirrors the source
+  `.prisma` file structure), `per-model` (one file per model), and
+  `single` (one big file).
+- **Configurable crate mappings**: `chrono` ↔ `time` for `DateTime`,
+  `rust_decimal` ↔ `bigdecimal` for `Decimal`, `std` ↔ `bytes` for
+  `Bytes`, `serde_json` ↔ `string` for `Json`.
+- **Output passes `cargo fmt --check`, `cargo clippy -- -D warnings`,
+  and `cargo check`** on every fixture, including the 80-model
+  lexmata stress fixture (17 .prisma files, hundreds of relations).
+
+### Shape decisions worth knowing
+
+- **Relation fields are `Option<Box<T>>`**, both at the top level of
+  `*CreateInput` / `*UpdateInput` and inside nested `CreateWithout` /
+  `UpdateWithout` bodies. Required for densely connected schemas:
+  drop-check and serde-derive recursion overflow without the Box.
+  Construction-side: wrap values in `Box::new(...)`.
+- **`{Model}ScalarWhereInput` is emitted once per target model**, not
+  per `(source, relation)` pair. References use the bare
+  `{Model}ScalarWhereInput` name with no `Without*` infix.
+- **Generated `lib.rs` (or `mod.rs`) carries
+  `#![recursion_limit = "1024"]`** — required to compile densely
+  connected schemas, harmless otherwise.
 
 ### Internal
 
-- `scalarFilterRefFor` exported from `src/emit/filters/model.ts` (shared
-  between `WhereInput` and `ScalarWhereInput`).
-- `CRATE_RECURSION_LIMIT_ATTR` exported from `src/layout/header.ts`.
-- `computeEqEligibility` rewritten from O(M²) fix-point to O(V+E)
-  reverse-graph BFS. Output unchanged.
+- `computeEqEligibility` is an O(V+E) reverse-graph BFS over the
+  relation graph.
+- `scalarFilterRefFor` is the shared source of truth for filter-path
+  resolution between `WhereInput` and `ScalarWhereInput` (exported from
+  `src/emit/filters/model.ts`).
+- `CRATE_RECURSION_LIMIT_ATTR` is the single source of truth for the
+  crate recursion attribute (exported from `src/layout/header.ts`).
