@@ -12,7 +12,7 @@ filter ASTs. You translate filters to SQL with whichever Rust library you like
 ## Install
 
 ```bash
-pnpm add -D prisma prisma-rust-generator
+pnpm add -D prisma @lexmata/prisma-rust-generator
 ```
 
 ## Use
@@ -21,7 +21,7 @@ In your `schema.prisma`:
 
 ```prisma
 generator rust {
-  provider = "node ./node_modules/prisma-rust-generator/dist/index.js"
+  provider = "node ./node_modules/@lexmata/prisma-rust-generator/dist/index.js"
   output   = "../rust-out/src"
 }
 ```
@@ -79,7 +79,7 @@ pub struct UserUpdateInput { /* scalars wrapped in *FieldUpdateOperationsInput *
 
 ```prisma
 generator rust {
-  provider = "node ./node_modules/prisma-rust-generator/dist/index.js"
+  provider = "node ./node_modules/@lexmata/prisma-rust-generator/dist/index.js"
   output   = "./src"
 
   outputLayout     = "per-file"        // "per-file" | "per-model" | "single"
