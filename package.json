@@ -1,6 +1,6 @@
 {
   "name": "prisma-rust-generator",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Prisma generator emitting bare Rust models, enums, filters, and the full Prisma input surface.",
   "type": "module",
   "bin": {
