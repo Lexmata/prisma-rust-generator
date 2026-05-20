@@ -99,4 +99,16 @@ describe("emitPerFile", () => {
     expect(files.get("users.rs")!).toContain("pub struct UserWhereInput");
     expect(files.get("users.rs")!).toContain("pub struct UserRelationFilter");
   });
+
+  it("emits #![recursion_limit] in the crate root", () => {
+    const files = emitPerFile(ir, defaultCfg());
+    expect(files.get("lib.rs")!).toContain(`#![recursion_limit = "1024"]`);
+  });
+
+  it("emits one UserScalarWhereInput per model (not per relation)", () => {
+    const files = emitPerFile(ir, defaultCfg());
+    const usersRs = files.get("users.rs")!;
+    const matches = usersRs.match(/pub struct UserScalarWhereInput/g) ?? [];
+    expect(matches).toHaveLength(1);
+  });
 });

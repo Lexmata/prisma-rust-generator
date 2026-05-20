@@ -10,6 +10,6 @@ describe("e2e 08-lexmata", () => {
       await runFixture("08-lexmata");
       await rustVerify("08-lexmata");
     },
-    1_200_000,
+    300_000,
   );
 });

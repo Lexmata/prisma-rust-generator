@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { emitFileHeader } from "../../src/layout/header.js";
+import {
+  CRATE_RECURSION_LIMIT_ATTR,
+  emitFileHeader,
+} from "../../src/layout/header.js";
 
 describe("emitFileHeader", () => {
   it("always emits the @generated marker line first", () => {
@@ -26,5 +29,14 @@ describe("emitFileHeader", () => {
   it("omits the allow attribute when list is empty", () => {
     const out = emitFileHeader({ filePreamble: "", clippyAllowList: [] });
     expect(out).not.toContain("#![allow");
+  });
+});
+
+describe("CRATE_RECURSION_LIMIT_ATTR", () => {
+  it("emits the inner attribute with limit 1024", () => {
+    // Dense Prisma schemas push drop-check and serde-derive recursion past
+    // the default 256; a typo in this constant (e.g., "104") would still
+    // pass small fixtures but break on real schemas. Pin the value.
+    expect(CRATE_RECURSION_LIMIT_ATTR).toBe(`#![recursion_limit = "1024"]`);
   });
 });

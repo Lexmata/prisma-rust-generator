@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { emitCreateInputs } from "../../src/emit/inputs/create.js";
 import { emitUpdateInputs } from "../../src/emit/inputs/update.js";
-import type { ModelIR } from "../../src/ir/types.js";
+import type { ModelIR, RelationIR } from "../../src/ir/types.js";
 
 const noRelations: ModelIR = {
   name: "AllScalars",
@@ -89,5 +89,79 @@ describe("emitUpdateInputs", () => {
     expect(out).toContain("pub struct AllScalarsUncheckedUpdateInput {");
     expect(out).toContain("pub struct AllScalarsUpdateManyMutationInput {");
     expect(out).toContain("pub struct AllScalarsUncheckedUpdateManyInput {");
+  });
+
+  it("UpdateMany variants drop serde derives when serde is off", () => {
+    const out = emitUpdateInputs(noRelations, {
+      serde: false,
+      vis: "pub",
+      moduleOf: () => "",
+    });
+    // Both UpdateMany emitters previously routed through a hardcoded-serde
+    // helper that emitted Serialize/Deserialize unconditionally — this
+    // guards that regression.
+    expect(out).not.toContain("Serialize");
+    expect(out).not.toContain("Deserialize");
+    expect(out).not.toContain("#[serde");
+    expect(out).toContain("pub struct AllScalarsUpdateManyMutationInput {");
+    expect(out).toContain("pub struct AllScalarsUncheckedUpdateManyInput {");
+  });
+});
+
+const oneRelation: ModelIR = {
+  name: "Post",
+  module: "posts",
+  scalarFields: [
+    {
+      prismaName: "id",
+      rustName: "id",
+      type: { kind: "scalar", rust: "uuid::Uuid", eq: true, copy: true },
+      optional: false,
+      list: false,
+      isFk: false,
+      isId: true,
+      isUnique: true,
+      hasDefault: true,
+      docs: [],
+      serdeRenameOverride: null,
+    },
+  ],
+  relations: [
+    {
+      prismaName: "author",
+      rustName: "author",
+      fromModel: "Post",
+      toModel: "User",
+      cardinality: "one",
+      required: true,
+      fkFieldNames: [],
+      backRelationName: null,
+      docs: [],
+    } satisfies RelationIR,
+  ],
+  idFields: ["id"],
+  uniqueGroups: [],
+  docs: [],
+};
+
+describe("nested relation field Box wrapping", () => {
+  it("wraps CreateInput relation fields in Option<Box<...>>", () => {
+    const out = emitCreateInputs(oneRelation, {
+      serde: true,
+      vis: "pub",
+      moduleOf: () => "posts",
+    });
+    // Without Box, deeply mutually-recursive input graphs overflow
+    // drop-check; this assertion guards the regression.
+    expect(out).toMatch(/pub author: Option<Box<crate::posts::User\w+>>/);
+  });
+
+  it("wraps UpdateInput relation fields in Option<Box<...>>", () => {
+    const out = emitUpdateInputs(oneRelation, {
+      serde: true,
+      vis: "pub",
+      moduleOf: () => "posts",
+    });
+    expect(out).toMatch(/pub author: Option<Box<crate::posts::User\w+>>/);
   });
 });
