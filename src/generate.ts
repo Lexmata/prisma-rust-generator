@@ -24,11 +24,11 @@ export async function generate(opts: GeneratorOptions): Promise<void> {
   const files =
     cfg.outputLayout === "per-file"
       ? emitPerFile(ir, cfg)
-      : cfg.outputLayout === "per-model"
+      : (cfg.outputLayout === "per-model"
         ? emitPerModel(ir, cfg)
-        : emitSingle(ir, cfg);
+        : emitSingle(ir, cfg));
 
-  const entries = [...files.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  const entries = [...files.entries()].toSorted((a, b) => a[0].localeCompare(b[0]));
   const writtenPaths = await mapInPool(entries, cfg.concurrency, async ([rel, content]) => {
     const abs = join(cfg.output, rel);
     await mkdir(dirname(abs), { recursive: true });
@@ -44,14 +44,14 @@ export async function generate(opts: GeneratorOptions): Promise<void> {
         edition: cfg.edition,
         shardSize: cfg.rustfmtShardSize,
       });
-    } catch (e) {
-      if (e instanceof RustfmtUnavailableError && !cfg.requireRustfmt) {
+    } catch (error) {
+      if (error instanceof RustfmtUnavailableError && !cfg.requireRustfmt) {
         // soft-fail when not required
       } else {
-        throw e;
+        throw error;
       }
     }
   }
 
-  await pruneStaleFiles(cfg.output, new Set([...files.keys()]));
+  await pruneStaleFiles(cfg.output, new Set(files.keys()));
 }

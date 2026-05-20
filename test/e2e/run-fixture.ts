@@ -30,7 +30,7 @@ export async function runFixture(
     const { readdir } = await import("node:fs/promises");
     const files = (await readdir(fixtureDir))
       .filter((f) => f.endsWith(".prisma"))
-      .sort();
+      .toSorted();
     schema = (
       await Promise.all(files.map((f) => readFile(join(fixtureDir, f), "utf8")))
     ).join("\n\n");

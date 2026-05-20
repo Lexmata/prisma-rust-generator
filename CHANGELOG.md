@@ -9,6 +9,49 @@ source will be a major-version bump.
 
 _No changes yet._
 
+## 0.1.2 — 2026-05-20
+
+### Documentation
+
+- `docs/sqlx.md`: comprehensive sqlx integration covering Postgres,
+  MySQL/MariaDB, and SQLite — three `FromRow` strategies, fixed-shape
+  compile-checked writes via `query!`, sparse updates with
+  `QueryBuilder`, dynamic `*WhereInput` translation, dialect notes
+  (placeholders, identifier quoting, case-insensitive matching), and a
+  scalar-type-to-column-type cheat sheet.
+- `docs/raw-postgres.md`: end-to-end guide for `tokio-postgres` —
+  connecting, row → struct, writes from `UncheckedCreateInput`,
+  sparse `UpdateInput` translation, and a worked `*WhereInput`
+  translator emitting parameterized `WHERE` clauses.
+- `docs/raw-mongodb.md`: MongoDB equivalent — driver setup with the
+  `bson` feature flags that bridge the generator's default scalars,
+  Mongo-specific `@map("_id")` notes, `*UpdateInput` → `$set/$inc/$mul`
+  translation, and a `*WhereInput` → `bson::Document` translator.
+- `docs/raw-sqlite.md`: `rusqlite` integration — `?n` placeholders,
+  `IN (?, ?, ?)` patterns instead of `= ANY()`, and the LOWER-wrapping
+  required for unicode-aware case-insensitive `LIKE`.
+- `docs/raw-mysql.md`: `mysql_async` integration — backtick identifier
+  quoting, positional `?` placeholders, `RETURNING`-support split
+  between MariaDB 10.5+ and MySQL 8.x, collation-aware case sensitivity
+  notes.
+
+### Added
+
+- `skip` field on the generator block in `schema.prisma`. Wire it
+  through Prisma's `env()` function to gate Rust emission on an
+  environment variable (the name is up to the consumer):
+  ```prisma
+  generator rust {
+    ...
+    skip = env("PRISMA_RUST_GENERATOR_SKIP")
+  }
+  ```
+  When the resolved value is truthy (`1`, `true`, `yes`, `on`, or any
+  non-empty string other than `0`/`false`/`no`/`off`, case-insensitive),
+  the generator logs a notice on stderr and returns without emitting
+  any Rust. Useful in CI flows that refresh the JS client without
+  re-running Rust codegen.
+
 ## 0.1.1 — 2026-05-20
 
 ### Package name

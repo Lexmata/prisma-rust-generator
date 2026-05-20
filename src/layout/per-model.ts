@@ -138,8 +138,7 @@ export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> 
   const lib: string[] = [emitFileHeader(cfg), CRATE_RECURSION_LIMIT_ATTR];
   if (ir.models.length > 0) lib.push(`pub mod models;`);
   if (ir.enums.length > 0) lib.push(`pub mod enums;`);
-  lib.push(`pub mod shared;`);
-  lib.push(`pub use shared::*;`);
+  lib.push(`pub mod shared;`, `pub use shared::*;`);
   files.set(rootName, lib.join("\n") + "\n");
 
   return files;

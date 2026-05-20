@@ -1,0 +1,42 @@
+# Defense-in-depth: package.json's `files` allowlist is the primary
+# mechanism deciding what npm publishes. This file makes the intent
+# explicit and stays correct if `files` is ever removed.
+
+# Sources — only the built `dist/` ships
+src/
+test/
+docs/
+scripts/
+
+# Tool configs
+.husky/
+.github/
+.vscode/
+.idea/
+.worktrees/
+.editorconfig
+.gitattributes
+.gitignore
+.npmrc
+.prettierrc*
+eslint.config.js
+eslint.config.*
+tsconfig.json
+tsconfig.*.json
+vitest.config.*
+pnpm-workspace.yaml
+pnpm-lock.yaml
+
+# Build / cache artifacts
+*.tsbuildinfo
+coverage/
+.nyc_output/
+node_modules/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Project-internal docs (consumers don't need these)
+CLAUDE.md

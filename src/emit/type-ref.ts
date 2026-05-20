@@ -12,12 +12,15 @@ export function renderScalarFieldType(f: FieldIR, moduleOf: ModuleResolver): str
 
 export function renderTypeRef(r: RustTypeRef, _moduleOf: ModuleResolver): string {
   switch (r.kind) {
-    case "scalar":
+    case "scalar": {
       return r.rust;
-    case "enumRef":
+    }
+    case "enumRef": {
       return r.module ? `crate::${r.module}::${r.enumName}` : `crate::${r.enumName}`;
-    case "modelRef":
+    }
+    case "modelRef": {
       return r.module ? `crate::${r.module}::${r.modelName}` : `crate::${r.modelName}`;
+    }
   }
 }
 

@@ -120,9 +120,8 @@ export function emitPerFile(ir: IR, cfg: GeneratorConfig): Map<string, string> {
 
   const rootName = cfg.moduleName ? "mod.rs" : "lib.rs";
   const lib: string[] = [emitFileHeader(cfg), CRATE_RECURSION_LIMIT_ATTR];
-  for (const mod of [...modules].sort()) lib.push(`pub mod ${mod};`);
-  lib.push(`pub mod shared;`);
-  lib.push(`pub use shared::*;`);
+  for (const mod of [...modules].toSorted()) lib.push(`pub mod ${mod};`);
+  lib.push(`pub mod shared;`, `pub use shared::*;`);
   files.set(rootName, lib.join("\n") + "\n");
 
   return files;

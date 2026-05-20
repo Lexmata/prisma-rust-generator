@@ -91,7 +91,7 @@ function pickBool(v: unknown, def: boolean): boolean {
 }
 function pickInt(v: unknown, def: number): number {
   if (v == null) return def;
-  const n = typeof v === "string" ? parseInt(v, 10) : Number(v);
+  const n = typeof v === "string" ? Number.parseInt(v, 10) : Number(v);
   if (!Number.isFinite(n)) throw new Error(`expected integer, got ${String(v)}`);
   return n;
 }
@@ -103,4 +103,18 @@ function pickList(v: unknown, def: readonly string[]): readonly string[] {
   if (v == null) return def;
   if (Array.isArray(v)) return v.map(String);
   return [String(v)];
+}
+
+// Returns true when the `skip` generator-config value is set to a truthy
+// string. Consumers wire this up in schema.prisma via Prisma's env()
+// function — see README. Truthy = anything other than the empty string
+// or a recognized falsy literal ("0", "false", "no", "off",
+// case-insensitive). Common shapes (=1, =true, =yes) all trigger;
+// =0/=false do not.
+export function isSkipRequested(raw: unknown): boolean {
+  if (typeof raw !== "string") return false;
+  const normalized = raw.trim().toLowerCase();
+  if (normalized === "") return false;
+  if (["0", "false", "no", "off"].includes(normalized)) return false;
+  return true;
 }

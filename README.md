@@ -9,6 +9,18 @@ The generated code is **ORM-agnostic**. It's just data: structs, enums, and
 filter ASTs. You translate filters to SQL with whichever Rust library you like
 (sqlx, sea-query, raw SQL, etc.).
 
+Concrete integration walkthroughs — connecting, reading rows into model
+structs, writing from `UncheckedCreateInput`, translating the filter AST
+to the target's native query shape:
+
+- [sqlx](https://github.com/Lexmata/prisma-rust-generator/blob/main/docs/sqlx.md)
+  — the comprehensive guide; Postgres, MySQL, SQLite via `QueryBuilder`
+  with compile-checked queries for fixed shapes
+- [raw Postgres (tokio-postgres)](https://github.com/Lexmata/prisma-rust-generator/blob/main/docs/raw-postgres.md)
+- [raw MySQL / MariaDB (mysql_async)](https://github.com/Lexmata/prisma-rust-generator/blob/main/docs/raw-mysql.md)
+- [raw SQLite (rusqlite)](https://github.com/Lexmata/prisma-rust-generator/blob/main/docs/raw-sqlite.md)
+- [raw MongoDB (mongodb)](https://github.com/Lexmata/prisma-rust-generator/blob/main/docs/raw-mongodb.md)
+
 ## Install
 
 ```bash
@@ -99,6 +111,39 @@ generator rust {
   rustfmtShardSize = "16"
 }
 ```
+
+## Skipping generation
+
+Wire a `skip` field on the generator block to bypass Rust emission
+without removing the generator from `schema.prisma`. Useful in CI when
+the generated code is already committed, or when running `prisma
+generate` purely to refresh the JS client.
+
+```prisma
+generator rust {
+  provider = "node ./node_modules/@lexmata/prisma-rust-generator/dist/index.js"
+  output   = "./src"
+  skip     = env("PRISMA_RUST_GENERATOR_SKIP")
+}
+```
+
+Then in CI / your shell:
+
+```bash
+PRISMA_RUST_GENERATOR_SKIP=1 pnpm prisma generate
+```
+
+Prisma resolves `env()` before invoking the generator, so the value of
+the chosen env var lands as the `skip` config value. The env var name
+is up to you — pick whatever fits your conventions.
+
+Truthy values that trigger skip: `1`, `true`, `yes`, `on`, or any other
+non-empty string. Falsy values that do NOT skip: empty string, `0`,
+`false`, `no`, `off` (case-insensitive). Unset env var → Prisma passes
+`undefined`, which also does not skip.
+
+You can also hard-code `skip = "true"` for a permanent opt-out, but
+that's rarely what you want.
 
 ## Guarantees
 
