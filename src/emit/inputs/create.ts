@@ -77,7 +77,9 @@ function nestedCreateRefForRelation(
       : `CreateNestedManyWithout${without}Input`;
   const ty = `${prefix}${r.toModel}${suffix}`;
   void required;
-  return `Option<${ty}>`;
+  // Box the nested type to break drop-check cycles in deeply recursive
+  // input graphs.
+  return `Option<Box<${ty}>>`;
 }
 
 function openInput(w: RustWriter, opts: CreateOpts, name: string): void {

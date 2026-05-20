@@ -11,6 +11,7 @@ import { emitSelectInput, emitIncludeInput } from "../emit/inputs/select-include
 import { emitCreateInputs } from "../emit/inputs/create.js";
 import { emitUpdateInputs } from "../emit/inputs/update.js";
 import { emitNestedInputsForModel } from "../emit/inputs/nested.js";
+import { emitModelScalarWhereInput } from "../emit/inputs/scalar-where.js";
 import { emitAggregateInputs } from "../emit/inputs/aggregate.js";
 import { emitEnumFilter } from "../emit/filters/enum.js";
 import { emitSharedScalarFilters } from "../emit/filters/scalar.js";
@@ -93,6 +94,12 @@ export function emitPerFile(ir: IR, cfg: GeneratorConfig): Map<string, string> {
         }),
       );
       parts.push(
+        emitModelScalarWhereInput(m, {
+          serde: cfg.serde,
+          vis: cfg.moduleVisibility,
+        }),
+      );
+      parts.push(
         emitAggregateInputs(m, { serde: cfg.serde, vis: cfg.moduleVisibility }),
       );
     }
@@ -113,6 +120,9 @@ export function emitPerFile(ir: IR, cfg: GeneratorConfig): Map<string, string> {
 
   const rootName = cfg.moduleName ? "mod.rs" : "lib.rs";
   const lib: string[] = [emitFileHeader(cfg)];
+  // Deeply nested input graphs (highly-connected Prisma schemas) push the
+  // compiler's drop-check and serde-derive recursion past the default 256.
+  lib.push(`#![recursion_limit = "1024"]`);
   for (const mod of [...modules].sort()) lib.push(`pub mod ${mod};`);
   lib.push(`pub mod shared;`);
   lib.push(`pub use shared::*;`);

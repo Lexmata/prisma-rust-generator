@@ -242,6 +242,31 @@ pub struct Mr8OrderStatusUncheckedUpdateManyInput {
         Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Mr8OrderStatusScalarWhereInput {
+    pub id: Option<crate::shared::filters::IntFilter>,
+    pub firm_id: Option<crate::shared::filters::IntNullableFilter>,
+    pub order_id: Option<crate::shared::filters::IntNullableFilter>,
+    pub tracking_id: Option<crate::shared::filters::IntNullableFilter>,
+    pub provider_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub matter_number: Option<crate::shared::filters::StringNullableFilter>,
+    pub patient_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub processor_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub processor_email: Option<crate::shared::filters::StringNullableFilter>,
+    pub order_status: Option<crate::shared::filters::StringNullableFilter>,
+    pub provider_status: Option<crate::shared::filters::StringNullableFilter>,
+    pub ordered_by: Option<crate::shared::filters::StringNullableFilter>,
+    pub order_date: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub last_status_date: Option<crate::shared::filters::DateTimeNullableFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<Mr8OrderStatusScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<Mr8OrderStatusScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<Mr8OrderStatusScalarWhereInput>>,
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Mr8OrderStatusCountAggregateInput {
@@ -562,9 +587,9 @@ pub struct OrderCreateInput {
     pub order_json: Option<serde_json::Value>,
     pub submitter: Option<String>,
     pub orders_documents:
-        Option<crate::orders::OrderDocumentCreateNestedManyWithoutOrderOrdersDocumentsInput>,
+        Option<Box<crate::orders::OrderDocumentCreateNestedManyWithoutOrderOrdersDocumentsInput>>,
     pub provider_orders:
-        Option<crate::orders::ProviderOrderCreateNestedManyWithoutOrderProviderOrdersInput>,
+        Option<Box<crate::orders::ProviderOrderCreateNestedManyWithoutOrderProviderOrdersInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -663,9 +688,9 @@ pub struct OrderUpdateInput {
     pub source: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub submitter: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub orders_documents:
-        Option<crate::orders::OrderDocumentUpdateManyWithoutOrderOrdersDocumentsNestedInput>,
+        Option<Box<crate::orders::OrderDocumentUpdateManyWithoutOrderOrdersDocumentsNestedInput>>,
     pub provider_orders:
-        Option<crate::orders::ProviderOrderUpdateManyWithoutOrderProviderOrdersNestedInput>,
+        Option<Box<crate::orders::ProviderOrderUpdateManyWithoutOrderProviderOrdersNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -925,27 +950,6 @@ pub struct OrderDocumentUpdateManyWithWhereWithoutOrderOrdersDocumentsInput {
     pub data: Box<crate::orders::OrderDocumentUpdateManyMutationInput>,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct OrderDocumentScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub id_uuid: Option<crate::shared::filters::StringNullableFilter>,
-    pub order_id: Option<crate::shared::filters::IntFilter>,
-    pub file_name: Option<crate::shared::filters::StringFilter>,
-    pub mime_type: Option<crate::shared::filters::StringFilter>,
-    pub file_size: Option<crate::shared::filters::IntFilter>,
-    pub page_count: Option<crate::shared::filters::IntNullableFilter>,
-    pub uploaded_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub deleted_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub delete_document: Option<crate::shared::filters::BoolNullableFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<OrderDocumentScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<OrderDocumentScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<OrderDocumentScalarWhereInput>>,
-}
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ProviderOrderCreateWithoutOrderProviderOrdersInput {
@@ -1121,28 +1125,43 @@ pub struct ProviderOrderUpdateManyWithWhereWithoutOrderProviderOrdersInput {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ProviderOrderScalarWhereInput {
+pub struct OrderScalarWhereInput {
     pub id: Option<crate::shared::filters::IntFilter>,
-    pub order_id: Option<crate::shared::filters::IntFilter>,
-    pub provider_location_id: Option<crate::shared::filters::IntNullableFilter>,
-    pub provider_name: Option<crate::shared::filters::StringNullableFilter>,
-    pub provider_address: Option<crate::shared::filters::StringNullableFilter>,
-    pub provider_city: Option<crate::shared::filters::StringNullableFilter>,
-    pub provider_state: Option<crate::shared::filters::StringNullableFilter>,
-    pub provider_zip: Option<crate::shared::filters::StringNullableFilter>,
-    pub provider_phone: Option<crate::shared::filters::StringNullableFilter>,
-    pub provider_fax: Option<crate::shared::filters::StringNullableFilter>,
-    pub service_start: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub service_end: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub order_flags: Option<crate::shared::filters::JsonNullableFilter>,
-    pub record_types: Option<crate::shared::filters::JsonNullableFilter>,
-    pub provider_notes: Option<crate::shared::filters::StringNullableFilter>,
+    pub order_unique_id: Option<crate::shared::filters::StringNullableFilter>,
+    pub order_id_mr8: Option<crate::shared::filters::IntNullableFilter>,
+    pub order_id: Option<crate::shared::filters::StringFilter>,
+    pub order_id_uuid: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_id: Option<crate::shared::filters::StringFilter>,
+    pub client_id_uuid: Option<crate::shared::filters::StringNullableFilter>,
+    pub firm_id: Option<crate::shared::filters::IntNullableFilter>,
+    pub order_date: Option<crate::shared::filters::DateTimeFilter>,
+    pub case_number: Option<crate::shared::filters::StringNullableFilter>,
+    pub case_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub claim_number: Option<crate::shared::filters::StringNullableFilter>,
+    pub loss_date: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub state: Option<crate::shared::filters::StringNullableFilter>,
+    pub county: Option<crate::shared::filters::IntNullableFilter>,
+    pub parties: Option<crate::shared::filters::StringNullableFilter>,
+    pub federal: Option<crate::shared::filters::BoolFilter>,
+    pub patient_id: Option<crate::shared::filters::StringNullableFilter>,
+    pub patient_first_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub patient_middle_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub patient_last_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub patient_dob: Option<crate::shared::filters::DateTimeFilter>,
+    pub patient_notes: Option<crate::shared::filters::StringNullableFilter>,
+    pub patient_address: Option<crate::shared::filters::StringNullableFilter>,
+    pub patient_city: Option<crate::shared::filters::StringNullableFilter>,
+    pub patient_state: Option<crate::shared::filters::StringNullableFilter>,
+    pub patient_zip: Option<crate::shared::filters::StringNullableFilter>,
+    pub order_json: Option<crate::shared::filters::JsonNullableFilter>,
+    pub source: Option<crate::shared::filters::StringFilter>,
+    pub submitter: Option<crate::shared::filters::StringNullableFilter>,
     #[serde(rename = "AND")]
-    pub and: Option<Vec<ProviderOrderScalarWhereInput>>,
+    pub and: Option<Vec<OrderScalarWhereInput>>,
     #[serde(rename = "OR")]
-    pub or: Option<Vec<ProviderOrderScalarWhereInput>>,
+    pub or: Option<Vec<OrderScalarWhereInput>>,
     #[serde(rename = "NOT")]
-    pub not: Option<Vec<ProviderOrderScalarWhereInput>>,
+    pub not: Option<Vec<OrderScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -1419,7 +1438,7 @@ pub struct OrderDocumentCreateInput {
     pub page_count: Option<i32>,
     pub deleted_at: Option<chrono::DateTime<chrono::Utc>>,
     pub delete_document: Option<bool>,
-    pub orders: Option<crate::orders::OrderCreateNestedOneWithoutOrderDocumentOrdersInput>,
+    pub orders: Option<Box<crate::orders::OrderCreateNestedOneWithoutOrderDocumentOrdersInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1460,7 +1479,8 @@ pub struct OrderDocumentUpdateInput {
     pub uploaded_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub deleted_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub delete_document: Option<crate::shared::filters::NullableBoolFieldUpdateOperationsInput>,
-    pub orders: Option<crate::orders::OrderUpdateOneRequiredWithoutOrderDocumentOrdersNestedInput>,
+    pub orders:
+        Option<Box<crate::orders::OrderUpdateOneRequiredWithoutOrderDocumentOrdersNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -1536,7 +1556,7 @@ pub struct OrderCreateWithoutOrderDocumentOrdersInput {
     pub order_json: Option<serde_json::Value>,
     pub submitter: Option<String>,
     pub provider_orders:
-        Option<crate::orders::ProviderOrderCreateNestedManyWithoutOrderProviderOrdersInput>,
+        Option<Box<crate::orders::ProviderOrderCreateNestedManyWithoutOrderProviderOrdersInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1612,7 +1632,7 @@ pub struct OrderUpdateWithoutOrderDocumentOrdersInput {
     pub source: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub submitter: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub provider_orders:
-        Option<crate::orders::ProviderOrderUpdateManyWithoutOrderProviderOrdersNestedInput>,
+        Option<Box<crate::orders::ProviderOrderUpdateManyWithoutOrderProviderOrdersNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -1686,6 +1706,27 @@ pub struct OrderUpdateOneRequiredWithoutOrderDocumentOrdersNestedInput {
 pub struct OrderUpdateToOneWithWhereWithoutOrderDocumentOrdersInput {
     pub r#where: Option<Box<crate::orders::OrderWhereInput>>,
     pub data: Box<crate::orders::OrderUpdateWithoutOrderDocumentOrdersInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct OrderDocumentScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub id_uuid: Option<crate::shared::filters::StringNullableFilter>,
+    pub order_id: Option<crate::shared::filters::IntFilter>,
+    pub file_name: Option<crate::shared::filters::StringFilter>,
+    pub mime_type: Option<crate::shared::filters::StringFilter>,
+    pub file_size: Option<crate::shared::filters::IntFilter>,
+    pub page_count: Option<crate::shared::filters::IntNullableFilter>,
+    pub uploaded_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub deleted_at: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub delete_document: Option<crate::shared::filters::BoolNullableFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<OrderDocumentScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<OrderDocumentScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<OrderDocumentScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -1930,6 +1971,24 @@ pub struct OrderSubmittedLogUncheckedUpdateManyInput {
     pub order_status: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub provider_details: Option<crate::shared::filters::NullableJsonFieldUpdateOperationsInput>,
     pub submitted_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct OrderSubmittedLogScalarWhereInput {
+    pub id: Option<crate::shared::filters::IntFilter>,
+    pub order_id: Option<crate::shared::filters::IntFilter>,
+    pub client_id: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_id_uuid: Option<crate::shared::filters::StringNullableFilter>,
+    pub order_status: Option<crate::shared::filters::StringFilter>,
+    pub provider_details: Option<crate::shared::filters::JsonNullableFilter>,
+    pub submitted_at: Option<crate::shared::filters::DateTimeFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<OrderSubmittedLogScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<OrderSubmittedLogScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<OrderSubmittedLogScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -2491,6 +2550,52 @@ pub struct ProviderLocationUncheckedUpdateManyInput {
     pub data_verification_needed: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProviderLocationScalarWhereInput {
+    pub id: Option<crate::shared::filters::IntFilter>,
+    pub location_number_mr8: Option<crate::shared::filters::IntNullableFilter>,
+    pub provider_name: Option<crate::shared::filters::StringFilter>,
+    pub street_address: Option<crate::shared::filters::StringNullableFilter>,
+    pub city: Option<crate::shared::filters::StringNullableFilter>,
+    pub state: Option<crate::shared::filters::StringNullableFilter>,
+    pub zip: Option<crate::shared::filters::StringNullableFilter>,
+    pub country: Option<crate::shared::filters::StringNullableFilter>,
+    pub main_phone: Option<crate::shared::filters::StringNullableFilter>,
+    pub main_phone_e164: Option<crate::shared::filters::StringNullableFilter>,
+    pub main_phone_ext: Option<crate::shared::filters::StringNullableFilter>,
+    pub main_phone_extra_info: Option<crate::shared::filters::StringNullableFilter>,
+    pub alt_phone: Option<crate::shared::filters::StringNullableFilter>,
+    pub alt_phone_e164: Option<crate::shared::filters::StringNullableFilter>,
+    pub alt_phone_ext: Option<crate::shared::filters::StringNullableFilter>,
+    pub alt_phone_extra_info: Option<crate::shared::filters::StringNullableFilter>,
+    pub toll_free_phone: Option<crate::shared::filters::StringNullableFilter>,
+    pub toll_free_phone_e164: Option<crate::shared::filters::StringNullableFilter>,
+    pub toll_free_phone_ext: Option<crate::shared::filters::StringNullableFilter>,
+    pub toll_free_phone_extra_info: Option<crate::shared::filters::StringNullableFilter>,
+    pub fax: Option<crate::shared::filters::StringNullableFilter>,
+    pub fax_e164: Option<crate::shared::filters::StringNullableFilter>,
+    pub fax_ext: Option<crate::shared::filters::StringNullableFilter>,
+    pub fax_extra_info: Option<crate::shared::filters::StringNullableFilter>,
+    pub email: Option<crate::shared::filters::StringNullableFilter>,
+    pub additional_info: Option<crate::shared::filters::StringNullableFilter>,
+    pub department_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub order_preference: Option<crate::shared::filters::StringNullableFilter>,
+    pub web_url: Option<crate::shared::filters::StringNullableFilter>,
+    pub doctor_first_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub doctor_middle_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub doctor_last_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub doctor_title: Option<crate::shared::filters::StringNullableFilter>,
+    pub doctor_speciality: Option<crate::shared::filters::StringNullableFilter>,
+    pub data_verification_needed: Option<crate::shared::filters::BoolFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<ProviderLocationScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<ProviderLocationScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<ProviderLocationScalarWhereInput>>,
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ProviderLocationCountAggregateInput {
@@ -2811,7 +2916,7 @@ pub struct ProviderOrderCreateInput {
     pub order_flags: Option<serde_json::Value>,
     pub record_types: Option<serde_json::Value>,
     pub provider_notes: Option<String>,
-    pub orders: Option<crate::orders::OrderCreateNestedOneWithoutProviderOrderOrdersInput>,
+    pub orders: Option<Box<crate::orders::OrderCreateNestedOneWithoutProviderOrderOrdersInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2869,7 +2974,8 @@ pub struct ProviderOrderUpdateInput {
     pub order_flags: Option<crate::shared::filters::NullableJsonFieldUpdateOperationsInput>,
     pub record_types: Option<crate::shared::filters::NullableJsonFieldUpdateOperationsInput>,
     pub provider_notes: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub orders: Option<crate::orders::OrderUpdateOneRequiredWithoutProviderOrderOrdersNestedInput>,
+    pub orders:
+        Option<Box<crate::orders::OrderUpdateOneRequiredWithoutProviderOrderOrdersNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2960,7 +3066,7 @@ pub struct OrderCreateWithoutProviderOrderOrdersInput {
     pub order_json: Option<serde_json::Value>,
     pub submitter: Option<String>,
     pub orders_documents:
-        Option<crate::orders::OrderDocumentCreateNestedManyWithoutOrderOrdersDocumentsInput>,
+        Option<Box<crate::orders::OrderDocumentCreateNestedManyWithoutOrderOrdersDocumentsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3036,7 +3142,7 @@ pub struct OrderUpdateWithoutProviderOrderOrdersInput {
     pub source: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub submitter: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub orders_documents:
-        Option<crate::orders::OrderDocumentUpdateManyWithoutOrderOrdersDocumentsNestedInput>,
+        Option<Box<crate::orders::OrderDocumentUpdateManyWithoutOrderOrdersDocumentsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -3110,6 +3216,32 @@ pub struct OrderUpdateOneRequiredWithoutProviderOrderOrdersNestedInput {
 pub struct OrderUpdateToOneWithWhereWithoutProviderOrderOrdersInput {
     pub r#where: Option<Box<crate::orders::OrderWhereInput>>,
     pub data: Box<crate::orders::OrderUpdateWithoutProviderOrderOrdersInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ProviderOrderScalarWhereInput {
+    pub id: Option<crate::shared::filters::IntFilter>,
+    pub order_id: Option<crate::shared::filters::IntFilter>,
+    pub provider_location_id: Option<crate::shared::filters::IntNullableFilter>,
+    pub provider_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub provider_address: Option<crate::shared::filters::StringNullableFilter>,
+    pub provider_city: Option<crate::shared::filters::StringNullableFilter>,
+    pub provider_state: Option<crate::shared::filters::StringNullableFilter>,
+    pub provider_zip: Option<crate::shared::filters::StringNullableFilter>,
+    pub provider_phone: Option<crate::shared::filters::StringNullableFilter>,
+    pub provider_fax: Option<crate::shared::filters::StringNullableFilter>,
+    pub service_start: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub service_end: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub order_flags: Option<crate::shared::filters::JsonNullableFilter>,
+    pub record_types: Option<crate::shared::filters::JsonNullableFilter>,
+    pub provider_notes: Option<crate::shared::filters::StringNullableFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<ProviderOrderScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<ProviderOrderScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<ProviderOrderScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]

@@ -274,6 +274,34 @@ pub struct AllScalarsUncheckedUpdateManyInput {
     pub blob: Option<crate::shared::filters::BytesFieldUpdateOperationsInput>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AllScalarsScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub text: Option<crate::shared::filters::StringFilter>,
+    pub var_char: Option<crate::shared::filters::StringFilter>,
+    pub count: Option<crate::shared::filters::IntFilter>,
+    pub small_count: Option<crate::shared::filters::IntFilter>,
+    pub big: Option<crate::shared::filters::BigIntFilter>,
+    pub ratio: Option<crate::shared::filters::FloatFilter>,
+    pub real: Option<crate::shared::filters::FloatFilter>,
+    pub amount: Option<crate::shared::filters::DecimalFilter>,
+    pub active: Option<crate::shared::filters::BoolFilter>,
+    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub date_only: Option<crate::shared::filters::DateTimeFilter>,
+    pub time_only: Option<crate::shared::filters::DateTimeFilter>,
+    pub with_tz: Option<crate::shared::filters::DateTimeFilter>,
+    pub without_tz: Option<crate::shared::filters::DateTimeFilter>,
+    pub meta: Option<crate::shared::filters::JsonFilter>,
+    pub blob: Option<crate::shared::filters::BytesFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<AllScalarsScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<AllScalarsScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<AllScalarsScalarWhereInput>>,
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AllScalarsCountAggregateInput {

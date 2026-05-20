@@ -89,7 +89,9 @@ function nestedUpdateRefForRelation(
   } else {
     suffix = `UpdateManyWithout${without}NestedInput`;
   }
-  return `Option<${prefix}${r.toModel}${suffix}>`;
+  // Box the nested type to break drop-check cycles in deeply recursive
+  // input graphs.
+  return `Option<Box<${prefix}${r.toModel}${suffix}>>`;
 }
 
 function openInput(w: RustWriter, opts: UpdateOpts, name: string): void {

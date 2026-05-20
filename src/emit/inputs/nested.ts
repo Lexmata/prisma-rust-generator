@@ -1,8 +1,8 @@
 import { RustWriter } from "../rust-writer.js";
 import type { FieldIR, ModelIR, RelationIR } from "../../ir/types.js";
-import { filterFamilyForRustType } from "../filters/model.js";
 import { renderScalarFieldType, type ModuleResolver } from "../type-ref.js";
 import { toPascalCase } from "../../ir/names.js";
+import { filterFamilyForRustType } from "../filters/model.js";
 
 // Disambiguator used in nested-input names. When a model has multiple relations
 // to the same target (e.g. CaseTask.creator: User and CaseTask.assignee: User),
@@ -23,7 +23,13 @@ interface Ctx {
   source: ModelIR;
   target: ModelIR;
   relation: RelationIR;
+  // prefix: source model's module path — used for types emitted from source's
+  // perspective (per-relation types like CreateWithout, UpdateWithout, etc.).
   prefix: string;
+  // targetPrefix: target model's module path — used for "global" types that
+  // are emitted once per target model regardless of the source: WhereInput,
+  // WhereUniqueInput, ScalarWhereInput, UpdateManyMutationInput.
+  targetPrefix: string;
   opts: NestedOpts;
 }
 
@@ -33,34 +39,30 @@ export function emitNestedInputsForModel(
   opts: NestedOpts,
 ): string {
   const w = new RustWriter();
-  // Emit nested inputs in source (host) model's module so paths resolve as
-  // crate::<source-mod>::<TargetModel>CreateNestedOneWithout<Source>Input
   const mod = opts.moduleOf(m.name);
   const prefix = mod ? `crate::${mod}::` : `crate::`;
   for (const r of m.relations) {
     const target = allModels.get(r.toModel);
     if (!target) continue;
-    const ctx: Ctx = { source: m, target, relation: r, prefix, opts };
+    const targetMod = opts.moduleOf(target.name);
+    const targetPrefix = targetMod ? `crate::${targetMod}::` : `crate::`;
+    const ctx: Ctx = { source: m, target, relation: r, prefix, targetPrefix, opts };
     emitRelationVariants(w, ctx);
   }
   return w.toString();
 }
 
 function emitRelationVariants(w: RustWriter, ctx: Ctx): void {
-  const { relation, target, source, opts } = ctx;
-  const sourceName = source.name;
-  const t = target.name;
-
   emitCreateWithout(w, ctx, false);
   emitCreateWithout(w, ctx, true);
   emitCreateOrConnectWithout(w, ctx);
   emitUpdateWithout(w, ctx, false);
   emitUpdateWithout(w, ctx, true);
 
-  if (relation.cardinality === "one") {
+  if (ctx.relation.cardinality === "one") {
     emitCreateNestedOne(w, ctx);
     emitUpsertWithout(w, ctx);
-    if (relation.required) {
+    if (ctx.relation.required) {
       emitUpdateOneRequired(w, ctx);
     } else {
       emitUpdateOneOptional(w, ctx);
@@ -73,11 +75,7 @@ function emitRelationVariants(w: RustWriter, ctx: Ctx): void {
     emitUpdateManyNested(w, ctx);
     emitUpdateWithWhereUnique(w, ctx);
     emitUpdateManyWithWhere(w, ctx);
-    emitScalarWhereInput(w, ctx);
   }
-  void sourceName;
-  void t;
-  void opts;
 }
 
 function openInput(
@@ -95,6 +93,38 @@ function openInput(
   w.openStruct(opts.vis, name);
 }
 
+// Returns the type of a relation field inside a CreateWithout body — the
+// inner reference points to a nested type emitted from the target model's
+// perspective, so it lives in the target's module. Boxed to break drop-check
+// cycles on deep, mutually recursive input graphs.
+function innerNestedCreateRef(
+  ctx: Ctx,
+  r: RelationIR,
+): string {
+  const innerWithout = `${ctx.target.name}${toPascalCase(r.prismaName)}`;
+  const nested =
+    r.cardinality === "one"
+      ? `CreateNestedOneWithout${innerWithout}Input`
+      : `CreateNestedManyWithout${innerWithout}Input`;
+  return `Option<Box<${ctx.targetPrefix}${r.toModel}${nested}>>`;
+}
+
+function innerNestedUpdateRef(
+  ctx: Ctx,
+  r: RelationIR,
+): string {
+  const innerWithout = `${ctx.target.name}${toPascalCase(r.prismaName)}`;
+  let suffix: string;
+  if (r.cardinality === "one") {
+    suffix = r.required
+      ? `UpdateOneRequiredWithout${innerWithout}NestedInput`
+      : `UpdateOneWithout${innerWithout}NestedInput`;
+  } else {
+    suffix = `UpdateManyWithout${innerWithout}NestedInput`;
+  }
+  return `Option<Box<${ctx.targetPrefix}${r.toModel}${suffix}>>`;
+}
+
 function emitCreateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
   const name = `${ctx.relation.toModel}${unchecked ? "Unchecked" : ""}CreateWithout${rel(ctx.source, ctx.relation)}Input`;
   openInput(w, ctx.opts, name, false);
@@ -106,17 +136,7 @@ function emitCreateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
   for (const r of ctx.target.relations) {
     if (r.toModel === ctx.source.name) continue;
     if (unchecked) continue;
-    const targetMod = ctx.opts.moduleOf(ctx.target.name);
-    const targetPrefix = targetMod ? `crate::${targetMod}::` : `crate::`;
-    const innerWithout = `${ctx.target.name}${toPascalCase(r.prismaName)}`;
-    const nested =
-      r.cardinality === "one"
-        ? `CreateNestedOneWithout${innerWithout}Input`
-        : `CreateNestedManyWithout${innerWithout}Input`;
-    w.field(
-      `pub ${r.rustName}`,
-      `Option<${targetPrefix}${r.toModel}${nested}>`,
-    );
+    w.field(`pub ${r.rustName}`, innerNestedCreateRef(ctx, r));
   }
   w.close();
   w.blank();
@@ -125,7 +145,7 @@ function emitCreateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
 function emitCreateOrConnectWithout(w: RustWriter, ctx: Ctx): void {
   const name = `${ctx.relation.toModel}CreateOrConnectWithout${rel(ctx.source, ctx.relation)}Input`;
   openInput(w, ctx.opts, name, false);
-  w.field(`pub r#where`, `Box<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>`);
+  w.field(`pub r#where`, `Box<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>`);
   w.field(
     `pub create`,
     `Box<${ctx.prefix}${ctx.relation.toModel}CreateWithout${rel(ctx.source, ctx.relation)}Input>`,
@@ -147,7 +167,7 @@ function emitCreateNestedOne(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub connect`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>>`,
+    `Option<Box<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>>`,
   );
   w.close();
   w.blank();
@@ -170,7 +190,7 @@ function emitCreateNestedMany(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub connect`,
-    `Option<crate::shared::filters::OneOrMany<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>>`,
+    `Option<crate::shared::filters::OneOrMany<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>>`,
   );
   w.close();
   w.blank();
@@ -204,23 +224,12 @@ function emitUpdateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
   openInput(w, ctx.opts, name);
   for (const f of ctx.target.scalarFields) {
     if (!unchecked && f.isFk) continue;
-    w.field(`pub ${f.rustName}`, opInputType(f));
+    w.field(`pub ${f.rustName}`, opInputTypeForField(f));
   }
   for (const r of ctx.target.relations) {
     if (r.toModel === ctx.source.name) continue;
     if (unchecked) continue;
-    const targetMod = ctx.opts.moduleOf(ctx.target.name);
-    const targetPrefix = targetMod ? `crate::${targetMod}::` : `crate::`;
-    const innerWithout = `${ctx.target.name}${toPascalCase(r.prismaName)}`;
-    let suffix: string;
-    if (r.cardinality === "one") {
-      suffix = r.required
-        ? `UpdateOneRequiredWithout${innerWithout}NestedInput`
-        : `UpdateOneWithout${innerWithout}NestedInput`;
-    } else {
-      suffix = `UpdateManyWithout${innerWithout}NestedInput`;
-    }
-    w.field(`pub ${r.rustName}`, `Option<${targetPrefix}${r.toModel}${suffix}>`);
+    w.field(`pub ${r.rustName}`, innerNestedUpdateRef(ctx, r));
   }
   w.close();
   w.blank();
@@ -239,7 +248,7 @@ function emitUpsertWithout(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub r#where`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}WhereInput>>`,
+    `Option<Box<${ctx.targetPrefix}${ctx.relation.toModel}WhereInput>>`,
   );
   w.close();
   w.blank();
@@ -262,7 +271,7 @@ function emitUpdateOneRequired(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub connect`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>>`,
+    `Option<Box<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>>`,
   );
   w.field(
     `pub update`,
@@ -291,7 +300,7 @@ function emitUpdateOneOptional(w: RustWriter, ctx: Ctx): void {
   w.field(`pub delete`, `Option<bool>`);
   w.field(
     `pub connect`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>>`,
+    `Option<Box<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>>`,
   );
   w.field(
     `pub update`,
@@ -306,7 +315,7 @@ function emitUpdateToOneWithWhere(w: RustWriter, ctx: Ctx): void {
   openInput(w, ctx.opts, name, false);
   w.field(
     `pub r#where`,
-    `Option<Box<${ctx.prefix}${ctx.relation.toModel}WhereInput>>`,
+    `Option<Box<${ctx.targetPrefix}${ctx.relation.toModel}WhereInput>>`,
   );
   w.field(
     `pub data`,
@@ -337,19 +346,19 @@ function emitUpdateManyNested(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub set`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>>`,
+    `Option<Vec<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>>`,
   );
   w.field(
     `pub disconnect`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>>`,
+    `Option<Vec<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>>`,
   );
   w.field(
     `pub delete`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>>`,
+    `Option<Vec<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>>`,
   );
   w.field(
     `pub connect`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>>`,
+    `Option<Vec<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>>`,
   );
   w.field(
     `pub update`,
@@ -361,15 +370,9 @@ function emitUpdateManyNested(w: RustWriter, ctx: Ctx): void {
   );
   w.field(
     `pub delete_many`,
-    `Option<Vec<${ctx.prefix}${ctx.relation.toModel}ScalarWhereInput>>`,
+    `Option<Vec<${ctx.targetPrefix}${ctx.relation.toModel}ScalarWhereInput>>`,
   );
-  // UpsertWithWhereUnique referenced above
-  emitUpsertWithWhereUniqueSidecar(w, ctx);
   w.close();
-}
-
-function emitUpsertWithWhereUniqueSidecar(_w: RustWriter, _ctx: Ctx): void {
-  // sidecar emitted separately below via emitUpsertWithWhereUnique; nothing to add inline
 }
 
 function emitUpdateWithWhereUnique(w: RustWriter, ctx: Ctx): void {
@@ -377,7 +380,7 @@ function emitUpdateWithWhereUnique(w: RustWriter, ctx: Ctx): void {
   openInput(w, ctx.opts, upsertName, false);
   w.field(
     `pub r#where`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>`,
+    `Box<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>`,
   );
   w.field(
     `pub update`,
@@ -394,7 +397,7 @@ function emitUpdateWithWhereUnique(w: RustWriter, ctx: Ctx): void {
   openInput(w, ctx.opts, name, false);
   w.field(
     `pub r#where`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}WhereUniqueInput>`,
+    `Box<${ctx.targetPrefix}${ctx.relation.toModel}WhereUniqueInput>`,
   );
   w.field(
     `pub data`,
@@ -409,29 +412,12 @@ function emitUpdateManyWithWhere(w: RustWriter, ctx: Ctx): void {
   openInput(w, ctx.opts, name, false);
   w.field(
     `pub r#where`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}ScalarWhereInput>`,
+    `Box<${ctx.targetPrefix}${ctx.relation.toModel}ScalarWhereInput>`,
   );
   w.field(
     `pub data`,
-    `Box<${ctx.prefix}${ctx.relation.toModel}UpdateManyMutationInput>`,
+    `Box<${ctx.targetPrefix}${ctx.relation.toModel}UpdateManyMutationInput>`,
   );
-  w.close();
-  w.blank();
-}
-
-function emitScalarWhereInput(w: RustWriter, ctx: Ctx): void {
-  const name = `${ctx.relation.toModel}ScalarWhereInput`;
-  openInput(w, ctx.opts, name);
-  for (const f of ctx.target.scalarFields) {
-    const filter = scalarFilterRefFor(f);
-    w.field(`pub ${f.rustName}`, `Option<${filter}>`);
-  }
-  if (ctx.opts.serde) w.line(`#[serde(rename = "AND")]`);
-  w.field(`pub and`, `Option<Vec<${name}>>`);
-  if (ctx.opts.serde) w.line(`#[serde(rename = "OR")]`);
-  w.field(`pub or`, `Option<Vec<${name}>>`);
-  if (ctx.opts.serde) w.line(`#[serde(rename = "NOT")]`);
-  w.field(`pub not`, `Option<Vec<${name}>>`);
   w.close();
   w.blank();
 }
@@ -446,7 +432,7 @@ function scalarTypeForCreate(f: FieldIR): string {
   return inner;
 }
 
-function opInputType(f: FieldIR): string {
+function opInputTypeForField(f: FieldIR): string {
   if (f.type.kind === "scalar") {
     const family = filterFamilyForRustType(f.type.rust);
     const prefix = f.optional ? "Nullable" : "";
@@ -460,16 +446,3 @@ function opInputType(f: FieldIR): string {
   return "()";
 }
 
-function scalarFilterRefFor(f: FieldIR): string {
-  if (f.type.kind === "scalar") {
-    const family = filterFamilyForRustType(f.type.rust);
-    const suffix = f.optional ? "NullableFilter" : "Filter";
-    return `crate::shared::filters::${family}${suffix}`;
-  }
-  if (f.type.kind === "enumRef") {
-    const mod = f.type.module ? `crate::${f.type.module}::` : `crate::`;
-    const suffix = f.optional ? "NullableFilter" : "Filter";
-    return `${mod}${f.type.enumName}${suffix}`;
-  }
-  return "()";
-}

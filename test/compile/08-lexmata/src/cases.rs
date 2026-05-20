@@ -1061,25 +1061,25 @@ pub struct CaseCreateInput {
     pub opposing_counsel_attorney: Option<String>,
     pub opposing_counsel_phone: Option<String>,
     pub opposing_counsel_email: Option<String>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>,
-    pub assigned_user: Option<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>,
-    pub documents: Option<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>,
-    pub batch_files: Option<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>,
-    pub invoices: Option<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>,
-    pub case_notes: Option<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>>,
+    pub documents: Option<Box<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1256,25 +1256,25 @@ pub struct CaseUpdateInput {
     pub opposing_counsel_attorney: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_phone: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_email: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>,
-    pub assigned_user: Option<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>,
-    pub documents: Option<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>,
-    pub batch_files: Option<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>,
-    pub invoices: Option<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>,
-    pub case_notes: Option<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>>,
+    pub documents: Option<Box<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -1542,43 +1542,43 @@ pub struct FirmCreateWithoutCaseFirmInput {
     pub name: String,
     pub phone_number: Option<String>,
     pub fax_number: Option<String>,
-    pub address: Option<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>,
-    pub users: Option<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>,
-    pub owner: Option<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>,
-    pub documents: Option<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>,
-    pub invoices: Option<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>,
-    pub form_templates: Option<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>,
-    pub notifications: Option<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>,
-    pub default_role: Option<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>,
-    pub case_notes: Option<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>,
+    pub address: Option<Box<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>>,
+    pub users: Option<Box<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>>,
+    pub owner: Option<Box<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>>,
+    pub documents: Option<Box<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1595,7 +1595,7 @@ pub struct FirmUncheckedCreateWithoutCaseFirmInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmCreateOrConnectWithoutCaseFirmInput {
-    pub r#where: Box<crate::cases::FirmWhereUniqueInput>,
+    pub r#where: Box<crate::firms::FirmWhereUniqueInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseFirmInput>,
 }
 
@@ -1613,43 +1613,43 @@ pub struct FirmUpdateWithoutCaseFirmInput {
     pub has_free_demo_identification: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub require_mfa: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub qualify_ai_demo_used: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
-    pub address: Option<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>,
-    pub users: Option<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>,
-    pub owner: Option<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>,
-    pub documents: Option<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>,
-    pub invoices: Option<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>,
-    pub form_templates: Option<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>,
-    pub notifications: Option<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>,
-    pub default_role: Option<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>,
-    pub case_notes: Option<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>,
+    pub address: Option<Box<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>>,
+    pub users: Option<Box<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>>,
+    pub owner: Option<Box<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>>,
+    pub documents: Option<Box<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -1677,7 +1677,7 @@ pub struct FirmUncheckedUpdateWithoutCaseFirmInput {
 pub struct FirmCreateNestedOneWithoutCaseFirmInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseFirmInput>>,
     pub connect_or_create: Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1685,7 +1685,7 @@ pub struct FirmCreateNestedOneWithoutCaseFirmInput {
 pub struct FirmUpsertWithoutCaseFirmInput {
     pub update: Box<crate::cases::FirmUpdateWithoutCaseFirmInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseFirmInput>,
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -1694,14 +1694,14 @@ pub struct FirmUpdateOneRequiredWithoutCaseFirmNestedInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseFirmInput>>,
     pub connect_or_create: Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseFirmInput>>,
     pub upsert: Option<Box<crate::cases::FirmUpsertWithoutCaseFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
     pub update: Option<Box<crate::cases::FirmUpdateToOneWithWhereWithoutCaseFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmUpdateToOneWithWhereWithoutCaseFirmInput {
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
     pub data: Box<crate::cases::FirmUpdateWithoutCaseFirmInput>,
 }
 
@@ -1720,34 +1720,34 @@ pub struct UserCreateWithoutCaseAssignedUserInput {
     pub mfa_setup_dismissed_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cookie_policy_accepted_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cognito_sub: Option<String>,
-    pub batch_file: Option<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>,
-    pub document: Option<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>,
-    pub document_tags: Option<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>,
-    pub firm: Option<crate::users::FirmCreateNestedOneWithoutUserFirmInput>,
-    pub firm_role: Option<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>,
-    pub owned_firm: Option<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>,
-    pub invoices: Option<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>,
-    pub form_templates: Option<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>,
-    pub form_distributions: Option<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>,
-    pub notifications: Option<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>,
-    pub case_notes: Option<crate::users::CaseNoteCreateNestedManyWithoutUserCaseNotesInput>,
-    pub case_tasks_created: Option<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksCreatedInput>,
-    pub case_tasks_assigned: Option<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksAssignedInput>,
-    pub case_billing_time_entries: Option<crate::users::CaseBillingTimeEntryCreateNestedManyWithoutUserCaseBillingTimeEntriesInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>>,
+    pub document: Option<Box<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>>,
+    pub firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserFirmInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>>,
+    pub notifications: Option<Box<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>>,
+    pub case_notes: Option<Box<crate::users::CaseNoteCreateNestedManyWithoutUserCaseNotesInput>>,
+    pub case_tasks_created: Option<Box<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksCreatedInput>>,
+    pub case_tasks_assigned: Option<Box<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksAssignedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::users::CaseBillingTimeEntryCreateNestedManyWithoutUserCaseBillingTimeEntriesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1772,7 +1772,7 @@ pub struct UserUncheckedCreateWithoutCaseAssignedUserInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserCreateOrConnectWithoutCaseAssignedUserInput {
-    pub r#where: Box<crate::cases::UserWhereUniqueInput>,
+    pub r#where: Box<crate::users::UserWhereUniqueInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseAssignedUserInput>,
 }
 
@@ -1801,34 +1801,34 @@ pub struct UserUpdateWithoutCaseAssignedUserInput {
     pub mfa_setup_dismissed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cookie_policy_accepted_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cognito_sub: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub batch_file: Option<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>,
-    pub document: Option<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>,
-    pub document_tags: Option<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>,
-    pub firm: Option<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>,
-    pub firm_role: Option<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>,
-    pub owned_firm: Option<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>,
-    pub invoices: Option<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>,
-    pub form_templates: Option<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>,
-    pub notifications: Option<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>,
-    pub case_notes: Option<crate::users::CaseNoteUpdateManyWithoutUserCaseNotesNestedInput>,
-    pub case_tasks_created: Option<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksCreatedNestedInput>,
-    pub case_tasks_assigned: Option<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksAssignedNestedInput>,
-    pub case_billing_time_entries: Option<crate::users::CaseBillingTimeEntryUpdateManyWithoutUserCaseBillingTimeEntriesNestedInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>>,
+    pub document: Option<Box<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>>,
+    pub firm: Option<Box<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>>,
+    pub notifications: Option<Box<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>>,
+    pub case_notes: Option<Box<crate::users::CaseNoteUpdateManyWithoutUserCaseNotesNestedInput>>,
+    pub case_tasks_created: Option<Box<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksCreatedNestedInput>>,
+    pub case_tasks_assigned: Option<Box<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksAssignedNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::users::CaseBillingTimeEntryUpdateManyWithoutUserCaseBillingTimeEntriesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -1870,7 +1870,7 @@ pub struct UserCreateNestedOneWithoutCaseAssignedUserInput {
     pub create: Option<Box<crate::cases::UserCreateWithoutCaseAssignedUserInput>>,
     pub connect_or_create:
         Option<Box<crate::cases::UserCreateOrConnectWithoutCaseAssignedUserInput>>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1878,7 +1878,7 @@ pub struct UserCreateNestedOneWithoutCaseAssignedUserInput {
 pub struct UserUpsertWithoutCaseAssignedUserInput {
     pub update: Box<crate::cases::UserUpdateWithoutCaseAssignedUserInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseAssignedUserInput>,
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -1890,14 +1890,14 @@ pub struct UserUpdateOneWithoutCaseAssignedUserNestedInput {
     pub upsert: Option<Box<crate::cases::UserUpsertWithoutCaseAssignedUserInput>>,
     pub disconnect: Option<bool>,
     pub delete: Option<bool>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
     pub update: Option<Box<crate::cases::UserUpdateToOneWithWhereWithoutCaseAssignedUserInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserUpdateToOneWithWhereWithoutCaseAssignedUserInput {
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
     pub data: Box<crate::cases::UserUpdateWithoutCaseAssignedUserInput>,
 }
 
@@ -1910,17 +1910,17 @@ pub struct DocumentCreateWithoutCaseDocumentsInput {
     pub billed_at: Option<chrono::DateTime<chrono::Utc>>,
     pub deleted_at: Option<chrono::DateTime<chrono::Utc>>,
     pub tags: Option<serde_json::Value>,
-    pub user: Option<crate::documents::UserCreateNestedOneWithoutDocumentUserInput>,
-    pub invoice: Option<crate::documents::InvoiceCreateNestedOneWithoutDocumentInvoiceInput>,
-    pub demand_letter: Option<crate::documents::DemandLetterCreateNestedOneWithoutDocumentDemandLetterInput>,
-    pub document_blocks: Option<crate::documents::DocumentBlockCreateNestedManyWithoutDocumentDocumentBlocksInput>,
-    pub search_processing: Option<crate::documents::SearchProcessingCreateNestedManyWithoutDocumentSearchProcessingInput>,
-    pub firm: Option<crate::documents::FirmCreateNestedOneWithoutDocumentFirmInput>,
-    pub line_items: Option<crate::documents::LineItemCreateNestedManyWithoutDocumentLineItemsInput>,
-    pub child_relations: Option<crate::documents::DocumentRelationCreateNestedManyWithoutDocumentChildRelationsInput>,
-    pub parent_relations: Option<crate::documents::DocumentRelationCreateNestedManyWithoutDocumentParentRelationsInput>,
-    pub advita_tracking_mappings: Option<crate::documents::AdvitaTrackingMappingCreateNestedManyWithoutDocumentAdvitaTrackingMappingsInput>,
-    pub qualify_ai_processed_documents: Option<crate::documents::QualifyAiProcessedDocumentCreateNestedManyWithoutDocumentQualifyAiProcessedDocumentsInput>,
+    pub user: Option<Box<crate::documents::UserCreateNestedOneWithoutDocumentUserInput>>,
+    pub invoice: Option<Box<crate::documents::InvoiceCreateNestedOneWithoutDocumentInvoiceInput>>,
+    pub demand_letter: Option<Box<crate::documents::DemandLetterCreateNestedOneWithoutDocumentDemandLetterInput>>,
+    pub document_blocks: Option<Box<crate::documents::DocumentBlockCreateNestedManyWithoutDocumentDocumentBlocksInput>>,
+    pub search_processing: Option<Box<crate::documents::SearchProcessingCreateNestedManyWithoutDocumentSearchProcessingInput>>,
+    pub firm: Option<Box<crate::documents::FirmCreateNestedOneWithoutDocumentFirmInput>>,
+    pub line_items: Option<Box<crate::documents::LineItemCreateNestedManyWithoutDocumentLineItemsInput>>,
+    pub child_relations: Option<Box<crate::documents::DocumentRelationCreateNestedManyWithoutDocumentChildRelationsInput>>,
+    pub parent_relations: Option<Box<crate::documents::DocumentRelationCreateNestedManyWithoutDocumentParentRelationsInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::documents::AdvitaTrackingMappingCreateNestedManyWithoutDocumentAdvitaTrackingMappingsInput>>,
+    pub qualify_ai_processed_documents: Option<Box<crate::documents::QualifyAiProcessedDocumentCreateNestedManyWithoutDocumentQualifyAiProcessedDocumentsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1940,7 +1940,7 @@ pub struct DocumentUncheckedCreateWithoutCaseDocumentsInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DocumentCreateOrConnectWithoutCaseDocumentsInput {
-    pub r#where: Box<crate::cases::DocumentWhereUniqueInput>,
+    pub r#where: Box<crate::documents::DocumentWhereUniqueInput>,
     pub create: Box<crate::cases::DocumentCreateWithoutCaseDocumentsInput>,
 }
 
@@ -1963,17 +1963,17 @@ pub struct DocumentUpdateWithoutCaseDocumentsInput {
     pub document_type: Option<crate::documents::DocumentTypeFieldUpdateOperationsInput>,
     pub illegible_pages: Option<crate::shared::filters::JsonFieldUpdateOperationsInput>,
     pub tags: Option<crate::shared::filters::NullableJsonFieldUpdateOperationsInput>,
-    pub user: Option<crate::documents::UserUpdateOneRequiredWithoutDocumentUserNestedInput>,
-    pub invoice: Option<crate::documents::InvoiceUpdateOneRequiredWithoutDocumentInvoiceNestedInput>,
-    pub demand_letter: Option<crate::documents::DemandLetterUpdateOneWithoutDocumentDemandLetterNestedInput>,
-    pub document_blocks: Option<crate::documents::DocumentBlockUpdateManyWithoutDocumentDocumentBlocksNestedInput>,
-    pub search_processing: Option<crate::documents::SearchProcessingUpdateManyWithoutDocumentSearchProcessingNestedInput>,
-    pub firm: Option<crate::documents::FirmUpdateOneRequiredWithoutDocumentFirmNestedInput>,
-    pub line_items: Option<crate::documents::LineItemUpdateManyWithoutDocumentLineItemsNestedInput>,
-    pub child_relations: Option<crate::documents::DocumentRelationUpdateManyWithoutDocumentChildRelationsNestedInput>,
-    pub parent_relations: Option<crate::documents::DocumentRelationUpdateManyWithoutDocumentParentRelationsNestedInput>,
-    pub advita_tracking_mappings: Option<crate::documents::AdvitaTrackingMappingUpdateManyWithoutDocumentAdvitaTrackingMappingsNestedInput>,
-    pub qualify_ai_processed_documents: Option<crate::documents::QualifyAiProcessedDocumentUpdateManyWithoutDocumentQualifyAiProcessedDocumentsNestedInput>,
+    pub user: Option<Box<crate::documents::UserUpdateOneRequiredWithoutDocumentUserNestedInput>>,
+    pub invoice: Option<Box<crate::documents::InvoiceUpdateOneRequiredWithoutDocumentInvoiceNestedInput>>,
+    pub demand_letter: Option<Box<crate::documents::DemandLetterUpdateOneWithoutDocumentDemandLetterNestedInput>>,
+    pub document_blocks: Option<Box<crate::documents::DocumentBlockUpdateManyWithoutDocumentDocumentBlocksNestedInput>>,
+    pub search_processing: Option<Box<crate::documents::SearchProcessingUpdateManyWithoutDocumentSearchProcessingNestedInput>>,
+    pub firm: Option<Box<crate::documents::FirmUpdateOneRequiredWithoutDocumentFirmNestedInput>>,
+    pub line_items: Option<Box<crate::documents::LineItemUpdateManyWithoutDocumentLineItemsNestedInput>>,
+    pub child_relations: Option<Box<crate::documents::DocumentRelationUpdateManyWithoutDocumentChildRelationsNestedInput>>,
+    pub parent_relations: Option<Box<crate::documents::DocumentRelationUpdateManyWithoutDocumentParentRelationsNestedInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::documents::AdvitaTrackingMappingUpdateManyWithoutDocumentAdvitaTrackingMappingsNestedInput>>,
+    pub qualify_ai_processed_documents: Option<Box<crate::documents::QualifyAiProcessedDocumentUpdateManyWithoutDocumentQualifyAiProcessedDocumentsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2011,7 +2011,8 @@ pub struct DocumentCreateNestedManyWithoutCaseDocumentsInput {
     pub connect_or_create:
         Option<Vec<crate::cases::DocumentCreateOrConnectWithoutCaseDocumentsInput>>,
     pub create_many: Option<Box<crate::cases::DocumentCreateManyCaseDocumentsInputEnvelope>>,
-    pub connect: Option<crate::shared::filters::OneOrMany<crate::cases::DocumentWhereUniqueInput>>,
+    pub connect:
+        Option<crate::shared::filters::OneOrMany<crate::documents::DocumentWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2045,19 +2046,19 @@ pub struct DocumentUpdateManyWithoutCaseDocumentsNestedInput {
         Option<Vec<crate::cases::DocumentCreateOrConnectWithoutCaseDocumentsInput>>,
     pub upsert: Option<Vec<crate::cases::DocumentUpsertWithWhereUniqueWithoutCaseDocumentsInput>>,
     pub create_many: Option<Box<crate::cases::DocumentCreateManyCaseDocumentsInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::DocumentWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::DocumentWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::DocumentWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::DocumentWhereUniqueInput>>,
+    pub set: Option<Vec<crate::documents::DocumentWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::documents::DocumentWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::documents::DocumentWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::documents::DocumentWhereUniqueInput>>,
     pub update: Option<Vec<crate::cases::DocumentUpdateWithWhereUniqueWithoutCaseDocumentsInput>>,
     pub update_many:
         Option<Vec<crate::cases::DocumentUpdateManyWithWhereWithoutCaseDocumentsInput>>,
-    pub delete_many: Option<Vec<crate::cases::DocumentScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::documents::DocumentScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DocumentUpsertWithWhereUniqueWithoutCaseDocumentsInput {
-    pub r#where: Box<crate::cases::DocumentWhereUniqueInput>,
+    pub r#where: Box<crate::documents::DocumentWhereUniqueInput>,
     pub update: Box<crate::cases::DocumentUpdateWithoutCaseDocumentsInput>,
     pub create: Box<crate::cases::DocumentCreateWithoutCaseDocumentsInput>,
 }
@@ -2065,57 +2066,25 @@ pub struct DocumentUpsertWithWhereUniqueWithoutCaseDocumentsInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DocumentUpdateWithWhereUniqueWithoutCaseDocumentsInput {
-    pub r#where: Box<crate::cases::DocumentWhereUniqueInput>,
+    pub r#where: Box<crate::documents::DocumentWhereUniqueInput>,
     pub data: Box<crate::cases::DocumentUpdateWithoutCaseDocumentsInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DocumentUpdateManyWithWhereWithoutCaseDocumentsInput {
-    pub r#where: Box<crate::cases::DocumentScalarWhereInput>,
-    pub data: Box<crate::cases::DocumentUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct DocumentScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub user_id: Option<crate::shared::filters::StringFilter>,
-    pub file_name: Option<crate::shared::filters::StringFilter>,
-    pub mime_type: Option<crate::shared::filters::StringFilter>,
-    pub file_size: Option<crate::shared::filters::BigIntFilter>,
-    pub page_count: Option<crate::shared::filters::IntFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub uploaded_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub billed_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub deleted_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub delete_document: Option<crate::shared::filters::BoolFilter>,
-    pub is_frozen: Option<crate::shared::filters::BoolFilter>,
-    pub paid: Option<crate::shared::filters::BoolFilter>,
-    pub invoice_id: Option<crate::shared::filters::StringFilter>,
-    pub demand_letter_id: Option<crate::shared::filters::StringNullableFilter>,
-    pub document_type: Option<crate::documents::DocumentTypeFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub illegible_pages: Option<crate::shared::filters::JsonFilter>,
-    pub tags: Option<crate::shared::filters::JsonNullableFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<DocumentScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<DocumentScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<DocumentScalarWhereInput>>,
+    pub r#where: Box<crate::documents::DocumentScalarWhereInput>,
+    pub data: Box<crate::documents::DocumentUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DemandLetterCreateWithoutCaseDemandLettersInput {
     pub upload_form: serde_json::Value,
-    pub firm: Option<crate::demand_letters::FirmCreateNestedOneWithoutDemandLetterFirmInput>,
-    pub documents: Option<crate::demand_letters::DocumentCreateNestedManyWithoutDemandLetterDocumentsInput>,
-    pub line_items: Option<crate::demand_letters::LineItemCreateNestedManyWithoutDemandLetterLineItemsInput>,
-    pub processing: Option<crate::demand_letters::DemandLetterProcessingCreateNestedOneWithoutDemandLetterProcessingInput>,
+    pub firm: Option<Box<crate::demand_letters::FirmCreateNestedOneWithoutDemandLetterFirmInput>>,
+    pub documents: Option<Box<crate::demand_letters::DocumentCreateNestedManyWithoutDemandLetterDocumentsInput>>,
+    pub line_items: Option<Box<crate::demand_letters::LineItemCreateNestedManyWithoutDemandLetterLineItemsInput>>,
+    pub processing: Option<Box<crate::demand_letters::DemandLetterProcessingCreateNestedOneWithoutDemandLetterProcessingInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2129,7 +2098,7 @@ pub struct DemandLetterUncheckedCreateWithoutCaseDemandLettersInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DemandLetterCreateOrConnectWithoutCaseDemandLettersInput {
-    pub r#where: Box<crate::cases::DemandLetterWhereUniqueInput>,
+    pub r#where: Box<crate::demand_letters::DemandLetterWhereUniqueInput>,
     pub create: Box<crate::cases::DemandLetterCreateWithoutCaseDemandLettersInput>,
 }
 
@@ -2141,10 +2110,10 @@ pub struct DemandLetterUpdateWithoutCaseDemandLettersInput {
     pub processing_status: Option<crate::case_processing::ProcessingStatusFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::demand_letters::FirmUpdateOneRequiredWithoutDemandLetterFirmNestedInput>,
-    pub documents: Option<crate::demand_letters::DocumentUpdateManyWithoutDemandLetterDocumentsNestedInput>,
-    pub line_items: Option<crate::demand_letters::LineItemUpdateManyWithoutDemandLetterLineItemsNestedInput>,
-    pub processing: Option<crate::demand_letters::DemandLetterProcessingUpdateOneWithoutDemandLetterProcessingNestedInput>,
+    pub firm: Option<Box<crate::demand_letters::FirmUpdateOneRequiredWithoutDemandLetterFirmNestedInput>>,
+    pub documents: Option<Box<crate::demand_letters::DocumentUpdateManyWithoutDemandLetterDocumentsNestedInput>>,
+    pub line_items: Option<Box<crate::demand_letters::LineItemUpdateManyWithoutDemandLetterLineItemsNestedInput>>,
+    pub processing: Option<Box<crate::demand_letters::DemandLetterProcessingUpdateOneWithoutDemandLetterProcessingNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2172,8 +2141,9 @@ pub struct DemandLetterCreateNestedManyWithoutCaseDemandLettersInput {
         Option<Vec<crate::cases::DemandLetterCreateOrConnectWithoutCaseDemandLettersInput>>,
     pub create_many:
         Option<Box<crate::cases::DemandLetterCreateManyCaseDemandLettersInputEnvelope>>,
-    pub connect:
-        Option<crate::shared::filters::OneOrMany<crate::cases::DemandLetterWhereUniqueInput>>,
+    pub connect: Option<
+        crate::shared::filters::OneOrMany<crate::demand_letters::DemandLetterWhereUniqueInput>,
+    >,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2205,20 +2175,20 @@ pub struct DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput {
         Option<Vec<crate::cases::DemandLetterUpsertWithWhereUniqueWithoutCaseDemandLettersInput>>,
     pub create_many:
         Option<Box<crate::cases::DemandLetterCreateManyCaseDemandLettersInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::DemandLetterWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::DemandLetterWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::DemandLetterWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::DemandLetterWhereUniqueInput>>,
+    pub set: Option<Vec<crate::demand_letters::DemandLetterWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::demand_letters::DemandLetterWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::demand_letters::DemandLetterWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::demand_letters::DemandLetterWhereUniqueInput>>,
     pub update:
         Option<Vec<crate::cases::DemandLetterUpdateWithWhereUniqueWithoutCaseDemandLettersInput>>,
     pub update_many:
         Option<Vec<crate::cases::DemandLetterUpdateManyWithWhereWithoutCaseDemandLettersInput>>,
-    pub delete_many: Option<Vec<crate::cases::DemandLetterScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::demand_letters::DemandLetterScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DemandLetterUpsertWithWhereUniqueWithoutCaseDemandLettersInput {
-    pub r#where: Box<crate::cases::DemandLetterWhereUniqueInput>,
+    pub r#where: Box<crate::demand_letters::DemandLetterWhereUniqueInput>,
     pub update: Box<crate::cases::DemandLetterUpdateWithoutCaseDemandLettersInput>,
     pub create: Box<crate::cases::DemandLetterCreateWithoutCaseDemandLettersInput>,
 }
@@ -2226,33 +2196,15 @@ pub struct DemandLetterUpsertWithWhereUniqueWithoutCaseDemandLettersInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DemandLetterUpdateWithWhereUniqueWithoutCaseDemandLettersInput {
-    pub r#where: Box<crate::cases::DemandLetterWhereUniqueInput>,
+    pub r#where: Box<crate::demand_letters::DemandLetterWhereUniqueInput>,
     pub data: Box<crate::cases::DemandLetterUpdateWithoutCaseDemandLettersInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DemandLetterUpdateManyWithWhereWithoutCaseDemandLettersInput {
-    pub r#where: Box<crate::cases::DemandLetterScalarWhereInput>,
-    pub data: Box<crate::cases::DemandLetterUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct DemandLetterScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub upload_form: Option<crate::shared::filters::JsonFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub processing_status: Option<crate::case_processing::ProcessingStatusFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<DemandLetterScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<DemandLetterScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<DemandLetterScalarWhereInput>>,
+    pub r#where: Box<crate::demand_letters::DemandLetterScalarWhereInput>,
+    pub data: Box<crate::demand_letters::DemandLetterUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2264,7 +2216,7 @@ pub struct BatchFileCreateWithoutCaseBatchFilesInput {
     pub mime_type: String,
     pub file_size: i64,
     pub file_count: i32,
-    pub user: Option<crate::pdf_processing::UserCreateNestedOneWithoutBatchFileUserInput>,
+    pub user: Option<Box<crate::pdf_processing::UserCreateNestedOneWithoutBatchFileUserInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2283,7 +2235,7 @@ pub struct BatchFileUncheckedCreateWithoutCaseBatchFilesInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BatchFileCreateOrConnectWithoutCaseBatchFilesInput {
-    pub r#where: Box<crate::cases::BatchFileWhereUniqueInput>,
+    pub r#where: Box<crate::pdf_processing::BatchFileWhereUniqueInput>,
     pub create: Box<crate::cases::BatchFileCreateWithoutCaseBatchFilesInput>,
 }
 
@@ -2298,7 +2250,8 @@ pub struct BatchFileUpdateWithoutCaseBatchFilesInput {
     pub file_count: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub user: Option<crate::pdf_processing::UserUpdateOneRequiredWithoutBatchFileUserNestedInput>,
+    pub user:
+        Option<Box<crate::pdf_processing::UserUpdateOneRequiredWithoutBatchFileUserNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2325,7 +2278,8 @@ pub struct BatchFileCreateNestedManyWithoutCaseBatchFilesInput {
     pub connect_or_create:
         Option<Vec<crate::cases::BatchFileCreateOrConnectWithoutCaseBatchFilesInput>>,
     pub create_many: Option<Box<crate::cases::BatchFileCreateManyCaseBatchFilesInputEnvelope>>,
-    pub connect: Option<crate::shared::filters::OneOrMany<crate::cases::BatchFileWhereUniqueInput>>,
+    pub connect:
+        Option<crate::shared::filters::OneOrMany<crate::pdf_processing::BatchFileWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2358,19 +2312,19 @@ pub struct BatchFileUpdateManyWithoutCaseBatchFilesNestedInput {
         Option<Vec<crate::cases::BatchFileCreateOrConnectWithoutCaseBatchFilesInput>>,
     pub upsert: Option<Vec<crate::cases::BatchFileUpsertWithWhereUniqueWithoutCaseBatchFilesInput>>,
     pub create_many: Option<Box<crate::cases::BatchFileCreateManyCaseBatchFilesInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::BatchFileWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::BatchFileWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::BatchFileWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::BatchFileWhereUniqueInput>>,
+    pub set: Option<Vec<crate::pdf_processing::BatchFileWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::pdf_processing::BatchFileWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::pdf_processing::BatchFileWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::pdf_processing::BatchFileWhereUniqueInput>>,
     pub update: Option<Vec<crate::cases::BatchFileUpdateWithWhereUniqueWithoutCaseBatchFilesInput>>,
     pub update_many:
         Option<Vec<crate::cases::BatchFileUpdateManyWithWhereWithoutCaseBatchFilesInput>>,
-    pub delete_many: Option<Vec<crate::cases::BatchFileScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::pdf_processing::BatchFileScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BatchFileUpsertWithWhereUniqueWithoutCaseBatchFilesInput {
-    pub r#where: Box<crate::cases::BatchFileWhereUniqueInput>,
+    pub r#where: Box<crate::pdf_processing::BatchFileWhereUniqueInput>,
     pub update: Box<crate::cases::BatchFileUpdateWithoutCaseBatchFilesInput>,
     pub create: Box<crate::cases::BatchFileCreateWithoutCaseBatchFilesInput>,
 }
@@ -2378,36 +2332,15 @@ pub struct BatchFileUpsertWithWhereUniqueWithoutCaseBatchFilesInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BatchFileUpdateWithWhereUniqueWithoutCaseBatchFilesInput {
-    pub r#where: Box<crate::cases::BatchFileWhereUniqueInput>,
+    pub r#where: Box<crate::pdf_processing::BatchFileWhereUniqueInput>,
     pub data: Box<crate::cases::BatchFileUpdateWithoutCaseBatchFilesInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BatchFileUpdateManyWithWhereWithoutCaseBatchFilesInput {
-    pub r#where: Box<crate::cases::BatchFileScalarWhereInput>,
-    pub data: Box<crate::cases::BatchFileUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BatchFileScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub user_id: Option<crate::shared::filters::StringFilter>,
-    pub file_name: Option<crate::shared::filters::StringFilter>,
-    pub s3_key: Option<crate::shared::filters::StringNullableFilter>,
-    pub mime_type: Option<crate::shared::filters::StringFilter>,
-    pub file_size: Option<crate::shared::filters::BigIntFilter>,
-    pub file_count: Option<crate::shared::filters::IntFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub case_id: Option<crate::shared::filters::StringNullableFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<BatchFileScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<BatchFileScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<BatchFileScalarWhereInput>>,
+    pub r#where: Box<crate::pdf_processing::BatchFileScalarWhereInput>,
+    pub data: Box<crate::pdf_processing::BatchFileUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2428,9 +2361,11 @@ pub struct SearchProcessingCreateWithoutCaseSearchProcessingsInput {
     pub redaction_terms: Option<serde_json::Value>,
     pub processing_message: Option<String>,
     pub sqs_message: Option<serde_json::Value>,
-    pub document:
-        Option<crate::case_processing::DocumentCreateNestedOneWithoutSearchProcessingDocumentInput>,
-    pub firm: Option<crate::case_processing::FirmCreateNestedOneWithoutSearchProcessingFirmInput>,
+    pub document: Option<
+        Box<crate::case_processing::DocumentCreateNestedOneWithoutSearchProcessingDocumentInput>,
+    >,
+    pub firm:
+        Option<Box<crate::case_processing::FirmCreateNestedOneWithoutSearchProcessingFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2459,7 +2394,7 @@ pub struct SearchProcessingUncheckedCreateWithoutCaseSearchProcessingsInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SearchProcessingCreateOrConnectWithoutCaseSearchProcessingsInput {
-    pub r#where: Box<crate::cases::SearchProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::SearchProcessingWhereUniqueInput>,
     pub create: Box<crate::cases::SearchProcessingCreateWithoutCaseSearchProcessingsInput>,
 }
 
@@ -2473,35 +2408,24 @@ pub struct SearchProcessingUpdateWithoutCaseSearchProcessingsInput {
     pub file_count: Option<crate::shared::filters::NullableIntFieldUpdateOperationsInput>,
     pub processing_tier: Option<crate::case_processing::ProcessingTierFieldUpdateOperationsInput>,
     pub ocr_status: Option<crate::case_processing::ProcessingStatusFieldUpdateOperationsInput>,
-    pub processing_status:
-        Option<crate::case_processing::ProcessingStatusFieldUpdateOperationsInput>,
-    pub organization_status:
-        Option<crate::case_processing::ProcessingStatusFieldUpdateOperationsInput>,
-    pub summarization_status:
-        Option<crate::case_processing::ProcessingStatusFieldUpdateOperationsInput>,
+    pub processing_status: Option<crate::case_processing::ProcessingStatusFieldUpdateOperationsInput>,
+    pub organization_status: Option<crate::case_processing::ProcessingStatusFieldUpdateOperationsInput>,
+    pub summarization_status: Option<crate::case_processing::ProcessingStatusFieldUpdateOperationsInput>,
     pub started_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub completed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
-    pub organization_started_at:
-        Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
-    pub organization_completed_at:
-        Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
-    pub summarization_started_at:
-        Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
-    pub summarization_completed_at:
-        Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
-    pub summarization_output_file_path:
-        Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
+    pub organization_started_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
+    pub organization_completed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
+    pub summarization_started_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
+    pub summarization_completed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
+    pub summarization_output_file_path: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub notification_email: Option<crate::shared::filters::NullableJsonFieldUpdateOperationsInput>,
     pub redaction_terms: Option<crate::shared::filters::NullableJsonFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub processing_message:
-        Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
+    pub processing_message: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub sqs_message: Option<crate::shared::filters::NullableJsonFieldUpdateOperationsInput>,
-    pub document: Option<
-        crate::case_processing::DocumentUpdateOneRequiredWithoutSearchProcessingDocumentNestedInput,
-    >,
-    pub firm: Option<crate::case_processing::FirmUpdateOneWithoutSearchProcessingFirmNestedInput>,
+    pub document: Option<Box<crate::case_processing::DocumentUpdateOneRequiredWithoutSearchProcessingDocumentNestedInput>>,
+    pub firm: Option<Box<crate::case_processing::FirmUpdateOneWithoutSearchProcessingFirmNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2556,8 +2480,9 @@ pub struct SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput {
         Option<Vec<crate::cases::SearchProcessingCreateOrConnectWithoutCaseSearchProcessingsInput>>,
     pub create_many:
         Option<Box<crate::cases::SearchProcessingCreateManyCaseSearchProcessingsInputEnvelope>>,
-    pub connect:
-        Option<crate::shared::filters::OneOrMany<crate::cases::SearchProcessingWhereUniqueInput>>,
+    pub connect: Option<
+        crate::shared::filters::OneOrMany<crate::case_processing::SearchProcessingWhereUniqueInput>,
+    >,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2605,22 +2530,22 @@ pub struct SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput {
     >,
     pub create_many:
         Option<Box<crate::cases::SearchProcessingCreateManyCaseSearchProcessingsInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::SearchProcessingWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::SearchProcessingWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::SearchProcessingWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::SearchProcessingWhereUniqueInput>>,
+    pub set: Option<Vec<crate::case_processing::SearchProcessingWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::case_processing::SearchProcessingWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::case_processing::SearchProcessingWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::case_processing::SearchProcessingWhereUniqueInput>>,
     pub update: Option<
         Vec<crate::cases::SearchProcessingUpdateWithWhereUniqueWithoutCaseSearchProcessingsInput>,
     >,
     pub update_many: Option<
         Vec<crate::cases::SearchProcessingUpdateManyWithWhereWithoutCaseSearchProcessingsInput>,
     >,
-    pub delete_many: Option<Vec<crate::cases::SearchProcessingScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::case_processing::SearchProcessingScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SearchProcessingUpsertWithWhereUniqueWithoutCaseSearchProcessingsInput {
-    pub r#where: Box<crate::cases::SearchProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::SearchProcessingWhereUniqueInput>,
     pub update: Box<crate::cases::SearchProcessingUpdateWithoutCaseSearchProcessingsInput>,
     pub create: Box<crate::cases::SearchProcessingCreateWithoutCaseSearchProcessingsInput>,
 }
@@ -2628,52 +2553,15 @@ pub struct SearchProcessingUpsertWithWhereUniqueWithoutCaseSearchProcessingsInpu
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SearchProcessingUpdateWithWhereUniqueWithoutCaseSearchProcessingsInput {
-    pub r#where: Box<crate::cases::SearchProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::SearchProcessingWhereUniqueInput>,
     pub data: Box<crate::cases::SearchProcessingUpdateWithoutCaseSearchProcessingsInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SearchProcessingUpdateManyWithWhereWithoutCaseSearchProcessingsInput {
-    pub r#where: Box<crate::cases::SearchProcessingScalarWhereInput>,
-    pub data: Box<crate::cases::SearchProcessingUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct SearchProcessingScalarWhereInput {
-    pub id: Option<crate::shared::filters::IntFilter>,
-    pub document_id: Option<crate::shared::filters::StringFilter>,
-    pub batch_id: Option<crate::shared::filters::StringNullableFilter>,
-    pub search_types: Option<crate::shared::filters::JsonFilter>,
-    pub search_terms: Option<crate::shared::filters::JsonNullableFilter>,
-    pub file_count: Option<crate::shared::filters::IntNullableFilter>,
-    pub processing_tier: Option<crate::case_processing::ProcessingTierFilter>,
-    pub ocr_status: Option<crate::case_processing::ProcessingStatusFilter>,
-    pub processing_status: Option<crate::case_processing::ProcessingStatusFilter>,
-    pub organization_status: Option<crate::case_processing::ProcessingStatusFilter>,
-    pub summarization_status: Option<crate::case_processing::ProcessingStatusFilter>,
-    pub started_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub completed_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub organization_started_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub organization_completed_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub summarization_started_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub summarization_completed_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub summarization_output_file_path: Option<crate::shared::filters::StringNullableFilter>,
-    pub notification_email: Option<crate::shared::filters::JsonNullableFilter>,
-    pub redaction_terms: Option<crate::shared::filters::JsonNullableFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub processing_message: Option<crate::shared::filters::StringNullableFilter>,
-    pub firm_id: Option<crate::shared::filters::StringNullableFilter>,
-    pub case_id: Option<crate::shared::filters::StringNullableFilter>,
-    pub sqs_message: Option<crate::shared::filters::JsonNullableFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<SearchProcessingScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<SearchProcessingScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<SearchProcessingScalarWhereInput>>,
+    pub r#where: Box<crate::case_processing::SearchProcessingScalarWhereInput>,
+    pub data: Box<crate::case_processing::SearchProcessingUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2694,12 +2582,8 @@ pub struct InitialCaseEvaluationProcessingCreateWithoutCaseInitialCaseEvaluation
     pub known_providers: Option<serde_json::Value>,
     pub treatment_start_date: Option<chrono::DateTime<chrono::Utc>>,
     pub treatment_end_date: Option<chrono::DateTime<chrono::Utc>>,
-    pub firm: Option<
-        crate::case_processing::FirmCreateNestedOneWithoutInitialCaseEvaluationProcessingFirmInput,
-    >,
-    pub user: Option<
-        crate::case_processing::UserCreateNestedOneWithoutInitialCaseEvaluationProcessingUserInput,
-    >,
+    pub firm: Option<Box<crate::case_processing::FirmCreateNestedOneWithoutInitialCaseEvaluationProcessingFirmInput>>,
+    pub user: Option<Box<crate::case_processing::UserCreateNestedOneWithoutInitialCaseEvaluationProcessingUserInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2728,7 +2612,7 @@ pub struct InitialCaseEvaluationProcessingUncheckedCreateWithoutCaseInitialCaseE
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InitialCaseEvaluationProcessingCreateOrConnectWithoutCaseInitialCaseEvaluationInput {
-    pub r#where: Box<crate::cases::InitialCaseEvaluationProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::InitialCaseEvaluationProcessingWhereUniqueInput>,
     pub create: Box<
         crate::cases::InitialCaseEvaluationProcessingCreateWithoutCaseInitialCaseEvaluationInput,
     >,
@@ -2756,8 +2640,8 @@ pub struct InitialCaseEvaluationProcessingUpdateWithoutCaseInitialCaseEvaluation
     pub known_providers: Option<crate::shared::filters::NullableJsonFieldUpdateOperationsInput>,
     pub treatment_start_date: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub treatment_end_date: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::case_processing::FirmUpdateOneRequiredWithoutInitialCaseEvaluationProcessingFirmNestedInput>,
-    pub user: Option<crate::case_processing::UserUpdateOneRequiredWithoutInitialCaseEvaluationProcessingUserNestedInput>,
+    pub firm: Option<Box<crate::case_processing::FirmUpdateOneRequiredWithoutInitialCaseEvaluationProcessingFirmNestedInput>>,
+    pub user: Option<Box<crate::case_processing::UserUpdateOneRequiredWithoutInitialCaseEvaluationProcessingUserNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2799,7 +2683,7 @@ pub struct InitialCaseEvaluationProcessingUncheckedUpdateWithoutCaseInitialCaseE
 pub struct InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput {
     pub create: Option<Box<crate::cases::InitialCaseEvaluationProcessingCreateWithoutCaseInitialCaseEvaluationInput>>,
     pub connect_or_create: Option<Box<crate::cases::InitialCaseEvaluationProcessingCreateOrConnectWithoutCaseInitialCaseEvaluationInput>>,
-    pub connect: Option<Box<crate::cases::InitialCaseEvaluationProcessingWhereUniqueInput>>,
+    pub connect: Option<Box<crate::case_processing::InitialCaseEvaluationProcessingWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2811,7 +2695,7 @@ pub struct InitialCaseEvaluationProcessingUpsertWithoutCaseInitialCaseEvaluation
     pub create: Box<
         crate::cases::InitialCaseEvaluationProcessingCreateWithoutCaseInitialCaseEvaluationInput,
     >,
-    pub r#where: Option<Box<crate::cases::InitialCaseEvaluationProcessingWhereInput>>,
+    pub r#where: Option<Box<crate::case_processing::InitialCaseEvaluationProcessingWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2822,7 +2706,7 @@ pub struct InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluat
     pub upsert: Option<Box<crate::cases::InitialCaseEvaluationProcessingUpsertWithoutCaseInitialCaseEvaluationInput>>,
     pub disconnect: Option<bool>,
     pub delete: Option<bool>,
-    pub connect: Option<Box<crate::cases::InitialCaseEvaluationProcessingWhereUniqueInput>>,
+    pub connect: Option<Box<crate::case_processing::InitialCaseEvaluationProcessingWhereUniqueInput>>,
     pub update: Option<Box<crate::cases::InitialCaseEvaluationProcessingUpdateToOneWithWhereWithoutCaseInitialCaseEvaluationInput>>,
 }
 
@@ -2830,7 +2714,7 @@ pub struct InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluat
 #[serde(rename_all = "camelCase")]
 pub struct InitialCaseEvaluationProcessingUpdateToOneWithWhereWithoutCaseInitialCaseEvaluationInput
 {
-    pub r#where: Option<Box<crate::cases::InitialCaseEvaluationProcessingWhereInput>>,
+    pub r#where: Option<Box<crate::case_processing::InitialCaseEvaluationProcessingWhereInput>>,
     pub data: Box<
         crate::cases::InitialCaseEvaluationProcessingUpdateWithoutCaseInitialCaseEvaluationInput,
     >,
@@ -2841,8 +2725,8 @@ pub struct InitialCaseEvaluationProcessingUpdateToOneWithWhereWithoutCaseInitial
 pub struct DemandLetterProcessingCreateWithoutCaseDemandLetterProcessingsInput {
     pub completed_at: Option<chrono::DateTime<chrono::Utc>>,
     pub processing_status_message: Option<String>,
-    pub demand_letter: Option<crate::demand_letters::DemandLetterCreateNestedOneWithoutDemandLetterProcessingDemandLetterInput>,
-    pub firm: Option<crate::demand_letters::FirmCreateNestedOneWithoutDemandLetterProcessingFirmInput>,
+    pub demand_letter: Option<Box<crate::demand_letters::DemandLetterCreateNestedOneWithoutDemandLetterProcessingDemandLetterInput>>,
+    pub firm: Option<Box<crate::demand_letters::FirmCreateNestedOneWithoutDemandLetterProcessingFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2858,7 +2742,7 @@ pub struct DemandLetterProcessingUncheckedCreateWithoutCaseDemandLetterProcessin
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DemandLetterProcessingCreateOrConnectWithoutCaseDemandLetterProcessingsInput {
-    pub r#where: Box<crate::cases::DemandLetterProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::demand_letters::DemandLetterProcessingWhereUniqueInput>,
     pub create:
         Box<crate::cases::DemandLetterProcessingCreateWithoutCaseDemandLetterProcessingsInput>,
 }
@@ -2873,8 +2757,8 @@ pub struct DemandLetterProcessingUpdateWithoutCaseDemandLetterProcessingsInput {
     pub processing_status_message: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub demand_letter: Option<crate::demand_letters::DemandLetterUpdateOneRequiredWithoutDemandLetterProcessingDemandLetterNestedInput>,
-    pub firm: Option<crate::demand_letters::FirmUpdateOneRequiredWithoutDemandLetterProcessingFirmNestedInput>,
+    pub demand_letter: Option<Box<crate::demand_letters::DemandLetterUpdateOneRequiredWithoutDemandLetterProcessingDemandLetterNestedInput>>,
+    pub firm: Option<Box<crate::demand_letters::FirmUpdateOneRequiredWithoutDemandLetterProcessingFirmNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2900,7 +2784,7 @@ pub struct DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessi
     pub create: Option<crate::shared::filters::OneOrMany<crate::cases::DemandLetterProcessingCreateWithoutCaseDemandLetterProcessingsInput>>,
     pub connect_or_create: Option<Vec<crate::cases::DemandLetterProcessingCreateOrConnectWithoutCaseDemandLetterProcessingsInput>>,
     pub create_many: Option<Box<crate::cases::DemandLetterProcessingCreateManyCaseDemandLetterProcessingsInputEnvelope>>,
-    pub connect: Option<crate::shared::filters::OneOrMany<crate::cases::DemandLetterProcessingWhereUniqueInput>>,
+    pub connect: Option<crate::shared::filters::OneOrMany<crate::demand_letters::DemandLetterProcessingWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -2927,18 +2811,18 @@ pub struct DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNes
     pub connect_or_create: Option<Vec<crate::cases::DemandLetterProcessingCreateOrConnectWithoutCaseDemandLetterProcessingsInput>>,
     pub upsert: Option<Vec<crate::cases::DemandLetterProcessingUpsertWithWhereUniqueWithoutCaseDemandLetterProcessingsInput>>,
     pub create_many: Option<Box<crate::cases::DemandLetterProcessingCreateManyCaseDemandLetterProcessingsInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::DemandLetterProcessingWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::DemandLetterProcessingWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::DemandLetterProcessingWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::DemandLetterProcessingWhereUniqueInput>>,
+    pub set: Option<Vec<crate::demand_letters::DemandLetterProcessingWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::demand_letters::DemandLetterProcessingWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::demand_letters::DemandLetterProcessingWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::demand_letters::DemandLetterProcessingWhereUniqueInput>>,
     pub update: Option<Vec<crate::cases::DemandLetterProcessingUpdateWithWhereUniqueWithoutCaseDemandLetterProcessingsInput>>,
     pub update_many: Option<Vec<crate::cases::DemandLetterProcessingUpdateManyWithWhereWithoutCaseDemandLetterProcessingsInput>>,
-    pub delete_many: Option<Vec<crate::cases::DemandLetterProcessingScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::demand_letters::DemandLetterProcessingScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DemandLetterProcessingUpsertWithWhereUniqueWithoutCaseDemandLetterProcessingsInput {
-    pub r#where: Box<crate::cases::DemandLetterProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::demand_letters::DemandLetterProcessingWhereUniqueInput>,
     pub update:
         Box<crate::cases::DemandLetterProcessingUpdateWithoutCaseDemandLetterProcessingsInput>,
     pub create:
@@ -2948,7 +2832,7 @@ pub struct DemandLetterProcessingUpsertWithWhereUniqueWithoutCaseDemandLetterPro
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DemandLetterProcessingUpdateWithWhereUniqueWithoutCaseDemandLetterProcessingsInput {
-    pub r#where: Box<crate::cases::DemandLetterProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::demand_letters::DemandLetterProcessingWhereUniqueInput>,
     pub data:
         Box<crate::cases::DemandLetterProcessingUpdateWithoutCaseDemandLetterProcessingsInput>,
 }
@@ -2956,29 +2840,8 @@ pub struct DemandLetterProcessingUpdateWithWhereUniqueWithoutCaseDemandLetterPro
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DemandLetterProcessingUpdateManyWithWhereWithoutCaseDemandLetterProcessingsInput {
-    pub r#where: Box<crate::cases::DemandLetterProcessingScalarWhereInput>,
-    pub data: Box<crate::cases::DemandLetterProcessingUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct DemandLetterProcessingScalarWhereInput {
-    pub id: Option<crate::shared::filters::IntFilter>,
-    pub demand_letter_id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub processing_status: Option<crate::case_processing::ProcessingStatusFilter>,
-    pub started_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub completed_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub processing_status_message: Option<crate::shared::filters::StringNullableFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<DemandLetterProcessingScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<DemandLetterProcessingScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<DemandLetterProcessingScalarWhereInput>>,
+    pub r#where: Box<crate::demand_letters::DemandLetterProcessingScalarWhereInput>,
+    pub data: Box<crate::demand_letters::DemandLetterProcessingUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2989,8 +2852,9 @@ pub struct CaseReviewProcessingCreateWithoutCaseCaseReviewProcessingsInput {
     pub processing_status_message: Option<String>,
     pub m4a_path: Option<String>,
     pub transcript_path: Option<String>,
-    pub firm:
-        Option<crate::case_processing::FirmCreateNestedOneWithoutCaseReviewProcessingFirmInput>,
+    pub firm: Option<
+        Box<crate::case_processing::FirmCreateNestedOneWithoutCaseReviewProcessingFirmInput>,
+    >,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3008,7 +2872,7 @@ pub struct CaseReviewProcessingUncheckedCreateWithoutCaseCaseReviewProcessingsIn
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseReviewProcessingCreateOrConnectWithoutCaseCaseReviewProcessingsInput {
-    pub r#where: Box<crate::cases::CaseReviewProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::CaseReviewProcessingWhereUniqueInput>,
     pub create: Box<crate::cases::CaseReviewProcessingCreateWithoutCaseCaseReviewProcessingsInput>,
 }
 
@@ -3028,7 +2892,9 @@ pub struct CaseReviewProcessingUpdateWithoutCaseCaseReviewProcessingsInput {
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub firm: Option<
-        crate::case_processing::FirmUpdateOneRequiredWithoutCaseReviewProcessingFirmNestedInput,
+        Box<
+            crate::case_processing::FirmUpdateOneRequiredWithoutCaseReviewProcessingFirmNestedInput,
+        >,
     >,
 }
 
@@ -3066,7 +2932,9 @@ pub struct CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsI
         Box<crate::cases::CaseReviewProcessingCreateManyCaseCaseReviewProcessingsInputEnvelope>,
     >,
     pub connect: Option<
-        crate::shared::filters::OneOrMany<crate::cases::CaseReviewProcessingWhereUniqueInput>,
+        crate::shared::filters::OneOrMany<
+            crate::case_processing::CaseReviewProcessingWhereUniqueInput,
+        >,
     >,
 }
 
@@ -3096,18 +2964,18 @@ pub struct CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedI
     pub connect_or_create: Option<Vec<crate::cases::CaseReviewProcessingCreateOrConnectWithoutCaseCaseReviewProcessingsInput>>,
     pub upsert: Option<Vec<crate::cases::CaseReviewProcessingUpsertWithWhereUniqueWithoutCaseCaseReviewProcessingsInput>>,
     pub create_many: Option<Box<crate::cases::CaseReviewProcessingCreateManyCaseCaseReviewProcessingsInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::CaseReviewProcessingWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::CaseReviewProcessingWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::CaseReviewProcessingWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::CaseReviewProcessingWhereUniqueInput>>,
+    pub set: Option<Vec<crate::case_processing::CaseReviewProcessingWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::case_processing::CaseReviewProcessingWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::case_processing::CaseReviewProcessingWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::case_processing::CaseReviewProcessingWhereUniqueInput>>,
     pub update: Option<Vec<crate::cases::CaseReviewProcessingUpdateWithWhereUniqueWithoutCaseCaseReviewProcessingsInput>>,
     pub update_many: Option<Vec<crate::cases::CaseReviewProcessingUpdateManyWithWhereWithoutCaseCaseReviewProcessingsInput>>,
-    pub delete_many: Option<Vec<crate::cases::CaseReviewProcessingScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::case_processing::CaseReviewProcessingScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseReviewProcessingUpsertWithWhereUniqueWithoutCaseCaseReviewProcessingsInput {
-    pub r#where: Box<crate::cases::CaseReviewProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::CaseReviewProcessingWhereUniqueInput>,
     pub update: Box<crate::cases::CaseReviewProcessingUpdateWithoutCaseCaseReviewProcessingsInput>,
     pub create: Box<crate::cases::CaseReviewProcessingCreateWithoutCaseCaseReviewProcessingsInput>,
 }
@@ -3115,38 +2983,15 @@ pub struct CaseReviewProcessingUpsertWithWhereUniqueWithoutCaseCaseReviewProcess
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseReviewProcessingUpdateWithWhereUniqueWithoutCaseCaseReviewProcessingsInput {
-    pub r#where: Box<crate::cases::CaseReviewProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::CaseReviewProcessingWhereUniqueInput>,
     pub data: Box<crate::cases::CaseReviewProcessingUpdateWithoutCaseCaseReviewProcessingsInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseReviewProcessingUpdateManyWithWhereWithoutCaseCaseReviewProcessingsInput {
-    pub r#where: Box<crate::cases::CaseReviewProcessingScalarWhereInput>,
-    pub data: Box<crate::cases::CaseReviewProcessingUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CaseReviewProcessingScalarWhereInput {
-    pub id: Option<crate::shared::filters::IntFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub audience: Option<crate::case_processing::CaseReviewAudienceFilter>,
-    pub processing_status: Option<crate::case_processing::ProcessingStatusFilter>,
-    pub started_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub completed_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub processing_status_message: Option<crate::shared::filters::StringNullableFilter>,
-    pub m4a_path: Option<crate::shared::filters::StringNullableFilter>,
-    pub transcript_path: Option<crate::shared::filters::StringNullableFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<CaseReviewProcessingScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<CaseReviewProcessingScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<CaseReviewProcessingScalarWhereInput>>,
+    pub r#where: Box<crate::case_processing::CaseReviewProcessingScalarWhereInput>,
+    pub data: Box<crate::case_processing::CaseReviewProcessingUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3155,10 +3000,8 @@ pub struct AdvitaCaseMappingCreateWithoutCaseAdvitaCaseMappingsInput {
     pub advita_case_no: i32,
     pub last_sync_at: Option<chrono::DateTime<chrono::Utc>>,
     pub last_sync_error: Option<String>,
-    pub firm: Option<crate::advita::FirmCreateNestedOneWithoutAdvitaCaseMappingFirmInput>,
-    pub trackings: Option<
-        crate::advita::AdvitaTrackingMappingCreateNestedManyWithoutAdvitaCaseMappingTrackingsInput,
-    >,
+    pub firm: Option<Box<crate::advita::FirmCreateNestedOneWithoutAdvitaCaseMappingFirmInput>>,
+    pub trackings: Option<Box<crate::advita::AdvitaTrackingMappingCreateNestedManyWithoutAdvitaCaseMappingTrackingsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3174,7 +3017,7 @@ pub struct AdvitaCaseMappingUncheckedCreateWithoutCaseAdvitaCaseMappingsInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AdvitaCaseMappingCreateOrConnectWithoutCaseAdvitaCaseMappingsInput {
-    pub r#where: Box<crate::cases::AdvitaCaseMappingWhereUniqueInput>,
+    pub r#where: Box<crate::advita::AdvitaCaseMappingWhereUniqueInput>,
     pub create: Box<crate::cases::AdvitaCaseMappingCreateWithoutCaseAdvitaCaseMappingsInput>,
 }
 
@@ -3189,10 +3032,8 @@ pub struct AdvitaCaseMappingUpdateWithoutCaseAdvitaCaseMappingsInput {
     pub sync_attempts: Option<crate::shared::filters::IntFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::advita::FirmUpdateOneRequiredWithoutAdvitaCaseMappingFirmNestedInput>,
-    pub trackings: Option<
-        crate::advita::AdvitaTrackingMappingUpdateManyWithoutAdvitaCaseMappingTrackingsNestedInput,
-    >,
+    pub firm: Option<Box<crate::advita::FirmUpdateOneRequiredWithoutAdvitaCaseMappingFirmNestedInput>>,
+    pub trackings: Option<Box<crate::advita::AdvitaTrackingMappingUpdateManyWithoutAdvitaCaseMappingTrackingsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -3224,7 +3065,7 @@ pub struct AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput {
     pub create_many:
         Option<Box<crate::cases::AdvitaCaseMappingCreateManyCaseAdvitaCaseMappingsInputEnvelope>>,
     pub connect:
-        Option<crate::shared::filters::OneOrMany<crate::cases::AdvitaCaseMappingWhereUniqueInput>>,
+        Option<crate::shared::filters::OneOrMany<crate::advita::AdvitaCaseMappingWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -3260,22 +3101,22 @@ pub struct AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput {
     >,
     pub create_many:
         Option<Box<crate::cases::AdvitaCaseMappingCreateManyCaseAdvitaCaseMappingsInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::AdvitaCaseMappingWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::AdvitaCaseMappingWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::AdvitaCaseMappingWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::AdvitaCaseMappingWhereUniqueInput>>,
+    pub set: Option<Vec<crate::advita::AdvitaCaseMappingWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::advita::AdvitaCaseMappingWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::advita::AdvitaCaseMappingWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::advita::AdvitaCaseMappingWhereUniqueInput>>,
     pub update: Option<
         Vec<crate::cases::AdvitaCaseMappingUpdateWithWhereUniqueWithoutCaseAdvitaCaseMappingsInput>,
     >,
     pub update_many: Option<
         Vec<crate::cases::AdvitaCaseMappingUpdateManyWithWhereWithoutCaseAdvitaCaseMappingsInput>,
     >,
-    pub delete_many: Option<Vec<crate::cases::AdvitaCaseMappingScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::advita::AdvitaCaseMappingScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AdvitaCaseMappingUpsertWithWhereUniqueWithoutCaseAdvitaCaseMappingsInput {
-    pub r#where: Box<crate::cases::AdvitaCaseMappingWhereUniqueInput>,
+    pub r#where: Box<crate::advita::AdvitaCaseMappingWhereUniqueInput>,
     pub update: Box<crate::cases::AdvitaCaseMappingUpdateWithoutCaseAdvitaCaseMappingsInput>,
     pub create: Box<crate::cases::AdvitaCaseMappingCreateWithoutCaseAdvitaCaseMappingsInput>,
 }
@@ -3283,36 +3124,15 @@ pub struct AdvitaCaseMappingUpsertWithWhereUniqueWithoutCaseAdvitaCaseMappingsIn
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AdvitaCaseMappingUpdateWithWhereUniqueWithoutCaseAdvitaCaseMappingsInput {
-    pub r#where: Box<crate::cases::AdvitaCaseMappingWhereUniqueInput>,
+    pub r#where: Box<crate::advita::AdvitaCaseMappingWhereUniqueInput>,
     pub data: Box<crate::cases::AdvitaCaseMappingUpdateWithoutCaseAdvitaCaseMappingsInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AdvitaCaseMappingUpdateManyWithWhereWithoutCaseAdvitaCaseMappingsInput {
-    pub r#where: Box<crate::cases::AdvitaCaseMappingScalarWhereInput>,
-    pub data: Box<crate::cases::AdvitaCaseMappingUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct AdvitaCaseMappingScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub advita_case_no: Option<crate::shared::filters::IntFilter>,
-    pub sync_status: Option<crate::advita::AdvitaSyncStatusFilter>,
-    pub last_sync_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub last_sync_error: Option<crate::shared::filters::StringNullableFilter>,
-    pub sync_attempts: Option<crate::shared::filters::IntFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<AdvitaCaseMappingScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<AdvitaCaseMappingScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<AdvitaCaseMappingScalarWhereInput>>,
+    pub r#where: Box<crate::advita::AdvitaCaseMappingScalarWhereInput>,
+    pub data: Box<crate::advita::AdvitaCaseMappingUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3331,10 +3151,10 @@ pub struct CaseQualificationCreateWithoutCaseCaseQualificationsInput {
     pub document_ids: serde_json::Value,
     pub template_version: Option<String>,
     pub template_content_hash: Option<String>,
-    pub firm: Option<crate::qualification::FirmCreateNestedOneWithoutCaseQualificationFirmInput>,
-    pub template: Option<crate::qualification::TortTemplateCreateNestedOneWithoutCaseQualificationTemplateInput>,
-    pub superseded_by: Option<crate::qualification::CaseQualificationCreateNestedOneWithoutCaseQualificationSupersededByInput>,
-    pub supersedes: Option<crate::qualification::CaseQualificationCreateNestedManyWithoutCaseQualificationSupersedesInput>,
+    pub firm: Option<Box<crate::qualification::FirmCreateNestedOneWithoutCaseQualificationFirmInput>>,
+    pub template: Option<Box<crate::qualification::TortTemplateCreateNestedOneWithoutCaseQualificationTemplateInput>>,
+    pub superseded_by: Option<Box<crate::qualification::CaseQualificationCreateNestedOneWithoutCaseQualificationSupersededByInput>>,
+    pub supersedes: Option<Box<crate::qualification::CaseQualificationCreateNestedManyWithoutCaseQualificationSupersedesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3362,7 +3182,7 @@ pub struct CaseQualificationUncheckedCreateWithoutCaseCaseQualificationsInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseQualificationCreateOrConnectWithoutCaseCaseQualificationsInput {
-    pub r#where: Box<crate::cases::CaseQualificationWhereUniqueInput>,
+    pub r#where: Box<crate::qualification::CaseQualificationWhereUniqueInput>,
     pub create: Box<crate::cases::CaseQualificationCreateWithoutCaseCaseQualificationsInput>,
 }
 
@@ -3385,10 +3205,10 @@ pub struct CaseQualificationUpdateWithoutCaseCaseQualificationsInput {
     pub template_version: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub template_content_hash: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::qualification::FirmUpdateOneRequiredWithoutCaseQualificationFirmNestedInput>,
-    pub template: Option<crate::qualification::TortTemplateUpdateOneWithoutCaseQualificationTemplateNestedInput>,
-    pub superseded_by: Option<crate::qualification::CaseQualificationUpdateOneWithoutCaseQualificationSupersededByNestedInput>,
-    pub supersedes: Option<crate::qualification::CaseQualificationUpdateManyWithoutCaseQualificationSupersedesNestedInput>,
+    pub firm: Option<Box<crate::qualification::FirmUpdateOneRequiredWithoutCaseQualificationFirmNestedInput>>,
+    pub template: Option<Box<crate::qualification::TortTemplateUpdateOneWithoutCaseQualificationTemplateNestedInput>>,
+    pub superseded_by: Option<Box<crate::qualification::CaseQualificationUpdateOneWithoutCaseQualificationSupersededByNestedInput>>,
+    pub supersedes: Option<Box<crate::qualification::CaseQualificationUpdateManyWithoutCaseQualificationSupersedesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -3430,8 +3250,9 @@ pub struct CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput {
     >,
     pub create_many:
         Option<Box<crate::cases::CaseQualificationCreateManyCaseCaseQualificationsInputEnvelope>>,
-    pub connect:
-        Option<crate::shared::filters::OneOrMany<crate::cases::CaseQualificationWhereUniqueInput>>,
+    pub connect: Option<
+        crate::shared::filters::OneOrMany<crate::qualification::CaseQualificationWhereUniqueInput>,
+    >,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -3479,22 +3300,22 @@ pub struct CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput {
     >,
     pub create_many:
         Option<Box<crate::cases::CaseQualificationCreateManyCaseCaseQualificationsInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::CaseQualificationWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::CaseQualificationWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::CaseQualificationWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::CaseQualificationWhereUniqueInput>>,
+    pub set: Option<Vec<crate::qualification::CaseQualificationWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::qualification::CaseQualificationWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::qualification::CaseQualificationWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::qualification::CaseQualificationWhereUniqueInput>>,
     pub update: Option<
         Vec<crate::cases::CaseQualificationUpdateWithWhereUniqueWithoutCaseCaseQualificationsInput>,
     >,
     pub update_many: Option<
         Vec<crate::cases::CaseQualificationUpdateManyWithWhereWithoutCaseCaseQualificationsInput>,
     >,
-    pub delete_many: Option<Vec<crate::cases::CaseQualificationScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::qualification::CaseQualificationScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseQualificationUpsertWithWhereUniqueWithoutCaseCaseQualificationsInput {
-    pub r#where: Box<crate::cases::CaseQualificationWhereUniqueInput>,
+    pub r#where: Box<crate::qualification::CaseQualificationWhereUniqueInput>,
     pub update: Box<crate::cases::CaseQualificationUpdateWithoutCaseCaseQualificationsInput>,
     pub create: Box<crate::cases::CaseQualificationCreateWithoutCaseCaseQualificationsInput>,
 }
@@ -3502,46 +3323,15 @@ pub struct CaseQualificationUpsertWithWhereUniqueWithoutCaseCaseQualificationsIn
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseQualificationUpdateWithWhereUniqueWithoutCaseCaseQualificationsInput {
-    pub r#where: Box<crate::cases::CaseQualificationWhereUniqueInput>,
+    pub r#where: Box<crate::qualification::CaseQualificationWhereUniqueInput>,
     pub data: Box<crate::cases::CaseQualificationUpdateWithoutCaseCaseQualificationsInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseQualificationUpdateManyWithWhereWithoutCaseCaseQualificationsInput {
-    pub r#where: Box<crate::cases::CaseQualificationScalarWhereInput>,
-    pub data: Box<crate::cases::CaseQualificationUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CaseQualificationScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub tort_type: Option<crate::shared::filters::StringFilter>,
-    pub verdict: Option<crate::qualification::QualificationVerdictFilter>,
-    pub confidence_score: Option<crate::shared::filters::FloatFilter>,
-    pub summary: Option<crate::shared::filters::StringFilter>,
-    pub pros_json: Option<crate::shared::filters::JsonFilter>,
-    pub cons_json: Option<crate::shared::filters::JsonFilter>,
-    pub flags_json: Option<crate::shared::filters::JsonFilter>,
-    pub report_s3_key: Option<crate::shared::filters::StringFilter>,
-    pub criteria_used: Option<crate::shared::filters::JsonFilter>,
-    pub web_search_used: Option<crate::shared::filters::BoolFilter>,
-    pub documents_hash: Option<crate::shared::filters::StringFilter>,
-    pub document_ids: Option<crate::shared::filters::JsonFilter>,
-    pub template_id: Option<crate::shared::filters::StringNullableFilter>,
-    pub template_version: Option<crate::shared::filters::StringNullableFilter>,
-    pub template_content_hash: Option<crate::shared::filters::StringNullableFilter>,
-    pub superseded_by_id: Option<crate::shared::filters::StringNullableFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<CaseQualificationScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<CaseQualificationScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<CaseQualificationScalarWhereInput>>,
+    pub r#where: Box<crate::qualification::CaseQualificationScalarWhereInput>,
+    pub data: Box<crate::qualification::CaseQualificationUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3553,10 +3343,10 @@ pub struct QualifyAiProcessingCreateWithoutCaseQualifyAiProcessingInput {
     pub excel_output_key: Option<String>,
     pub docx_output_key: Option<String>,
     pub completed_at: Option<chrono::DateTime<chrono::Utc>>,
-    pub firm: Option<crate::case_processing::FirmCreateNestedOneWithoutQualifyAiProcessingFirmInput>,
-    pub user: Option<crate::case_processing::UserCreateNestedOneWithoutQualifyAiProcessingUserInput>,
-    pub invoice: Option<crate::case_processing::InvoiceCreateNestedOneWithoutQualifyAiProcessingInvoiceInput>,
-    pub processed_documents: Option<crate::case_processing::QualifyAiProcessedDocumentCreateNestedManyWithoutQualifyAiProcessingProcessedDocumentsInput>,
+    pub firm: Option<Box<crate::case_processing::FirmCreateNestedOneWithoutQualifyAiProcessingFirmInput>>,
+    pub user: Option<Box<crate::case_processing::UserCreateNestedOneWithoutQualifyAiProcessingUserInput>>,
+    pub invoice: Option<Box<crate::case_processing::InvoiceCreateNestedOneWithoutQualifyAiProcessingInvoiceInput>>,
+    pub processed_documents: Option<Box<crate::case_processing::QualifyAiProcessedDocumentCreateNestedManyWithoutQualifyAiProcessingProcessedDocumentsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3577,7 +3367,7 @@ pub struct QualifyAiProcessingUncheckedCreateWithoutCaseQualifyAiProcessingInput
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct QualifyAiProcessingCreateOrConnectWithoutCaseQualifyAiProcessingInput {
-    pub r#where: Box<crate::cases::QualifyAiProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::QualifyAiProcessingWhereUniqueInput>,
     pub create: Box<crate::cases::QualifyAiProcessingCreateWithoutCaseQualifyAiProcessingInput>,
 }
 
@@ -3597,10 +3387,10 @@ pub struct QualifyAiProcessingUpdateWithoutCaseQualifyAiProcessingInput {
     pub completed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::case_processing::FirmUpdateOneRequiredWithoutQualifyAiProcessingFirmNestedInput>,
-    pub user: Option<crate::case_processing::UserUpdateOneRequiredWithoutQualifyAiProcessingUserNestedInput>,
-    pub invoice: Option<crate::case_processing::InvoiceUpdateOneRequiredWithoutQualifyAiProcessingInvoiceNestedInput>,
-    pub processed_documents: Option<crate::case_processing::QualifyAiProcessedDocumentUpdateManyWithoutQualifyAiProcessingProcessedDocumentsNestedInput>,
+    pub firm: Option<Box<crate::case_processing::FirmUpdateOneRequiredWithoutQualifyAiProcessingFirmNestedInput>>,
+    pub user: Option<Box<crate::case_processing::UserUpdateOneRequiredWithoutQualifyAiProcessingUserNestedInput>>,
+    pub invoice: Option<Box<crate::case_processing::InvoiceUpdateOneRequiredWithoutQualifyAiProcessingInvoiceNestedInput>>,
+    pub processed_documents: Option<Box<crate::case_processing::QualifyAiProcessedDocumentUpdateManyWithoutQualifyAiProcessingProcessedDocumentsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -3641,7 +3431,9 @@ pub struct QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInpu
         Box<crate::cases::QualifyAiProcessingCreateManyCaseQualifyAiProcessingInputEnvelope>,
     >,
     pub connect: Option<
-        crate::shared::filters::OneOrMany<crate::cases::QualifyAiProcessingWhereUniqueInput>,
+        crate::shared::filters::OneOrMany<
+            crate::case_processing::QualifyAiProcessingWhereUniqueInput,
+        >,
     >,
 }
 
@@ -3674,18 +3466,18 @@ pub struct QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInpu
     pub connect_or_create: Option<Vec<crate::cases::QualifyAiProcessingCreateOrConnectWithoutCaseQualifyAiProcessingInput>>,
     pub upsert: Option<Vec<crate::cases::QualifyAiProcessingUpsertWithWhereUniqueWithoutCaseQualifyAiProcessingInput>>,
     pub create_many: Option<Box<crate::cases::QualifyAiProcessingCreateManyCaseQualifyAiProcessingInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::QualifyAiProcessingWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::QualifyAiProcessingWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::QualifyAiProcessingWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::QualifyAiProcessingWhereUniqueInput>>,
+    pub set: Option<Vec<crate::case_processing::QualifyAiProcessingWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::case_processing::QualifyAiProcessingWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::case_processing::QualifyAiProcessingWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::case_processing::QualifyAiProcessingWhereUniqueInput>>,
     pub update: Option<Vec<crate::cases::QualifyAiProcessingUpdateWithWhereUniqueWithoutCaseQualifyAiProcessingInput>>,
     pub update_many: Option<Vec<crate::cases::QualifyAiProcessingUpdateManyWithWhereWithoutCaseQualifyAiProcessingInput>>,
-    pub delete_many: Option<Vec<crate::cases::QualifyAiProcessingScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::case_processing::QualifyAiProcessingScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct QualifyAiProcessingUpsertWithWhereUniqueWithoutCaseQualifyAiProcessingInput {
-    pub r#where: Box<crate::cases::QualifyAiProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::QualifyAiProcessingWhereUniqueInput>,
     pub update: Box<crate::cases::QualifyAiProcessingUpdateWithoutCaseQualifyAiProcessingInput>,
     pub create: Box<crate::cases::QualifyAiProcessingCreateWithoutCaseQualifyAiProcessingInput>,
 }
@@ -3693,43 +3485,15 @@ pub struct QualifyAiProcessingUpsertWithWhereUniqueWithoutCaseQualifyAiProcessin
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct QualifyAiProcessingUpdateWithWhereUniqueWithoutCaseQualifyAiProcessingInput {
-    pub r#where: Box<crate::cases::QualifyAiProcessingWhereUniqueInput>,
+    pub r#where: Box<crate::case_processing::QualifyAiProcessingWhereUniqueInput>,
     pub data: Box<crate::cases::QualifyAiProcessingUpdateWithoutCaseQualifyAiProcessingInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct QualifyAiProcessingUpdateManyWithWhereWithoutCaseQualifyAiProcessingInput {
-    pub r#where: Box<crate::cases::QualifyAiProcessingScalarWhereInput>,
-    pub data: Box<crate::cases::QualifyAiProcessingUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct QualifyAiProcessingScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub user_id: Option<crate::shared::filters::StringFilter>,
-    pub invoice_id: Option<crate::shared::filters::StringFilter>,
-    pub nurse_review: Option<crate::shared::filters::BoolFilter>,
-    pub generate_qualification_memo: Option<crate::shared::filters::BoolFilter>,
-    pub page_count: Option<crate::shared::filters::IntFilter>,
-    pub processing_status: Option<crate::case_processing::ProcessingStatusFilter>,
-    pub sqs_message_id: Option<crate::shared::filters::StringNullableFilter>,
-    pub error_message: Option<crate::shared::filters::StringNullableFilter>,
-    pub excel_output_key: Option<crate::shared::filters::StringNullableFilter>,
-    pub docx_output_key: Option<crate::shared::filters::StringNullableFilter>,
-    pub started_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub completed_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<QualifyAiProcessingScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<QualifyAiProcessingScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<QualifyAiProcessingScalarWhereInput>>,
+    pub r#where: Box<crate::case_processing::QualifyAiProcessingScalarWhereInput>,
+    pub data: Box<crate::case_processing::QualifyAiProcessingUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3737,13 +3501,11 @@ pub struct QualifyAiProcessingScalarWhereInput {
 pub struct InvoiceCreateWithoutCaseInvoicesInput {
     pub paid_at: Option<chrono::DateTime<chrono::Utc>>,
     pub payment_intent_id: Option<String>,
-    pub user: Option<crate::billing::UserCreateNestedOneWithoutInvoiceUserInput>,
-    pub firm: Option<crate::billing::FirmCreateNestedOneWithoutInvoiceFirmInput>,
-    pub documents: Option<crate::billing::DocumentCreateNestedManyWithoutInvoiceDocumentsInput>,
-    pub line_items: Option<crate::billing::LineItemCreateNestedManyWithoutInvoiceLineItemsInput>,
-    pub qualify_ai_processing: Option<
-        crate::billing::QualifyAiProcessingCreateNestedManyWithoutInvoiceQualifyAiProcessingInput,
-    >,
+    pub user: Option<Box<crate::billing::UserCreateNestedOneWithoutInvoiceUserInput>>,
+    pub firm: Option<Box<crate::billing::FirmCreateNestedOneWithoutInvoiceFirmInput>>,
+    pub documents: Option<Box<crate::billing::DocumentCreateNestedManyWithoutInvoiceDocumentsInput>>,
+    pub line_items: Option<Box<crate::billing::LineItemCreateNestedManyWithoutInvoiceLineItemsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::billing::QualifyAiProcessingCreateNestedManyWithoutInvoiceQualifyAiProcessingInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3759,7 +3521,7 @@ pub struct InvoiceUncheckedCreateWithoutCaseInvoicesInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InvoiceCreateOrConnectWithoutCaseInvoicesInput {
-    pub r#where: Box<crate::cases::InvoiceWhereUniqueInput>,
+    pub r#where: Box<crate::billing::InvoiceWhereUniqueInput>,
     pub create: Box<crate::cases::InvoiceCreateWithoutCaseInvoicesInput>,
 }
 
@@ -3776,13 +3538,11 @@ pub struct InvoiceUpdateWithoutCaseInvoicesInput {
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub paid_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub payment_intent_id: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub user: Option<crate::billing::UserUpdateOneRequiredWithoutInvoiceUserNestedInput>,
-    pub firm: Option<crate::billing::FirmUpdateOneRequiredWithoutInvoiceFirmNestedInput>,
-    pub documents: Option<crate::billing::DocumentUpdateManyWithoutInvoiceDocumentsNestedInput>,
-    pub line_items: Option<crate::billing::LineItemUpdateManyWithoutInvoiceLineItemsNestedInput>,
-    pub qualify_ai_processing: Option<
-        crate::billing::QualifyAiProcessingUpdateManyWithoutInvoiceQualifyAiProcessingNestedInput,
-    >,
+    pub user: Option<Box<crate::billing::UserUpdateOneRequiredWithoutInvoiceUserNestedInput>>,
+    pub firm: Option<Box<crate::billing::FirmUpdateOneRequiredWithoutInvoiceFirmNestedInput>>,
+    pub documents: Option<Box<crate::billing::DocumentUpdateManyWithoutInvoiceDocumentsNestedInput>>,
+    pub line_items: Option<Box<crate::billing::LineItemUpdateManyWithoutInvoiceLineItemsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::billing::QualifyAiProcessingUpdateManyWithoutInvoiceQualifyAiProcessingNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -3812,7 +3572,7 @@ pub struct InvoiceCreateNestedManyWithoutCaseInvoicesInput {
     pub connect_or_create:
         Option<Vec<crate::cases::InvoiceCreateOrConnectWithoutCaseInvoicesInput>>,
     pub create_many: Option<Box<crate::cases::InvoiceCreateManyCaseInvoicesInputEnvelope>>,
-    pub connect: Option<crate::shared::filters::OneOrMany<crate::cases::InvoiceWhereUniqueInput>>,
+    pub connect: Option<crate::shared::filters::OneOrMany<crate::billing::InvoiceWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -3842,18 +3602,18 @@ pub struct InvoiceUpdateManyWithoutCaseInvoicesNestedInput {
         Option<Vec<crate::cases::InvoiceCreateOrConnectWithoutCaseInvoicesInput>>,
     pub upsert: Option<Vec<crate::cases::InvoiceUpsertWithWhereUniqueWithoutCaseInvoicesInput>>,
     pub create_many: Option<Box<crate::cases::InvoiceCreateManyCaseInvoicesInputEnvelope>>,
-    pub set: Option<Vec<crate::cases::InvoiceWhereUniqueInput>>,
-    pub disconnect: Option<Vec<crate::cases::InvoiceWhereUniqueInput>>,
-    pub delete: Option<Vec<crate::cases::InvoiceWhereUniqueInput>>,
-    pub connect: Option<Vec<crate::cases::InvoiceWhereUniqueInput>>,
+    pub set: Option<Vec<crate::billing::InvoiceWhereUniqueInput>>,
+    pub disconnect: Option<Vec<crate::billing::InvoiceWhereUniqueInput>>,
+    pub delete: Option<Vec<crate::billing::InvoiceWhereUniqueInput>>,
+    pub connect: Option<Vec<crate::billing::InvoiceWhereUniqueInput>>,
     pub update: Option<Vec<crate::cases::InvoiceUpdateWithWhereUniqueWithoutCaseInvoicesInput>>,
     pub update_many: Option<Vec<crate::cases::InvoiceUpdateManyWithWhereWithoutCaseInvoicesInput>>,
-    pub delete_many: Option<Vec<crate::cases::InvoiceScalarWhereInput>>,
+    pub delete_many: Option<Vec<crate::billing::InvoiceScalarWhereInput>>,
 }
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InvoiceUpsertWithWhereUniqueWithoutCaseInvoicesInput {
-    pub r#where: Box<crate::cases::InvoiceWhereUniqueInput>,
+    pub r#where: Box<crate::billing::InvoiceWhereUniqueInput>,
     pub update: Box<crate::cases::InvoiceUpdateWithoutCaseInvoicesInput>,
     pub create: Box<crate::cases::InvoiceCreateWithoutCaseInvoicesInput>,
 }
@@ -3861,39 +3621,15 @@ pub struct InvoiceUpsertWithWhereUniqueWithoutCaseInvoicesInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InvoiceUpdateWithWhereUniqueWithoutCaseInvoicesInput {
-    pub r#where: Box<crate::cases::InvoiceWhereUniqueInput>,
+    pub r#where: Box<crate::billing::InvoiceWhereUniqueInput>,
     pub data: Box<crate::cases::InvoiceUpdateWithoutCaseInvoicesInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InvoiceUpdateManyWithWhereWithoutCaseInvoicesInput {
-    pub r#where: Box<crate::cases::InvoiceScalarWhereInput>,
-    pub data: Box<crate::cases::InvoiceUpdateManyMutationInput>,
-}
-
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct InvoiceScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub amount: Option<crate::shared::filters::DecimalFilter>,
-    pub tax: Option<crate::shared::filters::DecimalFilter>,
-    pub total: Option<crate::shared::filters::DecimalFilter>,
-    pub status: Option<crate::billing::InvoiceStatusFilter>,
-    pub processing_tier: Option<crate::case_processing::ProcessingTierFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub paid_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub user_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringNullableFilter>,
-    pub payment_intent_id: Option<crate::shared::filters::StringNullableFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<InvoiceScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<InvoiceScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<InvoiceScalarWhereInput>>,
+    pub r#where: Box<crate::billing::InvoiceScalarWhereInput>,
+    pub data: Box<crate::billing::InvoiceUpdateManyMutationInput>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3901,8 +3637,8 @@ pub struct InvoiceScalarWhereInput {
 pub struct CaseNoteCreateWithoutCaseCaseNotesInput {
     pub title: String,
     pub body: String,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseNoteFirmInput>,
-    pub user: Option<crate::cases::UserCreateNestedOneWithoutCaseNoteUserInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseNoteFirmInput>>,
+    pub user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseNoteUserInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -3931,8 +3667,8 @@ pub struct CaseNoteUpdateWithoutCaseCaseNotesInput {
     pub is_pinned: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseNoteFirmNestedInput>,
-    pub user: Option<crate::cases::UserUpdateOneRequiredWithoutCaseNoteUserNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseNoteFirmNestedInput>>,
+    pub user: Option<Box<crate::cases::UserUpdateOneRequiredWithoutCaseNoteUserNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -4019,26 +3755,6 @@ pub struct CaseNoteUpdateManyWithWhereWithoutCaseCaseNotesInput {
     pub data: Box<crate::cases::CaseNoteUpdateManyMutationInput>,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CaseNoteScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub user_id: Option<crate::shared::filters::StringFilter>,
-    pub title: Option<crate::shared::filters::StringFilter>,
-    pub body: Option<crate::shared::filters::StringFilter>,
-    pub is_pinned: Option<crate::shared::filters::BoolFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<CaseNoteScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<CaseNoteScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<CaseNoteScalarWhereInput>>,
-}
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseTaskCreateWithoutCaseCaseTasksInput {
@@ -4046,9 +3762,9 @@ pub struct CaseTaskCreateWithoutCaseCaseTasksInput {
     pub description: Option<String>,
     pub due_date: Option<chrono::DateTime<chrono::Utc>>,
     pub completed_at: Option<chrono::DateTime<chrono::Utc>>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseTaskFirmInput>,
-    pub created_by: Option<crate::cases::UserCreateNestedOneWithoutCaseTaskCreatedByInput>,
-    pub assignee: Option<crate::cases::UserCreateNestedOneWithoutCaseTaskAssigneeInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseTaskFirmInput>>,
+    pub created_by: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseTaskCreatedByInput>>,
+    pub assignee: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseTaskAssigneeInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -4083,9 +3799,10 @@ pub struct CaseTaskUpdateWithoutCaseCaseTasksInput {
     pub completed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseTaskFirmNestedInput>,
-    pub created_by: Option<crate::cases::UserUpdateOneRequiredWithoutCaseTaskCreatedByNestedInput>,
-    pub assignee: Option<crate::cases::UserUpdateOneWithoutCaseTaskAssigneeNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseTaskFirmNestedInput>>,
+    pub created_by:
+        Option<Box<crate::cases::UserUpdateOneRequiredWithoutCaseTaskCreatedByNestedInput>>,
+    pub assignee: Option<Box<crate::cases::UserUpdateOneWithoutCaseTaskAssigneeNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -4179,30 +3896,6 @@ pub struct CaseTaskUpdateManyWithWhereWithoutCaseCaseTasksInput {
     pub data: Box<crate::cases::CaseTaskUpdateManyMutationInput>,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CaseTaskScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub created_by_id: Option<crate::shared::filters::StringFilter>,
-    pub assignee_id: Option<crate::shared::filters::StringNullableFilter>,
-    pub title: Option<crate::shared::filters::StringFilter>,
-    pub description: Option<crate::shared::filters::StringNullableFilter>,
-    pub status: Option<crate::cases::CaseTaskStatusFilter>,
-    pub priority: Option<crate::cases::CaseTaskPriorityFilter>,
-    pub due_date: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub completed_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<CaseTaskScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<CaseTaskScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<CaseTaskScalarWhereInput>>,
-}
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseCalendarEntryCreateWithoutCaseCaseCalendarEntriesInput {
@@ -4211,7 +3904,7 @@ pub struct CaseCalendarEntryCreateWithoutCaseCaseCalendarEntriesInput {
     pub description: Option<String>,
     pub date: chrono::DateTime<chrono::Utc>,
     pub reminder_at: Option<chrono::DateTime<chrono::Utc>>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseCalendarEntryFirmInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseCalendarEntryFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -4245,7 +3938,8 @@ pub struct CaseCalendarEntryUpdateWithoutCaseCaseCalendarEntriesInput {
     pub reminder_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseCalendarEntryFirmNestedInput>,
+    pub firm:
+        Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseCalendarEntryFirmNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -4354,28 +4048,6 @@ pub struct CaseCalendarEntryUpdateManyWithWhereWithoutCaseCaseCalendarEntriesInp
     pub data: Box<crate::cases::CaseCalendarEntryUpdateManyMutationInput>,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CaseCalendarEntryScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub entry_type: Option<crate::cases::CalendarEntryTypeFilter>,
-    pub title: Option<crate::shared::filters::StringFilter>,
-    pub description: Option<crate::shared::filters::StringNullableFilter>,
-    pub date: Option<crate::shared::filters::DateTimeFilter>,
-    pub has_reminder: Option<crate::shared::filters::BoolFilter>,
-    pub reminder_at: Option<crate::shared::filters::DateTimeNullableFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<CaseCalendarEntryScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<CaseCalendarEntryScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<CaseCalendarEntryScalarWhereInput>>,
-}
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseContactCreateWithoutCaseCaseContactsInput {
@@ -4392,7 +4064,7 @@ pub struct CaseContactCreateWithoutCaseCaseContactsInput {
     pub state: Option<String>,
     pub zip: Option<String>,
     pub notes: Option<String>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseContactFirmInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseContactFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -4441,7 +4113,7 @@ pub struct CaseContactUpdateWithoutCaseCaseContactsInput {
     pub notes: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseContactFirmNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseContactFirmNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -4554,43 +4226,14 @@ pub struct CaseContactUpdateManyWithWhereWithoutCaseCaseContactsInput {
     pub data: Box<crate::cases::CaseContactUpdateManyMutationInput>,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CaseContactScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub role: Option<crate::cases::ContactRoleFilter>,
-    pub custom_role: Option<crate::shared::filters::StringNullableFilter>,
-    pub first_name: Option<crate::shared::filters::StringFilter>,
-    pub last_name: Option<crate::shared::filters::StringFilter>,
-    pub organization: Option<crate::shared::filters::StringNullableFilter>,
-    pub email: Option<crate::shared::filters::StringNullableFilter>,
-    pub phone: Option<crate::shared::filters::StringNullableFilter>,
-    pub address_line1: Option<crate::shared::filters::StringNullableFilter>,
-    pub address_line2: Option<crate::shared::filters::StringNullableFilter>,
-    pub city: Option<crate::shared::filters::StringNullableFilter>,
-    pub state: Option<crate::shared::filters::StringNullableFilter>,
-    pub zip: Option<crate::shared::filters::StringNullableFilter>,
-    pub notes: Option<crate::shared::filters::StringNullableFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<CaseContactScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<CaseContactScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<CaseContactScalarWhereInput>>,
-}
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseBillingTimeEntryCreateWithoutCaseCaseBillingTimeEntriesInput {
     pub date: chrono::DateTime<chrono::Utc>,
     pub hours: rust_decimal::Decimal,
     pub description: String,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseBillingTimeEntryFirmInput>,
-    pub user: Option<crate::cases::UserCreateNestedOneWithoutCaseBillingTimeEntryUserInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseBillingTimeEntryFirmInput>>,
+    pub user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseBillingTimeEntryUserInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -4621,8 +4264,10 @@ pub struct CaseBillingTimeEntryUpdateWithoutCaseCaseBillingTimeEntriesInput {
     pub is_billable: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseBillingTimeEntryFirmNestedInput>,
-    pub user: Option<crate::cases::UserUpdateOneRequiredWithoutCaseBillingTimeEntryUserNestedInput>,
+    pub firm:
+        Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseBillingTimeEntryFirmNestedInput>>,
+    pub user:
+        Option<Box<crate::cases::UserUpdateOneRequiredWithoutCaseBillingTimeEntryUserNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -4716,27 +4361,6 @@ pub struct CaseBillingTimeEntryUpdateManyWithWhereWithoutCaseCaseBillingTimeEntr
     pub data: Box<crate::cases::CaseBillingTimeEntryUpdateManyMutationInput>,
 }
 
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CaseBillingTimeEntryScalarWhereInput {
-    pub id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub user_id: Option<crate::shared::filters::StringFilter>,
-    pub date: Option<crate::shared::filters::DateTimeFilter>,
-    pub hours: Option<crate::shared::filters::DecimalFilter>,
-    pub description: Option<crate::shared::filters::StringFilter>,
-    pub is_billable: Option<crate::shared::filters::BoolFilter>,
-    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
-    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
-    #[serde(rename = "AND")]
-    pub and: Option<Vec<CaseBillingTimeEntryScalarWhereInput>>,
-    #[serde(rename = "OR")]
-    pub or: Option<Vec<CaseBillingTimeEntryScalarWhereInput>>,
-    #[serde(rename = "NOT")]
-    pub not: Option<Vec<CaseBillingTimeEntryScalarWhereInput>>,
-}
-
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CaseBillingExpenseCreateWithoutCaseCaseBillingExpensesInput {
@@ -4744,7 +4368,7 @@ pub struct CaseBillingExpenseCreateWithoutCaseCaseBillingExpensesInput {
     pub description: String,
     pub amount: rust_decimal::Decimal,
     pub category: crate::cases::BillingExpenseCategory,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseBillingExpenseFirmInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseBillingExpenseFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -4775,7 +4399,8 @@ pub struct CaseBillingExpenseUpdateWithoutCaseCaseBillingExpensesInput {
     pub category: Option<crate::cases::BillingExpenseCategoryFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseBillingExpenseFirmNestedInput>,
+    pub firm:
+        Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseBillingExpenseFirmNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -4866,22 +4491,70 @@ pub struct CaseBillingExpenseUpdateManyWithWhereWithoutCaseCaseBillingExpensesIn
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct CaseBillingExpenseScalarWhereInput {
+pub struct CaseScalarWhereInput {
     pub id: Option<crate::shared::filters::StringFilter>,
-    pub case_id: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
-    pub date: Option<crate::shared::filters::DateTimeFilter>,
-    pub description: Option<crate::shared::filters::StringFilter>,
-    pub amount: Option<crate::shared::filters::DecimalFilter>,
-    pub category: Option<crate::cases::BillingExpenseCategoryFilter>,
+    pub identifier: Option<crate::shared::filters::StringFilter>,
     pub created_at: Option<crate::shared::filters::DateTimeFilter>,
     pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub firm_id: Option<crate::shared::filters::StringFilter>,
+    pub status: Option<crate::cases::CaseStatusFilter>,
+    pub reference_number: Option<crate::shared::filters::StringNullableFilter>,
+    pub description: Option<crate::shared::filters::StringNullableFilter>,
+    pub tort_type: Option<crate::cases::TortTypeNullableFilter>,
+    pub date_of_incident: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub assigned_user_id: Option<crate::shared::filters::StringNullableFilter>,
+    pub theory_of_the_case: Option<crate::shared::filters::StringNullableFilter>,
+    pub initial_notes: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_first_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_last_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_dob: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub client_phone: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_email: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_ssn_encrypted: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_ssn_last_four_encrypted: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_address_line1: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_address_line2: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_city: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_state: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_zip: Option<crate::shared::filters::StringNullableFilter>,
+    pub incident_location: Option<crate::shared::filters::StringNullableFilter>,
+    pub police_report_number: Option<crate::shared::filters::StringNullableFilter>,
+    pub incident_description: Option<crate::shared::filters::StringNullableFilter>,
+    pub weather_conditions: Option<crate::shared::filters::StringNullableFilter>,
+    pub witness_at_scene: Option<crate::shared::filters::BoolNullableFilter>,
+    pub witness_notes: Option<crate::shared::filters::StringNullableFilter>,
+    pub photos_available: Option<crate::shared::filters::BoolNullableFilter>,
+    pub photos_notes: Option<crate::shared::filters::StringNullableFilter>,
+    pub injured_body_parts: Option<crate::shared::filters::JsonNullableFilter>,
+    pub pre_existing_conditions: Option<crate::shared::filters::StringNullableFilter>,
+    pub treatment_start_date: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub treatment_end_date: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub known_providers: Option<crate::shared::filters::JsonNullableFilter>,
+    pub initial_diagnosis: Option<crate::shared::filters::StringNullableFilter>,
+    pub treatment_status: Option<crate::cases::TreatmentStatusNullableFilter>,
+    pub client_insurance_company: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_policy_number: Option<crate::shared::filters::StringNullableFilter>,
+    pub client_claim_number: Option<crate::shared::filters::StringNullableFilter>,
+    pub coverage_type: Option<crate::cases::CoverageTypeNullableFilter>,
+    pub client_policy_limits: Option<crate::shared::filters::DecimalNullableFilter>,
+    pub opposing_insurance_company: Option<crate::shared::filters::StringNullableFilter>,
+    pub opposing_claim_number: Option<crate::shared::filters::StringNullableFilter>,
+    pub opposing_policy_limits: Option<crate::shared::filters::DecimalNullableFilter>,
+    pub adjuster_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub adjuster_phone: Option<crate::shared::filters::StringNullableFilter>,
+    pub adjuster_email: Option<crate::shared::filters::StringNullableFilter>,
+    pub opposing_party_name: Option<crate::shared::filters::StringNullableFilter>,
+    pub opposing_party_type: Option<crate::cases::OpposingPartyTypeNullableFilter>,
+    pub opposing_counsel_firm: Option<crate::shared::filters::StringNullableFilter>,
+    pub opposing_counsel_attorney: Option<crate::shared::filters::StringNullableFilter>,
+    pub opposing_counsel_phone: Option<crate::shared::filters::StringNullableFilter>,
+    pub opposing_counsel_email: Option<crate::shared::filters::StringNullableFilter>,
     #[serde(rename = "AND")]
-    pub and: Option<Vec<CaseBillingExpenseScalarWhereInput>>,
+    pub and: Option<Vec<CaseScalarWhereInput>>,
     #[serde(rename = "OR")]
-    pub or: Option<Vec<CaseBillingExpenseScalarWhereInput>>,
+    pub or: Option<Vec<CaseScalarWhereInput>>,
     #[serde(rename = "NOT")]
-    pub not: Option<Vec<CaseBillingExpenseScalarWhereInput>>,
+    pub not: Option<Vec<CaseScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -5253,9 +4926,9 @@ pub struct CaseNoteInclude {
 pub struct CaseNoteCreateInput {
     pub title: String,
     pub body: String,
-    pub case: Option<crate::cases::CaseCreateNestedOneWithoutCaseNoteCaseInput>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseNoteFirmInput>,
-    pub user: Option<crate::cases::UserCreateNestedOneWithoutCaseNoteUserInput>,
+    pub case: Option<Box<crate::cases::CaseCreateNestedOneWithoutCaseNoteCaseInput>>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseNoteFirmInput>>,
+    pub user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseNoteUserInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -5287,9 +4960,9 @@ pub struct CaseNoteUpdateInput {
     pub is_pinned: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub case: Option<crate::cases::CaseUpdateOneRequiredWithoutCaseNoteCaseNestedInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseNoteFirmNestedInput>,
-    pub user: Option<crate::cases::UserUpdateOneRequiredWithoutCaseNoteUserNestedInput>,
+    pub case: Option<Box<crate::cases::CaseUpdateOneRequiredWithoutCaseNoteCaseNestedInput>>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseNoteFirmNestedInput>>,
+    pub user: Option<Box<crate::cases::UserUpdateOneRequiredWithoutCaseNoteUserNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -5385,24 +5058,24 @@ pub struct CaseCreateWithoutCaseNoteCaseInput {
     pub opposing_counsel_attorney: Option<String>,
     pub opposing_counsel_phone: Option<String>,
     pub opposing_counsel_email: Option<String>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>,
-    pub assigned_user: Option<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>,
-    pub documents: Option<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>,
-    pub batch_files: Option<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>,
-    pub invoices: Option<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>>,
+    pub documents: Option<Box<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -5528,24 +5201,24 @@ pub struct CaseUpdateWithoutCaseNoteCaseInput {
     pub opposing_counsel_attorney: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_phone: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_email: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>,
-    pub assigned_user: Option<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>,
-    pub documents: Option<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>,
-    pub batch_files: Option<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>,
-    pub invoices: Option<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>>,
+    pub documents: Option<Box<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -5674,43 +5347,43 @@ pub struct FirmCreateWithoutCaseNoteFirmInput {
     pub name: String,
     pub phone_number: Option<String>,
     pub fax_number: Option<String>,
-    pub address: Option<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>,
-    pub users: Option<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>,
-    pub owner: Option<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>,
-    pub documents: Option<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>,
-    pub cases: Option<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>,
-    pub invoices: Option<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>,
-    pub form_templates: Option<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>,
-    pub notifications: Option<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>,
-    pub default_role: Option<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>,
+    pub address: Option<Box<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>>,
+    pub users: Option<Box<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>>,
+    pub owner: Option<Box<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>>,
+    pub documents: Option<Box<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>>,
+    pub cases: Option<Box<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -5727,7 +5400,7 @@ pub struct FirmUncheckedCreateWithoutCaseNoteFirmInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmCreateOrConnectWithoutCaseNoteFirmInput {
-    pub r#where: Box<crate::cases::FirmWhereUniqueInput>,
+    pub r#where: Box<crate::firms::FirmWhereUniqueInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseNoteFirmInput>,
 }
 
@@ -5745,43 +5418,43 @@ pub struct FirmUpdateWithoutCaseNoteFirmInput {
     pub has_free_demo_identification: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub require_mfa: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub qualify_ai_demo_used: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
-    pub address: Option<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>,
-    pub users: Option<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>,
-    pub owner: Option<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>,
-    pub documents: Option<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>,
-    pub cases: Option<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>,
-    pub invoices: Option<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>,
-    pub form_templates: Option<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>,
-    pub notifications: Option<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>,
-    pub default_role: Option<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>,
+    pub address: Option<Box<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>>,
+    pub users: Option<Box<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>>,
+    pub owner: Option<Box<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>>,
+    pub documents: Option<Box<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>>,
+    pub cases: Option<Box<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -5809,7 +5482,7 @@ pub struct FirmUncheckedUpdateWithoutCaseNoteFirmInput {
 pub struct FirmCreateNestedOneWithoutCaseNoteFirmInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseNoteFirmInput>>,
     pub connect_or_create: Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseNoteFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -5817,7 +5490,7 @@ pub struct FirmCreateNestedOneWithoutCaseNoteFirmInput {
 pub struct FirmUpsertWithoutCaseNoteFirmInput {
     pub update: Box<crate::cases::FirmUpdateWithoutCaseNoteFirmInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseNoteFirmInput>,
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -5826,14 +5499,14 @@ pub struct FirmUpdateOneRequiredWithoutCaseNoteFirmNestedInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseNoteFirmInput>>,
     pub connect_or_create: Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseNoteFirmInput>>,
     pub upsert: Option<Box<crate::cases::FirmUpsertWithoutCaseNoteFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
     pub update: Option<Box<crate::cases::FirmUpdateToOneWithWhereWithoutCaseNoteFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmUpdateToOneWithWhereWithoutCaseNoteFirmInput {
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
     pub data: Box<crate::cases::FirmUpdateWithoutCaseNoteFirmInput>,
 }
 
@@ -5852,34 +5525,34 @@ pub struct UserCreateWithoutCaseNoteUserInput {
     pub mfa_setup_dismissed_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cookie_policy_accepted_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cognito_sub: Option<String>,
-    pub batch_file: Option<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>,
-    pub document: Option<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>,
-    pub document_tags: Option<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>,
-    pub firm: Option<crate::users::FirmCreateNestedOneWithoutUserFirmInput>,
-    pub firm_role: Option<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>,
-    pub owned_firm: Option<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>,
-    pub invoices: Option<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>,
-    pub form_templates: Option<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>,
-    pub form_distributions: Option<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>,
-    pub notifications: Option<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>,
-    pub assigned_cases: Option<crate::users::CaseCreateNestedManyWithoutUserAssignedCasesInput>,
-    pub case_tasks_created: Option<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksCreatedInput>,
-    pub case_tasks_assigned: Option<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksAssignedInput>,
-    pub case_billing_time_entries: Option<crate::users::CaseBillingTimeEntryCreateNestedManyWithoutUserCaseBillingTimeEntriesInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>>,
+    pub document: Option<Box<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>>,
+    pub firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserFirmInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>>,
+    pub notifications: Option<Box<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>>,
+    pub assigned_cases: Option<Box<crate::users::CaseCreateNestedManyWithoutUserAssignedCasesInput>>,
+    pub case_tasks_created: Option<Box<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksCreatedInput>>,
+    pub case_tasks_assigned: Option<Box<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksAssignedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::users::CaseBillingTimeEntryCreateNestedManyWithoutUserCaseBillingTimeEntriesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -5904,7 +5577,7 @@ pub struct UserUncheckedCreateWithoutCaseNoteUserInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserCreateOrConnectWithoutCaseNoteUserInput {
-    pub r#where: Box<crate::cases::UserWhereUniqueInput>,
+    pub r#where: Box<crate::users::UserWhereUniqueInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseNoteUserInput>,
 }
 
@@ -5933,34 +5606,34 @@ pub struct UserUpdateWithoutCaseNoteUserInput {
     pub mfa_setup_dismissed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cookie_policy_accepted_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cognito_sub: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub batch_file: Option<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>,
-    pub document: Option<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>,
-    pub document_tags: Option<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>,
-    pub firm: Option<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>,
-    pub firm_role: Option<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>,
-    pub owned_firm: Option<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>,
-    pub invoices: Option<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>,
-    pub form_templates: Option<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>,
-    pub notifications: Option<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>,
-    pub assigned_cases: Option<crate::users::CaseUpdateManyWithoutUserAssignedCasesNestedInput>,
-    pub case_tasks_created: Option<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksCreatedNestedInput>,
-    pub case_tasks_assigned: Option<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksAssignedNestedInput>,
-    pub case_billing_time_entries: Option<crate::users::CaseBillingTimeEntryUpdateManyWithoutUserCaseBillingTimeEntriesNestedInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>>,
+    pub document: Option<Box<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>>,
+    pub firm: Option<Box<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>>,
+    pub notifications: Option<Box<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>>,
+    pub assigned_cases: Option<Box<crate::users::CaseUpdateManyWithoutUserAssignedCasesNestedInput>>,
+    pub case_tasks_created: Option<Box<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksCreatedNestedInput>>,
+    pub case_tasks_assigned: Option<Box<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksAssignedNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::users::CaseBillingTimeEntryUpdateManyWithoutUserCaseBillingTimeEntriesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -6001,7 +5674,7 @@ pub struct UserUncheckedUpdateWithoutCaseNoteUserInput {
 pub struct UserCreateNestedOneWithoutCaseNoteUserInput {
     pub create: Option<Box<crate::cases::UserCreateWithoutCaseNoteUserInput>>,
     pub connect_or_create: Option<Box<crate::cases::UserCreateOrConnectWithoutCaseNoteUserInput>>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -6009,7 +5682,7 @@ pub struct UserCreateNestedOneWithoutCaseNoteUserInput {
 pub struct UserUpsertWithoutCaseNoteUserInput {
     pub update: Box<crate::cases::UserUpdateWithoutCaseNoteUserInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseNoteUserInput>,
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -6018,15 +5691,35 @@ pub struct UserUpdateOneRequiredWithoutCaseNoteUserNestedInput {
     pub create: Option<Box<crate::cases::UserCreateWithoutCaseNoteUserInput>>,
     pub connect_or_create: Option<Box<crate::cases::UserCreateOrConnectWithoutCaseNoteUserInput>>,
     pub upsert: Option<Box<crate::cases::UserUpsertWithoutCaseNoteUserInput>>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
     pub update: Option<Box<crate::cases::UserUpdateToOneWithWhereWithoutCaseNoteUserInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserUpdateToOneWithWhereWithoutCaseNoteUserInput {
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
     pub data: Box<crate::cases::UserUpdateWithoutCaseNoteUserInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CaseNoteScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub case_id: Option<crate::shared::filters::StringFilter>,
+    pub firm_id: Option<crate::shared::filters::StringFilter>,
+    pub user_id: Option<crate::shared::filters::StringFilter>,
+    pub title: Option<crate::shared::filters::StringFilter>,
+    pub body: Option<crate::shared::filters::StringFilter>,
+    pub is_pinned: Option<crate::shared::filters::BoolFilter>,
+    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<CaseNoteScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<CaseNoteScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<CaseNoteScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -6238,10 +5931,10 @@ pub struct CaseTaskCreateInput {
     pub description: Option<String>,
     pub due_date: Option<chrono::DateTime<chrono::Utc>>,
     pub completed_at: Option<chrono::DateTime<chrono::Utc>>,
-    pub case: Option<crate::cases::CaseCreateNestedOneWithoutCaseTaskCaseInput>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseTaskFirmInput>,
-    pub created_by: Option<crate::cases::UserCreateNestedOneWithoutCaseTaskCreatedByInput>,
-    pub assignee: Option<crate::cases::UserCreateNestedOneWithoutCaseTaskAssigneeInput>,
+    pub case: Option<Box<crate::cases::CaseCreateNestedOneWithoutCaseTaskCaseInput>>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseTaskFirmInput>>,
+    pub created_by: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseTaskCreatedByInput>>,
+    pub assignee: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseTaskAssigneeInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -6282,10 +5975,11 @@ pub struct CaseTaskUpdateInput {
     pub completed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub case: Option<crate::cases::CaseUpdateOneRequiredWithoutCaseTaskCaseNestedInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseTaskFirmNestedInput>,
-    pub created_by: Option<crate::cases::UserUpdateOneRequiredWithoutCaseTaskCreatedByNestedInput>,
-    pub assignee: Option<crate::cases::UserUpdateOneWithoutCaseTaskAssigneeNestedInput>,
+    pub case: Option<Box<crate::cases::CaseUpdateOneRequiredWithoutCaseTaskCaseNestedInput>>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseTaskFirmNestedInput>>,
+    pub created_by:
+        Option<Box<crate::cases::UserUpdateOneRequiredWithoutCaseTaskCreatedByNestedInput>>,
+    pub assignee: Option<Box<crate::cases::UserUpdateOneWithoutCaseTaskAssigneeNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -6392,24 +6086,24 @@ pub struct CaseCreateWithoutCaseTaskCaseInput {
     pub opposing_counsel_attorney: Option<String>,
     pub opposing_counsel_phone: Option<String>,
     pub opposing_counsel_email: Option<String>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>,
-    pub assigned_user: Option<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>,
-    pub documents: Option<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>,
-    pub batch_files: Option<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>,
-    pub invoices: Option<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>,
-    pub case_notes: Option<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>>,
+    pub documents: Option<Box<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -6535,24 +6229,24 @@ pub struct CaseUpdateWithoutCaseTaskCaseInput {
     pub opposing_counsel_attorney: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_phone: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_email: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>,
-    pub assigned_user: Option<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>,
-    pub documents: Option<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>,
-    pub batch_files: Option<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>,
-    pub invoices: Option<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>,
-    pub case_notes: Option<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>>,
+    pub documents: Option<Box<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -6681,43 +6375,43 @@ pub struct FirmCreateWithoutCaseTaskFirmInput {
     pub name: String,
     pub phone_number: Option<String>,
     pub fax_number: Option<String>,
-    pub address: Option<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>,
-    pub users: Option<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>,
-    pub owner: Option<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>,
-    pub documents: Option<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>,
-    pub cases: Option<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>,
-    pub invoices: Option<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>,
-    pub form_templates: Option<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>,
-    pub notifications: Option<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>,
-    pub default_role: Option<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>,
-    pub case_notes: Option<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>,
+    pub address: Option<Box<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>>,
+    pub users: Option<Box<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>>,
+    pub owner: Option<Box<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>>,
+    pub documents: Option<Box<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>>,
+    pub cases: Option<Box<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -6734,7 +6428,7 @@ pub struct FirmUncheckedCreateWithoutCaseTaskFirmInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmCreateOrConnectWithoutCaseTaskFirmInput {
-    pub r#where: Box<crate::cases::FirmWhereUniqueInput>,
+    pub r#where: Box<crate::firms::FirmWhereUniqueInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseTaskFirmInput>,
 }
 
@@ -6752,43 +6446,43 @@ pub struct FirmUpdateWithoutCaseTaskFirmInput {
     pub has_free_demo_identification: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub require_mfa: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub qualify_ai_demo_used: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
-    pub address: Option<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>,
-    pub users: Option<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>,
-    pub owner: Option<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>,
-    pub documents: Option<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>,
-    pub cases: Option<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>,
-    pub invoices: Option<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>,
-    pub form_templates: Option<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>,
-    pub notifications: Option<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>,
-    pub default_role: Option<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>,
-    pub case_notes: Option<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>,
+    pub address: Option<Box<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>>,
+    pub users: Option<Box<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>>,
+    pub owner: Option<Box<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>>,
+    pub documents: Option<Box<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>>,
+    pub cases: Option<Box<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -6816,7 +6510,7 @@ pub struct FirmUncheckedUpdateWithoutCaseTaskFirmInput {
 pub struct FirmCreateNestedOneWithoutCaseTaskFirmInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseTaskFirmInput>>,
     pub connect_or_create: Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseTaskFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -6824,7 +6518,7 @@ pub struct FirmCreateNestedOneWithoutCaseTaskFirmInput {
 pub struct FirmUpsertWithoutCaseTaskFirmInput {
     pub update: Box<crate::cases::FirmUpdateWithoutCaseTaskFirmInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseTaskFirmInput>,
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -6833,14 +6527,14 @@ pub struct FirmUpdateOneRequiredWithoutCaseTaskFirmNestedInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseTaskFirmInput>>,
     pub connect_or_create: Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseTaskFirmInput>>,
     pub upsert: Option<Box<crate::cases::FirmUpsertWithoutCaseTaskFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
     pub update: Option<Box<crate::cases::FirmUpdateToOneWithWhereWithoutCaseTaskFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmUpdateToOneWithWhereWithoutCaseTaskFirmInput {
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
     pub data: Box<crate::cases::FirmUpdateWithoutCaseTaskFirmInput>,
 }
 
@@ -6859,33 +6553,33 @@ pub struct UserCreateWithoutCaseTaskCreatedByInput {
     pub mfa_setup_dismissed_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cookie_policy_accepted_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cognito_sub: Option<String>,
-    pub batch_file: Option<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>,
-    pub document: Option<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>,
-    pub document_tags: Option<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>,
-    pub firm: Option<crate::users::FirmCreateNestedOneWithoutUserFirmInput>,
-    pub firm_role: Option<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>,
-    pub owned_firm: Option<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>,
-    pub invoices: Option<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>,
-    pub form_templates: Option<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>,
-    pub form_distributions: Option<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>,
-    pub notifications: Option<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>,
-    pub assigned_cases: Option<crate::users::CaseCreateNestedManyWithoutUserAssignedCasesInput>,
-    pub case_notes: Option<crate::users::CaseNoteCreateNestedManyWithoutUserCaseNotesInput>,
-    pub case_billing_time_entries: Option<crate::users::CaseBillingTimeEntryCreateNestedManyWithoutUserCaseBillingTimeEntriesInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>>,
+    pub document: Option<Box<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>>,
+    pub firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserFirmInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>>,
+    pub notifications: Option<Box<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>>,
+    pub assigned_cases: Option<Box<crate::users::CaseCreateNestedManyWithoutUserAssignedCasesInput>>,
+    pub case_notes: Option<Box<crate::users::CaseNoteCreateNestedManyWithoutUserCaseNotesInput>>,
+    pub case_billing_time_entries: Option<Box<crate::users::CaseBillingTimeEntryCreateNestedManyWithoutUserCaseBillingTimeEntriesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -6910,7 +6604,7 @@ pub struct UserUncheckedCreateWithoutCaseTaskCreatedByInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserCreateOrConnectWithoutCaseTaskCreatedByInput {
-    pub r#where: Box<crate::cases::UserWhereUniqueInput>,
+    pub r#where: Box<crate::users::UserWhereUniqueInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseTaskCreatedByInput>,
 }
 
@@ -6939,33 +6633,33 @@ pub struct UserUpdateWithoutCaseTaskCreatedByInput {
     pub mfa_setup_dismissed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cookie_policy_accepted_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cognito_sub: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub batch_file: Option<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>,
-    pub document: Option<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>,
-    pub document_tags: Option<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>,
-    pub firm: Option<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>,
-    pub firm_role: Option<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>,
-    pub owned_firm: Option<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>,
-    pub invoices: Option<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>,
-    pub form_templates: Option<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>,
-    pub notifications: Option<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>,
-    pub assigned_cases: Option<crate::users::CaseUpdateManyWithoutUserAssignedCasesNestedInput>,
-    pub case_notes: Option<crate::users::CaseNoteUpdateManyWithoutUserCaseNotesNestedInput>,
-    pub case_billing_time_entries: Option<crate::users::CaseBillingTimeEntryUpdateManyWithoutUserCaseBillingTimeEntriesNestedInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>>,
+    pub document: Option<Box<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>>,
+    pub firm: Option<Box<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>>,
+    pub notifications: Option<Box<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>>,
+    pub assigned_cases: Option<Box<crate::users::CaseUpdateManyWithoutUserAssignedCasesNestedInput>>,
+    pub case_notes: Option<Box<crate::users::CaseNoteUpdateManyWithoutUserCaseNotesNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::users::CaseBillingTimeEntryUpdateManyWithoutUserCaseBillingTimeEntriesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -7007,7 +6701,7 @@ pub struct UserCreateNestedOneWithoutCaseTaskCreatedByInput {
     pub create: Option<Box<crate::cases::UserCreateWithoutCaseTaskCreatedByInput>>,
     pub connect_or_create:
         Option<Box<crate::cases::UserCreateOrConnectWithoutCaseTaskCreatedByInput>>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -7015,7 +6709,7 @@ pub struct UserCreateNestedOneWithoutCaseTaskCreatedByInput {
 pub struct UserUpsertWithoutCaseTaskCreatedByInput {
     pub update: Box<crate::cases::UserUpdateWithoutCaseTaskCreatedByInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseTaskCreatedByInput>,
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -7025,14 +6719,14 @@ pub struct UserUpdateOneRequiredWithoutCaseTaskCreatedByNestedInput {
     pub connect_or_create:
         Option<Box<crate::cases::UserCreateOrConnectWithoutCaseTaskCreatedByInput>>,
     pub upsert: Option<Box<crate::cases::UserUpsertWithoutCaseTaskCreatedByInput>>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
     pub update: Option<Box<crate::cases::UserUpdateToOneWithWhereWithoutCaseTaskCreatedByInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserUpdateToOneWithWhereWithoutCaseTaskCreatedByInput {
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
     pub data: Box<crate::cases::UserUpdateWithoutCaseTaskCreatedByInput>,
 }
 
@@ -7051,33 +6745,33 @@ pub struct UserCreateWithoutCaseTaskAssigneeInput {
     pub mfa_setup_dismissed_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cookie_policy_accepted_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cognito_sub: Option<String>,
-    pub batch_file: Option<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>,
-    pub document: Option<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>,
-    pub document_tags: Option<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>,
-    pub firm: Option<crate::users::FirmCreateNestedOneWithoutUserFirmInput>,
-    pub firm_role: Option<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>,
-    pub owned_firm: Option<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>,
-    pub invoices: Option<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>,
-    pub form_templates: Option<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>,
-    pub form_distributions: Option<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>,
-    pub notifications: Option<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>,
-    pub assigned_cases: Option<crate::users::CaseCreateNestedManyWithoutUserAssignedCasesInput>,
-    pub case_notes: Option<crate::users::CaseNoteCreateNestedManyWithoutUserCaseNotesInput>,
-    pub case_billing_time_entries: Option<crate::users::CaseBillingTimeEntryCreateNestedManyWithoutUserCaseBillingTimeEntriesInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>>,
+    pub document: Option<Box<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>>,
+    pub firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserFirmInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>>,
+    pub notifications: Option<Box<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>>,
+    pub assigned_cases: Option<Box<crate::users::CaseCreateNestedManyWithoutUserAssignedCasesInput>>,
+    pub case_notes: Option<Box<crate::users::CaseNoteCreateNestedManyWithoutUserCaseNotesInput>>,
+    pub case_billing_time_entries: Option<Box<crate::users::CaseBillingTimeEntryCreateNestedManyWithoutUserCaseBillingTimeEntriesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -7102,7 +6796,7 @@ pub struct UserUncheckedCreateWithoutCaseTaskAssigneeInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserCreateOrConnectWithoutCaseTaskAssigneeInput {
-    pub r#where: Box<crate::cases::UserWhereUniqueInput>,
+    pub r#where: Box<crate::users::UserWhereUniqueInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseTaskAssigneeInput>,
 }
 
@@ -7131,33 +6825,33 @@ pub struct UserUpdateWithoutCaseTaskAssigneeInput {
     pub mfa_setup_dismissed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cookie_policy_accepted_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cognito_sub: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub batch_file: Option<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>,
-    pub document: Option<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>,
-    pub document_tags: Option<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>,
-    pub firm: Option<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>,
-    pub firm_role: Option<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>,
-    pub owned_firm: Option<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>,
-    pub invoices: Option<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>,
-    pub form_templates: Option<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>,
-    pub notifications: Option<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>,
-    pub assigned_cases: Option<crate::users::CaseUpdateManyWithoutUserAssignedCasesNestedInput>,
-    pub case_notes: Option<crate::users::CaseNoteUpdateManyWithoutUserCaseNotesNestedInput>,
-    pub case_billing_time_entries: Option<crate::users::CaseBillingTimeEntryUpdateManyWithoutUserCaseBillingTimeEntriesNestedInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>>,
+    pub document: Option<Box<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>>,
+    pub firm: Option<Box<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>>,
+    pub notifications: Option<Box<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>>,
+    pub assigned_cases: Option<Box<crate::users::CaseUpdateManyWithoutUserAssignedCasesNestedInput>>,
+    pub case_notes: Option<Box<crate::users::CaseNoteUpdateManyWithoutUserCaseNotesNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::users::CaseBillingTimeEntryUpdateManyWithoutUserCaseBillingTimeEntriesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -7199,7 +6893,7 @@ pub struct UserCreateNestedOneWithoutCaseTaskAssigneeInput {
     pub create: Option<Box<crate::cases::UserCreateWithoutCaseTaskAssigneeInput>>,
     pub connect_or_create:
         Option<Box<crate::cases::UserCreateOrConnectWithoutCaseTaskAssigneeInput>>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -7207,7 +6901,7 @@ pub struct UserCreateNestedOneWithoutCaseTaskAssigneeInput {
 pub struct UserUpsertWithoutCaseTaskAssigneeInput {
     pub update: Box<crate::cases::UserUpdateWithoutCaseTaskAssigneeInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseTaskAssigneeInput>,
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -7219,15 +6913,39 @@ pub struct UserUpdateOneWithoutCaseTaskAssigneeNestedInput {
     pub upsert: Option<Box<crate::cases::UserUpsertWithoutCaseTaskAssigneeInput>>,
     pub disconnect: Option<bool>,
     pub delete: Option<bool>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
     pub update: Option<Box<crate::cases::UserUpdateToOneWithWhereWithoutCaseTaskAssigneeInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserUpdateToOneWithWhereWithoutCaseTaskAssigneeInput {
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
     pub data: Box<crate::cases::UserUpdateWithoutCaseTaskAssigneeInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CaseTaskScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub case_id: Option<crate::shared::filters::StringFilter>,
+    pub firm_id: Option<crate::shared::filters::StringFilter>,
+    pub created_by_id: Option<crate::shared::filters::StringFilter>,
+    pub assignee_id: Option<crate::shared::filters::StringNullableFilter>,
+    pub title: Option<crate::shared::filters::StringFilter>,
+    pub description: Option<crate::shared::filters::StringNullableFilter>,
+    pub status: Option<crate::cases::CaseTaskStatusFilter>,
+    pub priority: Option<crate::cases::CaseTaskPriorityFilter>,
+    pub due_date: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub completed_at: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<CaseTaskScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<CaseTaskScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<CaseTaskScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -7432,8 +7150,8 @@ pub struct CaseCalendarEntryCreateInput {
     pub description: Option<String>,
     pub date: chrono::DateTime<chrono::Utc>,
     pub reminder_at: Option<chrono::DateTime<chrono::Utc>>,
-    pub case: Option<crate::cases::CaseCreateNestedOneWithoutCaseCalendarEntryCaseInput>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseCalendarEntryFirmInput>,
+    pub case: Option<Box<crate::cases::CaseCreateNestedOneWithoutCaseCalendarEntryCaseInput>>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseCalendarEntryFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -7472,8 +7190,10 @@ pub struct CaseCalendarEntryUpdateInput {
     pub reminder_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub case: Option<crate::cases::CaseUpdateOneRequiredWithoutCaseCalendarEntryCaseNestedInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseCalendarEntryFirmNestedInput>,
+    pub case:
+        Option<Box<crate::cases::CaseUpdateOneRequiredWithoutCaseCalendarEntryCaseNestedInput>>,
+    pub firm:
+        Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseCalendarEntryFirmNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -7576,24 +7296,24 @@ pub struct CaseCreateWithoutCaseCalendarEntryCaseInput {
     pub opposing_counsel_attorney: Option<String>,
     pub opposing_counsel_phone: Option<String>,
     pub opposing_counsel_email: Option<String>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>,
-    pub assigned_user: Option<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>,
-    pub documents: Option<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>,
-    pub batch_files: Option<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>,
-    pub invoices: Option<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>,
-    pub case_notes: Option<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>,
-    pub case_contacts: Option<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>>,
+    pub documents: Option<Box<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -7719,24 +7439,24 @@ pub struct CaseUpdateWithoutCaseCalendarEntryCaseInput {
     pub opposing_counsel_attorney: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_phone: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_email: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>,
-    pub assigned_user: Option<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>,
-    pub documents: Option<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>,
-    pub batch_files: Option<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>,
-    pub invoices: Option<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>,
-    pub case_notes: Option<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>,
-    pub case_contacts: Option<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>>,
+    pub documents: Option<Box<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -7868,43 +7588,43 @@ pub struct FirmCreateWithoutCaseCalendarEntryFirmInput {
     pub name: String,
     pub phone_number: Option<String>,
     pub fax_number: Option<String>,
-    pub address: Option<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>,
-    pub users: Option<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>,
-    pub owner: Option<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>,
-    pub documents: Option<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>,
-    pub cases: Option<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>,
-    pub invoices: Option<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>,
-    pub form_templates: Option<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>,
-    pub notifications: Option<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>,
-    pub default_role: Option<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>,
-    pub case_notes: Option<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>,
-    pub case_contacts: Option<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>,
+    pub address: Option<Box<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>>,
+    pub users: Option<Box<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>>,
+    pub owner: Option<Box<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>>,
+    pub documents: Option<Box<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>>,
+    pub cases: Option<Box<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -7921,7 +7641,7 @@ pub struct FirmUncheckedCreateWithoutCaseCalendarEntryFirmInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmCreateOrConnectWithoutCaseCalendarEntryFirmInput {
-    pub r#where: Box<crate::cases::FirmWhereUniqueInput>,
+    pub r#where: Box<crate::firms::FirmWhereUniqueInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseCalendarEntryFirmInput>,
 }
 
@@ -7939,43 +7659,43 @@ pub struct FirmUpdateWithoutCaseCalendarEntryFirmInput {
     pub has_free_demo_identification: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub require_mfa: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub qualify_ai_demo_used: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
-    pub address: Option<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>,
-    pub users: Option<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>,
-    pub owner: Option<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>,
-    pub documents: Option<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>,
-    pub cases: Option<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>,
-    pub invoices: Option<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>,
-    pub form_templates: Option<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>,
-    pub notifications: Option<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>,
-    pub default_role: Option<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>,
-    pub case_notes: Option<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>,
-    pub case_contacts: Option<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>,
+    pub address: Option<Box<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>>,
+    pub users: Option<Box<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>>,
+    pub owner: Option<Box<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>>,
+    pub documents: Option<Box<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>>,
+    pub cases: Option<Box<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -8004,7 +7724,7 @@ pub struct FirmCreateNestedOneWithoutCaseCalendarEntryFirmInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseCalendarEntryFirmInput>>,
     pub connect_or_create:
         Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseCalendarEntryFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -8012,7 +7732,7 @@ pub struct FirmCreateNestedOneWithoutCaseCalendarEntryFirmInput {
 pub struct FirmUpsertWithoutCaseCalendarEntryFirmInput {
     pub update: Box<crate::cases::FirmUpdateWithoutCaseCalendarEntryFirmInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseCalendarEntryFirmInput>,
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -8022,7 +7742,7 @@ pub struct FirmUpdateOneRequiredWithoutCaseCalendarEntryFirmNestedInput {
     pub connect_or_create:
         Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseCalendarEntryFirmInput>>,
     pub upsert: Option<Box<crate::cases::FirmUpsertWithoutCaseCalendarEntryFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
     pub update:
         Option<Box<crate::cases::FirmUpdateToOneWithWhereWithoutCaseCalendarEntryFirmInput>>,
 }
@@ -8030,8 +7750,30 @@ pub struct FirmUpdateOneRequiredWithoutCaseCalendarEntryFirmNestedInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmUpdateToOneWithWhereWithoutCaseCalendarEntryFirmInput {
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
     pub data: Box<crate::cases::FirmUpdateWithoutCaseCalendarEntryFirmInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CaseCalendarEntryScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub case_id: Option<crate::shared::filters::StringFilter>,
+    pub firm_id: Option<crate::shared::filters::StringFilter>,
+    pub entry_type: Option<crate::cases::CalendarEntryTypeFilter>,
+    pub title: Option<crate::shared::filters::StringFilter>,
+    pub description: Option<crate::shared::filters::StringNullableFilter>,
+    pub date: Option<crate::shared::filters::DateTimeFilter>,
+    pub has_reminder: Option<crate::shared::filters::BoolFilter>,
+    pub reminder_at: Option<crate::shared::filters::DateTimeNullableFilter>,
+    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<CaseCalendarEntryScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<CaseCalendarEntryScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<CaseCalendarEntryScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -8266,8 +8008,8 @@ pub struct CaseContactCreateInput {
     pub state: Option<String>,
     pub zip: Option<String>,
     pub notes: Option<String>,
-    pub case: Option<crate::cases::CaseCreateNestedOneWithoutCaseContactCaseInput>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseContactFirmInput>,
+    pub case: Option<Box<crate::cases::CaseCreateNestedOneWithoutCaseContactCaseInput>>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseContactFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -8329,8 +8071,8 @@ pub struct CaseContactUpdateInput {
     pub notes: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub case: Option<crate::cases::CaseUpdateOneRequiredWithoutCaseContactCaseNestedInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseContactFirmNestedInput>,
+    pub case: Option<Box<crate::cases::CaseUpdateOneRequiredWithoutCaseContactCaseNestedInput>>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseContactFirmNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -8454,24 +8196,24 @@ pub struct CaseCreateWithoutCaseContactCaseInput {
     pub opposing_counsel_attorney: Option<String>,
     pub opposing_counsel_phone: Option<String>,
     pub opposing_counsel_email: Option<String>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>,
-    pub assigned_user: Option<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>,
-    pub documents: Option<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>,
-    pub batch_files: Option<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>,
-    pub invoices: Option<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>,
-    pub case_notes: Option<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>>,
+    pub documents: Option<Box<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -8597,24 +8339,24 @@ pub struct CaseUpdateWithoutCaseContactCaseInput {
     pub opposing_counsel_attorney: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_phone: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_email: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>,
-    pub assigned_user: Option<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>,
-    pub documents: Option<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>,
-    pub batch_files: Option<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>,
-    pub invoices: Option<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>,
-    pub case_notes: Option<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>>,
+    pub documents: Option<Box<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -8745,43 +8487,43 @@ pub struct FirmCreateWithoutCaseContactFirmInput {
     pub name: String,
     pub phone_number: Option<String>,
     pub fax_number: Option<String>,
-    pub address: Option<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>,
-    pub users: Option<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>,
-    pub owner: Option<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>,
-    pub documents: Option<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>,
-    pub cases: Option<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>,
-    pub invoices: Option<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>,
-    pub form_templates: Option<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>,
-    pub notifications: Option<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>,
-    pub default_role: Option<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>,
-    pub case_notes: Option<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>,
+    pub address: Option<Box<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>>,
+    pub users: Option<Box<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>>,
+    pub owner: Option<Box<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>>,
+    pub documents: Option<Box<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>>,
+    pub cases: Option<Box<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -8798,7 +8540,7 @@ pub struct FirmUncheckedCreateWithoutCaseContactFirmInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmCreateOrConnectWithoutCaseContactFirmInput {
-    pub r#where: Box<crate::cases::FirmWhereUniqueInput>,
+    pub r#where: Box<crate::firms::FirmWhereUniqueInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseContactFirmInput>,
 }
 
@@ -8816,43 +8558,43 @@ pub struct FirmUpdateWithoutCaseContactFirmInput {
     pub has_free_demo_identification: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub require_mfa: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub qualify_ai_demo_used: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
-    pub address: Option<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>,
-    pub users: Option<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>,
-    pub owner: Option<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>,
-    pub documents: Option<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>,
-    pub cases: Option<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>,
-    pub invoices: Option<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>,
-    pub form_templates: Option<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>,
-    pub notifications: Option<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>,
-    pub default_role: Option<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>,
-    pub case_notes: Option<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>,
+    pub address: Option<Box<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>>,
+    pub users: Option<Box<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>>,
+    pub owner: Option<Box<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>>,
+    pub documents: Option<Box<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>>,
+    pub cases: Option<Box<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -8881,7 +8623,7 @@ pub struct FirmCreateNestedOneWithoutCaseContactFirmInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseContactFirmInput>>,
     pub connect_or_create:
         Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseContactFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -8889,7 +8631,7 @@ pub struct FirmCreateNestedOneWithoutCaseContactFirmInput {
 pub struct FirmUpsertWithoutCaseContactFirmInput {
     pub update: Box<crate::cases::FirmUpdateWithoutCaseContactFirmInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseContactFirmInput>,
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -8899,15 +8641,44 @@ pub struct FirmUpdateOneRequiredWithoutCaseContactFirmNestedInput {
     pub connect_or_create:
         Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseContactFirmInput>>,
     pub upsert: Option<Box<crate::cases::FirmUpsertWithoutCaseContactFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
     pub update: Option<Box<crate::cases::FirmUpdateToOneWithWhereWithoutCaseContactFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmUpdateToOneWithWhereWithoutCaseContactFirmInput {
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
     pub data: Box<crate::cases::FirmUpdateWithoutCaseContactFirmInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CaseContactScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub case_id: Option<crate::shared::filters::StringFilter>,
+    pub firm_id: Option<crate::shared::filters::StringFilter>,
+    pub role: Option<crate::cases::ContactRoleFilter>,
+    pub custom_role: Option<crate::shared::filters::StringNullableFilter>,
+    pub first_name: Option<crate::shared::filters::StringFilter>,
+    pub last_name: Option<crate::shared::filters::StringFilter>,
+    pub organization: Option<crate::shared::filters::StringNullableFilter>,
+    pub email: Option<crate::shared::filters::StringNullableFilter>,
+    pub phone: Option<crate::shared::filters::StringNullableFilter>,
+    pub address_line1: Option<crate::shared::filters::StringNullableFilter>,
+    pub address_line2: Option<crate::shared::filters::StringNullableFilter>,
+    pub city: Option<crate::shared::filters::StringNullableFilter>,
+    pub state: Option<crate::shared::filters::StringNullableFilter>,
+    pub zip: Option<crate::shared::filters::StringNullableFilter>,
+    pub notes: Option<crate::shared::filters::StringNullableFilter>,
+    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<CaseContactScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<CaseContactScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<CaseContactScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -9134,9 +8905,9 @@ pub struct CaseBillingTimeEntryCreateInput {
     pub date: chrono::DateTime<chrono::Utc>,
     pub hours: rust_decimal::Decimal,
     pub description: String,
-    pub case: Option<crate::cases::CaseCreateNestedOneWithoutCaseBillingTimeEntryCaseInput>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseBillingTimeEntryFirmInput>,
-    pub user: Option<crate::cases::UserCreateNestedOneWithoutCaseBillingTimeEntryUserInput>,
+    pub case: Option<Box<crate::cases::CaseCreateNestedOneWithoutCaseBillingTimeEntryCaseInput>>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseBillingTimeEntryFirmInput>>,
+    pub user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseBillingTimeEntryUserInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -9171,9 +8942,12 @@ pub struct CaseBillingTimeEntryUpdateInput {
     pub is_billable: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub case: Option<crate::cases::CaseUpdateOneRequiredWithoutCaseBillingTimeEntryCaseNestedInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseBillingTimeEntryFirmNestedInput>,
-    pub user: Option<crate::cases::UserUpdateOneRequiredWithoutCaseBillingTimeEntryUserNestedInput>,
+    pub case:
+        Option<Box<crate::cases::CaseUpdateOneRequiredWithoutCaseBillingTimeEntryCaseNestedInput>>,
+    pub firm:
+        Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseBillingTimeEntryFirmNestedInput>>,
+    pub user:
+        Option<Box<crate::cases::UserUpdateOneRequiredWithoutCaseBillingTimeEntryUserNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -9272,24 +9046,24 @@ pub struct CaseCreateWithoutCaseBillingTimeEntryCaseInput {
     pub opposing_counsel_attorney: Option<String>,
     pub opposing_counsel_phone: Option<String>,
     pub opposing_counsel_email: Option<String>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>,
-    pub assigned_user: Option<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>,
-    pub documents: Option<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>,
-    pub batch_files: Option<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>,
-    pub invoices: Option<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>,
-    pub case_notes: Option<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>>,
+    pub documents: Option<Box<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseCreateNestedManyWithoutCaseCaseBillingExpensesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -9415,24 +9189,24 @@ pub struct CaseUpdateWithoutCaseBillingTimeEntryCaseInput {
     pub opposing_counsel_attorney: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_phone: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_email: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>,
-    pub assigned_user: Option<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>,
-    pub documents: Option<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>,
-    pub batch_files: Option<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>,
-    pub invoices: Option<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>,
-    pub case_notes: Option<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>,
-    pub case_billing_expenses: Option<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>>,
+    pub documents: Option<Box<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::cases::CaseBillingExpenseUpdateManyWithoutCaseCaseBillingExpensesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -9564,43 +9338,43 @@ pub struct FirmCreateWithoutCaseBillingTimeEntryFirmInput {
     pub name: String,
     pub phone_number: Option<String>,
     pub fax_number: Option<String>,
-    pub address: Option<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>,
-    pub users: Option<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>,
-    pub owner: Option<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>,
-    pub documents: Option<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>,
-    pub cases: Option<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>,
-    pub invoices: Option<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>,
-    pub form_templates: Option<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>,
-    pub notifications: Option<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>,
-    pub default_role: Option<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>,
-    pub case_notes: Option<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>,
+    pub address: Option<Box<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>>,
+    pub users: Option<Box<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>>,
+    pub owner: Option<Box<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>>,
+    pub documents: Option<Box<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>>,
+    pub cases: Option<Box<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseCreateNestedManyWithoutFirmCaseBillingExpensesInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -9617,7 +9391,7 @@ pub struct FirmUncheckedCreateWithoutCaseBillingTimeEntryFirmInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmCreateOrConnectWithoutCaseBillingTimeEntryFirmInput {
-    pub r#where: Box<crate::cases::FirmWhereUniqueInput>,
+    pub r#where: Box<crate::firms::FirmWhereUniqueInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseBillingTimeEntryFirmInput>,
 }
 
@@ -9635,43 +9409,43 @@ pub struct FirmUpdateWithoutCaseBillingTimeEntryFirmInput {
     pub has_free_demo_identification: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub require_mfa: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub qualify_ai_demo_used: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
-    pub address: Option<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>,
-    pub users: Option<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>,
-    pub owner: Option<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>,
-    pub documents: Option<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>,
-    pub cases: Option<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>,
-    pub invoices: Option<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>,
-    pub form_templates: Option<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>,
-    pub notifications: Option<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>,
-    pub default_role: Option<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>,
-    pub case_notes: Option<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>,
-    pub case_billing_expenses: Option<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>,
+    pub address: Option<Box<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>>,
+    pub users: Option<Box<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>>,
+    pub owner: Option<Box<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>>,
+    pub documents: Option<Box<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>>,
+    pub cases: Option<Box<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>>,
+    pub case_billing_expenses: Option<Box<crate::firms::CaseBillingExpenseUpdateManyWithoutFirmCaseBillingExpensesNestedInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -9700,7 +9474,7 @@ pub struct FirmCreateNestedOneWithoutCaseBillingTimeEntryFirmInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseBillingTimeEntryFirmInput>>,
     pub connect_or_create:
         Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseBillingTimeEntryFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -9708,7 +9482,7 @@ pub struct FirmCreateNestedOneWithoutCaseBillingTimeEntryFirmInput {
 pub struct FirmUpsertWithoutCaseBillingTimeEntryFirmInput {
     pub update: Box<crate::cases::FirmUpdateWithoutCaseBillingTimeEntryFirmInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseBillingTimeEntryFirmInput>,
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -9718,7 +9492,7 @@ pub struct FirmUpdateOneRequiredWithoutCaseBillingTimeEntryFirmNestedInput {
     pub connect_or_create:
         Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseBillingTimeEntryFirmInput>>,
     pub upsert: Option<Box<crate::cases::FirmUpsertWithoutCaseBillingTimeEntryFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
     pub update:
         Option<Box<crate::cases::FirmUpdateToOneWithWhereWithoutCaseBillingTimeEntryFirmInput>>,
 }
@@ -9726,7 +9500,7 @@ pub struct FirmUpdateOneRequiredWithoutCaseBillingTimeEntryFirmNestedInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmUpdateToOneWithWhereWithoutCaseBillingTimeEntryFirmInput {
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
     pub data: Box<crate::cases::FirmUpdateWithoutCaseBillingTimeEntryFirmInput>,
 }
 
@@ -9745,34 +9519,34 @@ pub struct UserCreateWithoutCaseBillingTimeEntryUserInput {
     pub mfa_setup_dismissed_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cookie_policy_accepted_at: Option<chrono::DateTime<chrono::Utc>>,
     pub cognito_sub: Option<String>,
-    pub batch_file: Option<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>,
-    pub document: Option<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>,
-    pub document_tags: Option<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>,
-    pub firm: Option<crate::users::FirmCreateNestedOneWithoutUserFirmInput>,
-    pub firm_role: Option<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>,
-    pub owned_firm: Option<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>,
-    pub invoices: Option<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>,
-    pub form_templates: Option<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>,
-    pub form_distributions: Option<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>,
-    pub notifications: Option<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>,
-    pub assigned_cases: Option<crate::users::CaseCreateNestedManyWithoutUserAssignedCasesInput>,
-    pub case_notes: Option<crate::users::CaseNoteCreateNestedManyWithoutUserCaseNotesInput>,
-    pub case_tasks_created: Option<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksCreatedInput>,
-    pub case_tasks_assigned: Option<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksAssignedInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileCreateNestedManyWithoutUserBatchFileInput>>,
+    pub document: Option<Box<crate::users::DocumentCreateNestedManyWithoutUserDocumentInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateCreateNestedManyWithoutUserDocumentSearchTemplatesInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagCreateNestedManyWithoutUserDocumentTagsInput>>,
+    pub firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserFirmInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleCreateNestedOneWithoutUserFirmRoleInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmCreateNestedOneWithoutUserOwnedFirmInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceCreateNestedManyWithoutUserInvoicesInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryCreateNestedManyWithoutUserPasswordRecoveryInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingCreateNestedManyWithoutUserInitialCaseEvaluationProcessingsInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureCreateNestedManyWithoutUserOnboardingFeaturesInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeCreateNestedManyWithoutUserMfaRecoveryCodesInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateCreateNestedManyWithoutUserFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionCreateNestedManyWithoutUserFormDistributionsInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionCreateNestedManyWithoutUserVerifiedSubmissionsInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteCreateNestedManyWithoutUserSubmissionNotesInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewCreateNestedManyWithoutUserFieldReviewsInput>>,
+    pub notifications: Option<Box<crate::users::NotificationCreateNestedManyWithoutUserNotificationsInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceCreateNestedManyWithoutUserNotificationPreferencesInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationCreateNestedManyWithoutUserEmailVerificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingCreateNestedManyWithoutUserQualifyAiProcessingInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentCreateNestedManyWithoutUserQualifyAiUploadsInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsSentInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationCreateNestedManyWithoutUserFirmInvitationsAcceptedInput>>,
+    pub assigned_cases: Option<Box<crate::users::CaseCreateNestedManyWithoutUserAssignedCasesInput>>,
+    pub case_notes: Option<Box<crate::users::CaseNoteCreateNestedManyWithoutUserCaseNotesInput>>,
+    pub case_tasks_created: Option<Box<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksCreatedInput>>,
+    pub case_tasks_assigned: Option<Box<crate::users::CaseTaskCreateNestedManyWithoutUserCaseTasksAssignedInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -9797,7 +9571,7 @@ pub struct UserUncheckedCreateWithoutCaseBillingTimeEntryUserInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserCreateOrConnectWithoutCaseBillingTimeEntryUserInput {
-    pub r#where: Box<crate::cases::UserWhereUniqueInput>,
+    pub r#where: Box<crate::users::UserWhereUniqueInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseBillingTimeEntryUserInput>,
 }
 
@@ -9826,34 +9600,34 @@ pub struct UserUpdateWithoutCaseBillingTimeEntryUserInput {
     pub mfa_setup_dismissed_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cookie_policy_accepted_at: Option<crate::shared::filters::NullableDateTimeFieldUpdateOperationsInput>,
     pub cognito_sub: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub batch_file: Option<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>,
-    pub document: Option<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>,
-    pub document_search_templates: Option<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>,
-    pub document_tags: Option<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>,
-    pub firm: Option<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>,
-    pub firm_role: Option<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>,
-    pub owned_firm: Option<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>,
-    pub invoices: Option<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>,
-    pub password_recovery: Option<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>,
-    pub initial_case_evaluation_processings: Option<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>,
-    pub onboarding_features: Option<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>,
-    pub mfa_recovery_codes: Option<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>,
-    pub form_templates: Option<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>,
-    pub verified_submissions: Option<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>,
-    pub submission_notes: Option<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>,
-    pub field_reviews: Option<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>,
-    pub notifications: Option<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>,
-    pub notification_preferences: Option<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>,
-    pub email_verifications: Option<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>,
-    pub qualify_ai_uploads: Option<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>,
-    pub firm_invitations_sent: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>,
-    pub firm_invitations_accepted: Option<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>,
-    pub assigned_cases: Option<crate::users::CaseUpdateManyWithoutUserAssignedCasesNestedInput>,
-    pub case_notes: Option<crate::users::CaseNoteUpdateManyWithoutUserCaseNotesNestedInput>,
-    pub case_tasks_created: Option<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksCreatedNestedInput>,
-    pub case_tasks_assigned: Option<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksAssignedNestedInput>,
+    pub batch_file: Option<Box<crate::users::BatchFileUpdateManyWithoutUserBatchFileNestedInput>>,
+    pub document: Option<Box<crate::users::DocumentUpdateManyWithoutUserDocumentNestedInput>>,
+    pub document_search_templates: Option<Box<crate::users::DocumentSearchTemplateUpdateManyWithoutUserDocumentSearchTemplatesNestedInput>>,
+    pub document_tags: Option<Box<crate::users::DocumentTagUpdateManyWithoutUserDocumentTagsNestedInput>>,
+    pub firm: Option<Box<crate::users::FirmUpdateOneWithoutUserFirmNestedInput>>,
+    pub firm_role: Option<Box<crate::users::FirmRoleUpdateOneWithoutUserFirmRoleNestedInput>>,
+    pub owned_firm: Option<Box<crate::users::FirmUpdateOneWithoutUserOwnedFirmNestedInput>>,
+    pub invoices: Option<Box<crate::users::InvoiceUpdateManyWithoutUserInvoicesNestedInput>>,
+    pub password_recovery: Option<Box<crate::users::PasswordRecoveryUpdateManyWithoutUserPasswordRecoveryNestedInput>>,
+    pub initial_case_evaluation_processings: Option<Box<crate::users::InitialCaseEvaluationProcessingUpdateManyWithoutUserInitialCaseEvaluationProcessingsNestedInput>>,
+    pub onboarding_features: Option<Box<crate::users::UserOnboardingFeatureUpdateManyWithoutUserOnboardingFeaturesNestedInput>>,
+    pub mfa_recovery_codes: Option<Box<crate::users::MfaRecoveryCodeUpdateManyWithoutUserMfaRecoveryCodesNestedInput>>,
+    pub form_templates: Option<Box<crate::users::FormTemplateUpdateManyWithoutUserFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::users::FormDistributionUpdateManyWithoutUserFormDistributionsNestedInput>>,
+    pub verified_submissions: Option<Box<crate::users::FormSubmissionUpdateManyWithoutUserVerifiedSubmissionsNestedInput>>,
+    pub submission_notes: Option<Box<crate::users::SubmissionNoteUpdateManyWithoutUserSubmissionNotesNestedInput>>,
+    pub field_reviews: Option<Box<crate::users::ExtractedFieldReviewUpdateManyWithoutUserFieldReviewsNestedInput>>,
+    pub notifications: Option<Box<crate::users::NotificationUpdateManyWithoutUserNotificationsNestedInput>>,
+    pub notification_preferences: Option<Box<crate::users::NotificationPreferenceUpdateManyWithoutUserNotificationPreferencesNestedInput>>,
+    pub email_verifications: Option<Box<crate::users::EmailVerificationUpdateManyWithoutUserEmailVerificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::users::QualifyAiProcessingUpdateManyWithoutUserQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_uploads: Option<Box<crate::users::QualifyAiQualifierDocumentUpdateManyWithoutUserQualifyAiUploadsNestedInput>>,
+    pub firm_invitations_sent: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsSentNestedInput>>,
+    pub firm_invitations_accepted: Option<Box<crate::users::FirmInvitationUpdateManyWithoutUserFirmInvitationsAcceptedNestedInput>>,
+    pub assigned_cases: Option<Box<crate::users::CaseUpdateManyWithoutUserAssignedCasesNestedInput>>,
+    pub case_notes: Option<Box<crate::users::CaseNoteUpdateManyWithoutUserCaseNotesNestedInput>>,
+    pub case_tasks_created: Option<Box<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksCreatedNestedInput>>,
+    pub case_tasks_assigned: Option<Box<crate::users::CaseTaskUpdateManyWithoutUserCaseTasksAssignedNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -9895,7 +9669,7 @@ pub struct UserCreateNestedOneWithoutCaseBillingTimeEntryUserInput {
     pub create: Option<Box<crate::cases::UserCreateWithoutCaseBillingTimeEntryUserInput>>,
     pub connect_or_create:
         Option<Box<crate::cases::UserCreateOrConnectWithoutCaseBillingTimeEntryUserInput>>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -9903,7 +9677,7 @@ pub struct UserCreateNestedOneWithoutCaseBillingTimeEntryUserInput {
 pub struct UserUpsertWithoutCaseBillingTimeEntryUserInput {
     pub update: Box<crate::cases::UserUpdateWithoutCaseBillingTimeEntryUserInput>,
     pub create: Box<crate::cases::UserCreateWithoutCaseBillingTimeEntryUserInput>,
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -9913,7 +9687,7 @@ pub struct UserUpdateOneRequiredWithoutCaseBillingTimeEntryUserNestedInput {
     pub connect_or_create:
         Option<Box<crate::cases::UserCreateOrConnectWithoutCaseBillingTimeEntryUserInput>>,
     pub upsert: Option<Box<crate::cases::UserUpsertWithoutCaseBillingTimeEntryUserInput>>,
-    pub connect: Option<Box<crate::cases::UserWhereUniqueInput>>,
+    pub connect: Option<Box<crate::users::UserWhereUniqueInput>>,
     pub update:
         Option<Box<crate::cases::UserUpdateToOneWithWhereWithoutCaseBillingTimeEntryUserInput>>,
 }
@@ -9921,8 +9695,29 @@ pub struct UserUpdateOneRequiredWithoutCaseBillingTimeEntryUserNestedInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserUpdateToOneWithWhereWithoutCaseBillingTimeEntryUserInput {
-    pub r#where: Option<Box<crate::cases::UserWhereInput>>,
+    pub r#where: Option<Box<crate::users::UserWhereInput>>,
     pub data: Box<crate::cases::UserUpdateWithoutCaseBillingTimeEntryUserInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CaseBillingTimeEntryScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub case_id: Option<crate::shared::filters::StringFilter>,
+    pub firm_id: Option<crate::shared::filters::StringFilter>,
+    pub user_id: Option<crate::shared::filters::StringFilter>,
+    pub date: Option<crate::shared::filters::DateTimeFilter>,
+    pub hours: Option<crate::shared::filters::DecimalFilter>,
+    pub description: Option<crate::shared::filters::StringFilter>,
+    pub is_billable: Option<crate::shared::filters::BoolFilter>,
+    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<CaseBillingTimeEntryScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<CaseBillingTimeEntryScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<CaseBillingTimeEntryScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -10114,8 +9909,8 @@ pub struct CaseBillingExpenseCreateInput {
     pub description: String,
     pub amount: rust_decimal::Decimal,
     pub category: crate::cases::BillingExpenseCategory,
-    pub case: Option<crate::cases::CaseCreateNestedOneWithoutCaseBillingExpenseCaseInput>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseBillingExpenseFirmInput>,
+    pub case: Option<Box<crate::cases::CaseCreateNestedOneWithoutCaseBillingExpenseCaseInput>>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseBillingExpenseFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -10150,8 +9945,10 @@ pub struct CaseBillingExpenseUpdateInput {
     pub category: Option<crate::cases::BillingExpenseCategoryFieldUpdateOperationsInput>,
     pub created_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
     pub updated_at: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
-    pub case: Option<crate::cases::CaseUpdateOneRequiredWithoutCaseBillingExpenseCaseNestedInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseBillingExpenseFirmNestedInput>,
+    pub case:
+        Option<Box<crate::cases::CaseUpdateOneRequiredWithoutCaseBillingExpenseCaseNestedInput>>,
+    pub firm:
+        Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseBillingExpenseFirmNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -10248,24 +10045,24 @@ pub struct CaseCreateWithoutCaseBillingExpenseCaseInput {
     pub opposing_counsel_attorney: Option<String>,
     pub opposing_counsel_phone: Option<String>,
     pub opposing_counsel_email: Option<String>,
-    pub firm: Option<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>,
-    pub assigned_user: Option<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>,
-    pub documents: Option<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>,
-    pub batch_files: Option<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>,
-    pub invoices: Option<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>,
-    pub case_notes: Option<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>,
+    pub firm: Option<Box<crate::cases::FirmCreateNestedOneWithoutCaseFirmInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserCreateNestedOneWithoutCaseAssignedUserInput>>,
+    pub documents: Option<Box<crate::cases::DocumentCreateNestedManyWithoutCaseDocumentsInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterCreateNestedManyWithoutCaseDemandLettersInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileCreateNestedManyWithoutCaseBatchFilesInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingCreateNestedManyWithoutCaseSearchProcessingsInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingCreateNestedOneWithoutCaseInitialCaseEvaluationInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingCreateNestedManyWithoutCaseDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingCreateNestedManyWithoutCaseCaseReviewProcessingsInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingCreateNestedManyWithoutCaseAdvitaCaseMappingsInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationCreateNestedManyWithoutCaseCaseQualificationsInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingCreateNestedManyWithoutCaseQualifyAiProcessingInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceCreateNestedManyWithoutCaseInvoicesInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteCreateNestedManyWithoutCaseCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskCreateNestedManyWithoutCaseCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryCreateNestedManyWithoutCaseCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactCreateNestedManyWithoutCaseCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryCreateNestedManyWithoutCaseCaseBillingTimeEntriesInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -10391,24 +10188,24 @@ pub struct CaseUpdateWithoutCaseBillingExpenseCaseInput {
     pub opposing_counsel_attorney: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_phone: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
     pub opposing_counsel_email: Option<crate::shared::filters::NullableStringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>,
-    pub assigned_user: Option<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>,
-    pub documents: Option<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>,
-    pub demand_letters: Option<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>,
-    pub batch_files: Option<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>,
-    pub search_processings: Option<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>,
-    pub initial_case_evaluation: Option<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>,
-    pub demand_letter_processings: Option<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>,
-    pub advita_case_mappings: Option<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>,
-    pub case_qualifications: Option<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>,
-    pub qualify_ai_processing: Option<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>,
-    pub invoices: Option<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>,
-    pub case_notes: Option<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>,
+    pub firm: Option<Box<crate::cases::FirmUpdateOneRequiredWithoutCaseFirmNestedInput>>,
+    pub assigned_user: Option<Box<crate::cases::UserUpdateOneWithoutCaseAssignedUserNestedInput>>,
+    pub documents: Option<Box<crate::cases::DocumentUpdateManyWithoutCaseDocumentsNestedInput>>,
+    pub demand_letters: Option<Box<crate::cases::DemandLetterUpdateManyWithoutCaseDemandLettersNestedInput>>,
+    pub batch_files: Option<Box<crate::cases::BatchFileUpdateManyWithoutCaseBatchFilesNestedInput>>,
+    pub search_processings: Option<Box<crate::cases::SearchProcessingUpdateManyWithoutCaseSearchProcessingsNestedInput>>,
+    pub initial_case_evaluation: Option<Box<crate::cases::InitialCaseEvaluationProcessingUpdateOneWithoutCaseInitialCaseEvaluationNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::cases::DemandLetterProcessingUpdateManyWithoutCaseDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::cases::CaseReviewProcessingUpdateManyWithoutCaseCaseReviewProcessingsNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::cases::AdvitaCaseMappingUpdateManyWithoutCaseAdvitaCaseMappingsNestedInput>>,
+    pub case_qualifications: Option<Box<crate::cases::CaseQualificationUpdateManyWithoutCaseCaseQualificationsNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::cases::QualifyAiProcessingUpdateManyWithoutCaseQualifyAiProcessingNestedInput>>,
+    pub invoices: Option<Box<crate::cases::InvoiceUpdateManyWithoutCaseInvoicesNestedInput>>,
+    pub case_notes: Option<Box<crate::cases::CaseNoteUpdateManyWithoutCaseCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::cases::CaseTaskUpdateManyWithoutCaseCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::cases::CaseCalendarEntryUpdateManyWithoutCaseCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::cases::CaseContactUpdateManyWithoutCaseCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::cases::CaseBillingTimeEntryUpdateManyWithoutCaseCaseBillingTimeEntriesNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -10540,43 +10337,43 @@ pub struct FirmCreateWithoutCaseBillingExpenseFirmInput {
     pub name: String,
     pub phone_number: Option<String>,
     pub fax_number: Option<String>,
-    pub address: Option<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>,
-    pub users: Option<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>,
-    pub owner: Option<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>,
-    pub documents: Option<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>,
-    pub cases: Option<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>,
-    pub invoices: Option<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>,
-    pub form_templates: Option<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>,
-    pub notifications: Option<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>,
-    pub default_role: Option<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>,
-    pub case_notes: Option<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>,
-    pub case_contacts: Option<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>,
+    pub address: Option<Box<crate::firms::AddressCreateNestedOneWithoutFirmAddressInput>>,
+    pub users: Option<Box<crate::firms::UserCreateNestedManyWithoutFirmUsersInput>>,
+    pub owner: Option<Box<crate::firms::UserCreateNestedOneWithoutFirmOwnerInput>>,
+    pub documents: Option<Box<crate::firms::DocumentCreateNestedManyWithoutFirmDocumentsInput>>,
+    pub cases: Option<Box<crate::firms::CaseCreateNestedManyWithoutFirmCasesInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterCreateNestedManyWithoutFirmDemandLettersInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingCreateNestedManyWithoutFirmSearchProcessingsInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateCreateNestedManyWithoutFirmSearchTemplatesInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigCreateNestedManyWithoutFirmSsoConfigsInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceCreateNestedManyWithoutFirmInvoicesInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingCreateNestedManyWithoutFirmInitialCaseEvaluationsInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingCreateNestedManyWithoutFirmDemandLetterProcessingsInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingCreateNestedManyWithoutFirmCaseReviewProcessingsInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateCreateNestedManyWithoutFirmFormTemplatesInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionCreateNestedManyWithoutFirmFormDistributionsInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionCreateNestedManyWithoutFirmFormSubmissionsInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadCreateNestedManyWithoutFirmPdfUploadsInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationCreateNestedManyWithoutFirmNotificationsInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryCreateNestedManyWithoutFirmEmailDeliveriesInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleCreateNestedManyWithoutFirmFirmRolesInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleCreateNestedOneWithoutFirmDefaultRoleInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionCreateNestedOneWithoutFirmAdvitaConnectionInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingCreateNestedManyWithoutFirmAdvitaCaseMappingsInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingCreateNestedManyWithoutFirmAdvitaTrackingMappingsInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaCreateNestedManyWithoutFirmQualificationCriteriaInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationCreateNestedManyWithoutFirmCaseQualificationsInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateCreateNestedManyWithoutFirmTortTemplatesInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingCreateNestedManyWithoutFirmQualifyAiProcessingInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentCreateNestedManyWithoutFirmQualifyAiQualifierDocumentsInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationCreateNestedManyWithoutFirmFirmInvitationsInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeCreateNestedManyWithoutFirmFirmDocumentTypesInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteCreateNestedManyWithoutFirmCaseNotesInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskCreateNestedManyWithoutFirmCaseTasksInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryCreateNestedManyWithoutFirmCaseCalendarEntriesInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactCreateNestedManyWithoutFirmCaseContactsInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryCreateNestedManyWithoutFirmCaseBillingTimeEntriesInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionCreateNestedManyWithoutFirmExternalPlatformConnectionsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -10593,7 +10390,7 @@ pub struct FirmUncheckedCreateWithoutCaseBillingExpenseFirmInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmCreateOrConnectWithoutCaseBillingExpenseFirmInput {
-    pub r#where: Box<crate::cases::FirmWhereUniqueInput>,
+    pub r#where: Box<crate::firms::FirmWhereUniqueInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseBillingExpenseFirmInput>,
 }
 
@@ -10611,43 +10408,43 @@ pub struct FirmUpdateWithoutCaseBillingExpenseFirmInput {
     pub has_free_demo_identification: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub require_mfa: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
     pub qualify_ai_demo_used: Option<crate::shared::filters::BoolFieldUpdateOperationsInput>,
-    pub address: Option<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>,
-    pub users: Option<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>,
-    pub owner: Option<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>,
-    pub documents: Option<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>,
-    pub cases: Option<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>,
-    pub demand_letters: Option<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>,
-    pub search_processings: Option<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>,
-    pub search_templates: Option<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>,
-    pub sso_configs: Option<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>,
-    pub invoices: Option<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>,
-    pub initial_case_evaluations: Option<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>,
-    pub demand_letter_processings: Option<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>,
-    pub case_review_processings: Option<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>,
-    pub form_templates: Option<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>,
-    pub form_distributions: Option<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>,
-    pub form_submissions: Option<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>,
-    pub pdf_uploads: Option<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>,
-    pub notifications: Option<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>,
-    pub email_deliveries: Option<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>,
-    pub firm_roles: Option<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>,
-    pub default_role: Option<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>,
-    pub advita_connection: Option<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>,
-    pub advita_case_mappings: Option<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>,
-    pub advita_tracking_mappings: Option<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>,
-    pub qualification_criteria: Option<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>,
-    pub case_qualifications: Option<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>,
-    pub tort_templates: Option<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>,
-    pub qualify_ai_processing: Option<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>,
-    pub qualify_ai_qualifier_documents: Option<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>,
-    pub firm_invitations: Option<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>,
-    pub firm_document_types: Option<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>,
-    pub case_notes: Option<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>,
-    pub case_tasks: Option<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>,
-    pub case_calendar_entries: Option<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>,
-    pub case_contacts: Option<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>,
-    pub case_billing_time_entries: Option<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>,
-    pub external_platform_connections: Option<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>,
+    pub address: Option<Box<crate::firms::AddressUpdateOneWithoutFirmAddressNestedInput>>,
+    pub users: Option<Box<crate::firms::UserUpdateManyWithoutFirmUsersNestedInput>>,
+    pub owner: Option<Box<crate::firms::UserUpdateOneWithoutFirmOwnerNestedInput>>,
+    pub documents: Option<Box<crate::firms::DocumentUpdateManyWithoutFirmDocumentsNestedInput>>,
+    pub cases: Option<Box<crate::firms::CaseUpdateManyWithoutFirmCasesNestedInput>>,
+    pub demand_letters: Option<Box<crate::firms::DemandLetterUpdateManyWithoutFirmDemandLettersNestedInput>>,
+    pub search_processings: Option<Box<crate::firms::SearchProcessingUpdateManyWithoutFirmSearchProcessingsNestedInput>>,
+    pub search_templates: Option<Box<crate::firms::DocumentSearchTemplateUpdateManyWithoutFirmSearchTemplatesNestedInput>>,
+    pub sso_configs: Option<Box<crate::firms::FirmSSOConfigUpdateManyWithoutFirmSsoConfigsNestedInput>>,
+    pub invoices: Option<Box<crate::firms::InvoiceUpdateManyWithoutFirmInvoicesNestedInput>>,
+    pub initial_case_evaluations: Option<Box<crate::firms::InitialCaseEvaluationProcessingUpdateManyWithoutFirmInitialCaseEvaluationsNestedInput>>,
+    pub demand_letter_processings: Option<Box<crate::firms::DemandLetterProcessingUpdateManyWithoutFirmDemandLetterProcessingsNestedInput>>,
+    pub case_review_processings: Option<Box<crate::firms::CaseReviewProcessingUpdateManyWithoutFirmCaseReviewProcessingsNestedInput>>,
+    pub form_templates: Option<Box<crate::firms::FormTemplateUpdateManyWithoutFirmFormTemplatesNestedInput>>,
+    pub form_distributions: Option<Box<crate::firms::FormDistributionUpdateManyWithoutFirmFormDistributionsNestedInput>>,
+    pub form_submissions: Option<Box<crate::firms::FormSubmissionUpdateManyWithoutFirmFormSubmissionsNestedInput>>,
+    pub pdf_uploads: Option<Box<crate::firms::PdfUploadUpdateManyWithoutFirmPdfUploadsNestedInput>>,
+    pub notifications: Option<Box<crate::firms::NotificationUpdateManyWithoutFirmNotificationsNestedInput>>,
+    pub email_deliveries: Option<Box<crate::firms::EmailDeliveryUpdateManyWithoutFirmEmailDeliveriesNestedInput>>,
+    pub firm_roles: Option<Box<crate::firms::FirmRoleUpdateManyWithoutFirmFirmRolesNestedInput>>,
+    pub default_role: Option<Box<crate::firms::FirmRoleUpdateOneWithoutFirmDefaultRoleNestedInput>>,
+    pub advita_connection: Option<Box<crate::firms::AdvitaConnectionUpdateOneWithoutFirmAdvitaConnectionNestedInput>>,
+    pub advita_case_mappings: Option<Box<crate::firms::AdvitaCaseMappingUpdateManyWithoutFirmAdvitaCaseMappingsNestedInput>>,
+    pub advita_tracking_mappings: Option<Box<crate::firms::AdvitaTrackingMappingUpdateManyWithoutFirmAdvitaTrackingMappingsNestedInput>>,
+    pub qualification_criteria: Option<Box<crate::firms::QualificationCriteriaUpdateManyWithoutFirmQualificationCriteriaNestedInput>>,
+    pub case_qualifications: Option<Box<crate::firms::CaseQualificationUpdateManyWithoutFirmCaseQualificationsNestedInput>>,
+    pub tort_templates: Option<Box<crate::firms::TortTemplateUpdateManyWithoutFirmTortTemplatesNestedInput>>,
+    pub qualify_ai_processing: Option<Box<crate::firms::QualifyAiProcessingUpdateManyWithoutFirmQualifyAiProcessingNestedInput>>,
+    pub qualify_ai_qualifier_documents: Option<Box<crate::firms::QualifyAiQualifierDocumentUpdateManyWithoutFirmQualifyAiQualifierDocumentsNestedInput>>,
+    pub firm_invitations: Option<Box<crate::firms::FirmInvitationUpdateManyWithoutFirmFirmInvitationsNestedInput>>,
+    pub firm_document_types: Option<Box<crate::firms::FirmDocumentTypeUpdateManyWithoutFirmFirmDocumentTypesNestedInput>>,
+    pub case_notes: Option<Box<crate::firms::CaseNoteUpdateManyWithoutFirmCaseNotesNestedInput>>,
+    pub case_tasks: Option<Box<crate::firms::CaseTaskUpdateManyWithoutFirmCaseTasksNestedInput>>,
+    pub case_calendar_entries: Option<Box<crate::firms::CaseCalendarEntryUpdateManyWithoutFirmCaseCalendarEntriesNestedInput>>,
+    pub case_contacts: Option<Box<crate::firms::CaseContactUpdateManyWithoutFirmCaseContactsNestedInput>>,
+    pub case_billing_time_entries: Option<Box<crate::firms::CaseBillingTimeEntryUpdateManyWithoutFirmCaseBillingTimeEntriesNestedInput>>,
+    pub external_platform_connections: Option<Box<crate::firms::ExternalPlatformConnectionUpdateManyWithoutFirmExternalPlatformConnectionsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -10676,7 +10473,7 @@ pub struct FirmCreateNestedOneWithoutCaseBillingExpenseFirmInput {
     pub create: Option<Box<crate::cases::FirmCreateWithoutCaseBillingExpenseFirmInput>>,
     pub connect_or_create:
         Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseBillingExpenseFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -10684,7 +10481,7 @@ pub struct FirmCreateNestedOneWithoutCaseBillingExpenseFirmInput {
 pub struct FirmUpsertWithoutCaseBillingExpenseFirmInput {
     pub update: Box<crate::cases::FirmUpdateWithoutCaseBillingExpenseFirmInput>,
     pub create: Box<crate::cases::FirmCreateWithoutCaseBillingExpenseFirmInput>,
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -10694,7 +10491,7 @@ pub struct FirmUpdateOneRequiredWithoutCaseBillingExpenseFirmNestedInput {
     pub connect_or_create:
         Option<Box<crate::cases::FirmCreateOrConnectWithoutCaseBillingExpenseFirmInput>>,
     pub upsert: Option<Box<crate::cases::FirmUpsertWithoutCaseBillingExpenseFirmInput>>,
-    pub connect: Option<Box<crate::cases::FirmWhereUniqueInput>>,
+    pub connect: Option<Box<crate::firms::FirmWhereUniqueInput>>,
     pub update:
         Option<Box<crate::cases::FirmUpdateToOneWithWhereWithoutCaseBillingExpenseFirmInput>>,
 }
@@ -10702,8 +10499,28 @@ pub struct FirmUpdateOneRequiredWithoutCaseBillingExpenseFirmNestedInput {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FirmUpdateToOneWithWhereWithoutCaseBillingExpenseFirmInput {
-    pub r#where: Option<Box<crate::cases::FirmWhereInput>>,
+    pub r#where: Option<Box<crate::firms::FirmWhereInput>>,
     pub data: Box<crate::cases::FirmUpdateWithoutCaseBillingExpenseFirmInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CaseBillingExpenseScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub case_id: Option<crate::shared::filters::StringFilter>,
+    pub firm_id: Option<crate::shared::filters::StringFilter>,
+    pub date: Option<crate::shared::filters::DateTimeFilter>,
+    pub description: Option<crate::shared::filters::StringFilter>,
+    pub amount: Option<crate::shared::filters::DecimalFilter>,
+    pub category: Option<crate::cases::BillingExpenseCategoryFilter>,
+    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub updated_at: Option<crate::shared::filters::DateTimeFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<CaseBillingExpenseScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<CaseBillingExpenseScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<CaseBillingExpenseScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]

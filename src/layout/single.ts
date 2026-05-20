@@ -11,6 +11,7 @@ import { emitSelectInput, emitIncludeInput } from "../emit/inputs/select-include
 import { emitCreateInputs } from "../emit/inputs/create.js";
 import { emitUpdateInputs } from "../emit/inputs/update.js";
 import { emitNestedInputsForModel } from "../emit/inputs/nested.js";
+import { emitModelScalarWhereInput } from "../emit/inputs/scalar-where.js";
 import { emitAggregateInputs } from "../emit/inputs/aggregate.js";
 import { emitEnumFilter } from "../emit/filters/enum.js";
 import { emitSharedScalarFilters } from "../emit/filters/scalar.js";
@@ -23,6 +24,7 @@ export function emitSingle(ir: IR, cfg: GeneratorConfig): Map<string, string> {
   const allModels = new Map(ir.models.map((m) => [m.name, m]));
 
   const parts: string[] = [emitFileHeader(cfg)];
+  parts.push(`#![recursion_limit = "1024"]`);
   if (cfg.serde) parts.push(`use serde::{Deserialize, Serialize};\n`);
   parts.push(emitCommonSharedTypes({ serde: cfg.serde, vis: cfg.moduleVisibility }));
   parts.push(emitSharedScalarFilters({ serde: cfg.serde, vis: cfg.moduleVisibility, cfg }));
@@ -82,6 +84,12 @@ export function emitSingle(ir: IR, cfg: GeneratorConfig): Map<string, string> {
         serde: cfg.serde,
         vis: cfg.moduleVisibility,
         moduleOf,
+      }),
+    );
+    parts.push(
+      emitModelScalarWhereInput(m, {
+        serde: cfg.serde,
+        vis: cfg.moduleVisibility,
       }),
     );
     parts.push(

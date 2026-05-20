@@ -196,6 +196,20 @@ pub struct UserUncheckedUpdateManyInput {
     pub status: Option<crate::schema::CaseStatusFieldUpdateOperationsInput>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub role: Option<crate::schema::RoleFilter>,
+    pub status: Option<crate::schema::CaseStatusFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<UserScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<UserScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<UserScalarWhereInput>>,
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserCountAggregateInput {

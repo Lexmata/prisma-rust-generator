@@ -153,6 +153,23 @@ pub struct TimeRowUncheckedUpdateManyInput {
     pub without_tz: Option<crate::shared::filters::DateTimeFieldUpdateOperationsInput>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TimeRowScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub created_at: Option<crate::shared::filters::DateTimeFilter>,
+    pub date_only: Option<crate::shared::filters::DateTimeFilter>,
+    pub time_only: Option<crate::shared::filters::DateTimeFilter>,
+    pub with_tz: Option<crate::shared::filters::DateTimeFilter>,
+    pub without_tz: Option<crate::shared::filters::DateTimeFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<TimeRowScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<TimeRowScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<TimeRowScalarWhereInput>>,
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TimeRowCountAggregateInput {

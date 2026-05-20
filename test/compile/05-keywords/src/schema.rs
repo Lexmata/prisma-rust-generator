@@ -131,6 +131,21 @@ pub struct ItemUncheckedUpdateManyInput {
     pub r#ref: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub r#type: Option<crate::shared::filters::StringFilter>,
+    pub r#match: Option<crate::shared::filters::StringFilter>,
+    pub r#ref: Option<crate::shared::filters::StringFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<ItemScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<ItemScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<ItemScalarWhereInput>>,
+}
+
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ItemCountAggregateInput {

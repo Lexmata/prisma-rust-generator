@@ -72,7 +72,7 @@ pub struct FirmInclude {
 pub struct FirmCreateInput {
     pub id: String,
     pub name: String,
-    pub users: Option<crate::schema::UserCreateNestedManyWithoutFirmUsersInput>,
+    pub users: Option<Box<crate::schema::UserCreateNestedManyWithoutFirmUsersInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -94,7 +94,7 @@ pub struct FirmCreateManyInput {
 pub struct FirmUpdateInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub name: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub users: Option<crate::schema::UserUpdateManyWithoutFirmUsersNestedInput>,
+    pub users: Option<Box<crate::schema::UserUpdateManyWithoutFirmUsersNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -123,7 +123,7 @@ pub struct FirmUncheckedUpdateManyInput {
 pub struct UserCreateWithoutFirmUsersInput {
     pub id: String,
     pub email: String,
-    pub posts: Option<crate::schema::PostCreateNestedManyWithoutUserPostsInput>,
+    pub posts: Option<Box<crate::schema::PostCreateNestedManyWithoutUserPostsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -146,7 +146,7 @@ pub struct UserCreateOrConnectWithoutFirmUsersInput {
 pub struct UserUpdateWithoutFirmUsersInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub email: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub posts: Option<crate::schema::PostUpdateManyWithoutUserPostsNestedInput>,
+    pub posts: Option<Box<crate::schema::PostUpdateManyWithoutUserPostsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -222,16 +222,15 @@ pub struct UserUpdateManyWithWhereWithoutFirmUsersInput {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserScalarWhereInput {
+pub struct FirmScalarWhereInput {
     pub id: Option<crate::shared::filters::StringFilter>,
-    pub email: Option<crate::shared::filters::StringFilter>,
-    pub firm_id: Option<crate::shared::filters::StringFilter>,
+    pub name: Option<crate::shared::filters::StringFilter>,
     #[serde(rename = "AND")]
-    pub and: Option<Vec<UserScalarWhereInput>>,
+    pub and: Option<Vec<FirmScalarWhereInput>>,
     #[serde(rename = "OR")]
-    pub or: Option<Vec<UserScalarWhereInput>>,
+    pub or: Option<Vec<FirmScalarWhereInput>>,
     #[serde(rename = "NOT")]
-    pub not: Option<Vec<UserScalarWhereInput>>,
+    pub not: Option<Vec<FirmScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -363,8 +362,8 @@ pub struct UserInclude {
 pub struct UserCreateInput {
     pub id: String,
     pub email: String,
-    pub firm: Option<crate::schema::FirmCreateNestedOneWithoutUserFirmInput>,
-    pub posts: Option<crate::schema::PostCreateNestedManyWithoutUserPostsInput>,
+    pub firm: Option<Box<crate::schema::FirmCreateNestedOneWithoutUserFirmInput>>,
+    pub posts: Option<Box<crate::schema::PostCreateNestedManyWithoutUserPostsInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -388,8 +387,8 @@ pub struct UserCreateManyInput {
 pub struct UserUpdateInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub email: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::schema::FirmUpdateOneRequiredWithoutUserFirmNestedInput>,
-    pub posts: Option<crate::schema::PostUpdateManyWithoutUserPostsNestedInput>,
+    pub firm: Option<Box<crate::schema::FirmUpdateOneRequiredWithoutUserFirmNestedInput>>,
+    pub posts: Option<Box<crate::schema::PostUpdateManyWithoutUserPostsNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -585,16 +584,16 @@ pub struct PostUpdateManyWithWhereWithoutUserPostsInput {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostScalarWhereInput {
+pub struct UserScalarWhereInput {
     pub id: Option<crate::shared::filters::StringFilter>,
-    pub title: Option<crate::shared::filters::StringFilter>,
-    pub author_id: Option<crate::shared::filters::StringFilter>,
+    pub email: Option<crate::shared::filters::StringFilter>,
+    pub firm_id: Option<crate::shared::filters::StringFilter>,
     #[serde(rename = "AND")]
-    pub and: Option<Vec<PostScalarWhereInput>>,
+    pub and: Option<Vec<UserScalarWhereInput>>,
     #[serde(rename = "OR")]
-    pub or: Option<Vec<PostScalarWhereInput>>,
+    pub or: Option<Vec<UserScalarWhereInput>>,
     #[serde(rename = "NOT")]
-    pub not: Option<Vec<PostScalarWhereInput>>,
+    pub not: Option<Vec<UserScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -722,7 +721,7 @@ pub struct PostInclude {
 pub struct PostCreateInput {
     pub id: String,
     pub title: String,
-    pub author: Option<crate::schema::UserCreateNestedOneWithoutPostAuthorInput>,
+    pub author: Option<Box<crate::schema::UserCreateNestedOneWithoutPostAuthorInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -746,7 +745,7 @@ pub struct PostCreateManyInput {
 pub struct PostUpdateInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub title: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub author: Option<crate::schema::UserUpdateOneRequiredWithoutPostAuthorNestedInput>,
+    pub author: Option<Box<crate::schema::UserUpdateOneRequiredWithoutPostAuthorNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -777,7 +776,7 @@ pub struct PostUncheckedUpdateManyInput {
 pub struct UserCreateWithoutPostAuthorInput {
     pub id: String,
     pub email: String,
-    pub firm: Option<crate::schema::FirmCreateNestedOneWithoutUserFirmInput>,
+    pub firm: Option<Box<crate::schema::FirmCreateNestedOneWithoutUserFirmInput>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -800,7 +799,7 @@ pub struct UserCreateOrConnectWithoutPostAuthorInput {
 pub struct UserUpdateWithoutPostAuthorInput {
     pub id: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
     pub email: Option<crate::shared::filters::StringFieldUpdateOperationsInput>,
-    pub firm: Option<crate::schema::FirmUpdateOneRequiredWithoutUserFirmNestedInput>,
+    pub firm: Option<Box<crate::schema::FirmUpdateOneRequiredWithoutUserFirmNestedInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
@@ -842,6 +841,20 @@ pub struct UserUpdateOneRequiredWithoutPostAuthorNestedInput {
 pub struct UserUpdateToOneWithWhereWithoutPostAuthorInput {
     pub r#where: Option<Box<crate::schema::UserWhereInput>>,
     pub data: Box<crate::schema::UserUpdateWithoutPostAuthorInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostScalarWhereInput {
+    pub id: Option<crate::shared::filters::StringFilter>,
+    pub title: Option<crate::shared::filters::StringFilter>,
+    pub author_id: Option<crate::shared::filters::StringFilter>,
+    #[serde(rename = "AND")]
+    pub and: Option<Vec<PostScalarWhereInput>>,
+    #[serde(rename = "OR")]
+    pub or: Option<Vec<PostScalarWhereInput>>,
+    #[serde(rename = "NOT")]
+    pub not: Option<Vec<PostScalarWhereInput>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Eq, Hash, Serialize, Deserialize)]
