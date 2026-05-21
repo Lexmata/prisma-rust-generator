@@ -7,6 +7,10 @@ source will be a major-version bump.
 
 ## Unreleased
 
+_No changes yet._
+
+## 0.3.0 — 2026-05-21
+
 ### Added
 
 - **`engine = "sqlx-sqlite"`** as the second backend variant. Generated
