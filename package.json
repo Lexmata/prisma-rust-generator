@@ -1,6 +1,6 @@
 {
   "name": "@lexmata/prisma-rust-generator",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Prisma generator emitting bare Rust models, enums, filters, and the full Prisma input surface.",
   "type": "module",
   "publishConfig": {

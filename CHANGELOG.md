@@ -7,6 +7,10 @@ source will be a major-version bump.
 
 ## Unreleased
 
+_No changes yet._
+
+## 0.2.0 — 2026-05-21
+
 ### Added
 
 - Optional `engine = "sqlx-postgres"` generator block field. When set,
