@@ -41,6 +41,16 @@ export function parseGeneratorConfig(opts: GeneratorOptions): GeneratorConfig {
     "jsonCrate",
   );
   const edition = pickEnum(raw.edition, ["2021", "2024"] as const, "2021", "edition");
+  const engine =
+    raw.engine == null
+      ? null
+      : pickEnum(raw.engine, ["sqlx-postgres"] as const, "sqlx-postgres", "engine");
+
+  if (engine !== null && layout === "single") {
+    throw new Error(
+      `engine = "${engine}" is not yet supported with outputLayout = "single". Use "per-file" or "per-model".`,
+    );
+  }
 
   return {
     output: generator.output.value,
@@ -65,6 +75,7 @@ export function parseGeneratorConfig(opts: GeneratorOptions): GeneratorConfig {
     concurrency: pickInt(raw.concurrency, Math.min(os.cpus().length, 8)),
     rustfmtShardSize: pickInt(raw.rustfmtShardSize, 16),
     filePreamble: pickString(raw.filePreamble, "") ?? "",
+    engine,
   };
 }
 

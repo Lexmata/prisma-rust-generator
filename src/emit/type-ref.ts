@@ -10,16 +10,18 @@ export function renderScalarFieldType(f: FieldIR, moduleOf: ModuleResolver): str
   return t;
 }
 
-export function renderTypeRef(r: RustTypeRef, _moduleOf: ModuleResolver): string {
+export function renderTypeRef(r: RustTypeRef, moduleOf: ModuleResolver): string {
   switch (r.kind) {
     case "scalar": {
       return r.rust;
     }
     case "enumRef": {
-      return r.module ? `crate::${r.module}::${r.enumName}` : `crate::${r.enumName}`;
+      const mod = moduleOf(r.enumName) || r.module;
+      return mod ? `crate::${mod}::${r.enumName}` : `crate::${r.enumName}`;
     }
     case "modelRef": {
-      return r.module ? `crate::${r.module}::${r.modelName}` : `crate::${r.modelName}`;
+      const mod = moduleOf(r.modelName) || r.module;
+      return mod ? `crate::${mod}::${r.modelName}` : `crate::${r.modelName}`;
     }
   }
 }

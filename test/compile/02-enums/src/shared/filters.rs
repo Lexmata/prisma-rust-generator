@@ -28,242 +28,262 @@ pub enum OneOrMany<T> {
     Many(Vec<T>),
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum StringFilter {
-    Equals(String),
-    In(Vec<String>),
-    NotIn(Vec<String>),
-    Lt(String),
-    Lte(String),
-    Gt(String),
-    Gte(String),
-    Contains(String),
-    StartsWith(String),
-    EndsWith(String),
-    Not(Box<StringFilter>),
-    Mode(QueryMode),
+pub struct StringFilter {
+    pub equals: Option<String>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<String>>,
+    pub not_in: Option<Vec<String>>,
+    pub lt: Option<String>,
+    pub lte: Option<String>,
+    pub gt: Option<String>,
+    pub gte: Option<String>,
+    pub contains: Option<String>,
+    pub starts_with: Option<String>,
+    pub ends_with: Option<String>,
+    pub mode: Option<QueryMode>,
+    pub not: Option<Box<StringFilter>>,
 }
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum StringNullableFilter {
-    Equals(Option<String>),
-    In(Vec<String>),
-    NotIn(Vec<String>),
-    IsNull(bool),
-    Lt(String),
-    Lte(String),
-    Gt(String),
-    Gte(String),
-    Contains(String),
-    StartsWith(String),
-    EndsWith(String),
-    Not(Box<StringNullableFilter>),
-    Mode(QueryMode),
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub enum IntFilter {
-    Equals(i32),
-    In(Vec<i32>),
-    NotIn(Vec<i32>),
-    Lt(i32),
-    Lte(i32),
-    Gt(i32),
-    Gte(i32),
-    Not(Box<IntFilter>),
-}
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub enum IntNullableFilter {
-    Equals(Option<i32>),
-    In(Vec<i32>),
-    NotIn(Vec<i32>),
-    IsNull(bool),
-    Lt(i32),
-    Lte(i32),
-    Gt(i32),
-    Gte(i32),
-    Not(Box<IntNullableFilter>),
+pub struct StringNullableFilter {
+    pub equals: Option<String>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<String>>,
+    pub not_in: Option<Vec<String>>,
+    pub is_null: Option<bool>,
+    pub lt: Option<String>,
+    pub lte: Option<String>,
+    pub gt: Option<String>,
+    pub gte: Option<String>,
+    pub contains: Option<String>,
+    pub starts_with: Option<String>,
+    pub ends_with: Option<String>,
+    pub mode: Option<QueryMode>,
+    pub not: Option<Box<StringNullableFilter>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum BigIntFilter {
-    Equals(i64),
-    In(Vec<i64>),
-    NotIn(Vec<i64>),
-    Lt(i64),
-    Lte(i64),
-    Gt(i64),
-    Gte(i64),
-    Not(Box<BigIntFilter>),
+pub struct IntFilter {
+    pub equals: Option<i32>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<i32>>,
+    pub not_in: Option<Vec<i32>>,
+    pub lt: Option<i32>,
+    pub lte: Option<i32>,
+    pub gt: Option<i32>,
+    pub gte: Option<i32>,
+    pub not: Option<Box<IntFilter>>,
 }
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum BigIntNullableFilter {
-    Equals(Option<i64>),
-    In(Vec<i64>),
-    NotIn(Vec<i64>),
-    IsNull(bool),
-    Lt(i64),
-    Lte(i64),
-    Gt(i64),
-    Gte(i64),
-    Not(Box<BigIntNullableFilter>),
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub enum FloatFilter {
-    Equals(f64),
-    In(Vec<f64>),
-    NotIn(Vec<f64>),
-    Lt(f64),
-    Lte(f64),
-    Gt(f64),
-    Gte(f64),
-    Not(Box<FloatFilter>),
-}
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub enum FloatNullableFilter {
-    Equals(Option<f64>),
-    In(Vec<f64>),
-    NotIn(Vec<f64>),
-    IsNull(bool),
-    Lt(f64),
-    Lte(f64),
-    Gt(f64),
-    Gte(f64),
-    Not(Box<FloatNullableFilter>),
+pub struct IntNullableFilter {
+    pub equals: Option<i32>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<i32>>,
+    pub not_in: Option<Vec<i32>>,
+    pub is_null: Option<bool>,
+    pub lt: Option<i32>,
+    pub lte: Option<i32>,
+    pub gt: Option<i32>,
+    pub gte: Option<i32>,
+    pub not: Option<Box<IntNullableFilter>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum DecimalFilter {
-    Equals(rust_decimal::Decimal),
-    In(Vec<rust_decimal::Decimal>),
-    NotIn(Vec<rust_decimal::Decimal>),
-    Lt(rust_decimal::Decimal),
-    Lte(rust_decimal::Decimal),
-    Gt(rust_decimal::Decimal),
-    Gte(rust_decimal::Decimal),
-    Not(Box<DecimalFilter>),
+pub struct BigIntFilter {
+    pub equals: Option<i64>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<i64>>,
+    pub not_in: Option<Vec<i64>>,
+    pub lt: Option<i64>,
+    pub lte: Option<i64>,
+    pub gt: Option<i64>,
+    pub gte: Option<i64>,
+    pub not: Option<Box<BigIntFilter>>,
 }
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum DecimalNullableFilter {
-    Equals(Option<rust_decimal::Decimal>),
-    In(Vec<rust_decimal::Decimal>),
-    NotIn(Vec<rust_decimal::Decimal>),
-    IsNull(bool),
-    Lt(rust_decimal::Decimal),
-    Lte(rust_decimal::Decimal),
-    Gt(rust_decimal::Decimal),
-    Gte(rust_decimal::Decimal),
-    Not(Box<DecimalNullableFilter>),
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub enum DateTimeFilter {
-    Equals(chrono::DateTime<chrono::Utc>),
-    In(Vec<chrono::DateTime<chrono::Utc>>),
-    NotIn(Vec<chrono::DateTime<chrono::Utc>>),
-    Lt(chrono::DateTime<chrono::Utc>),
-    Lte(chrono::DateTime<chrono::Utc>),
-    Gt(chrono::DateTime<chrono::Utc>),
-    Gte(chrono::DateTime<chrono::Utc>),
-    Not(Box<DateTimeFilter>),
-}
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub enum DateTimeNullableFilter {
-    Equals(Option<chrono::DateTime<chrono::Utc>>),
-    In(Vec<chrono::DateTime<chrono::Utc>>),
-    NotIn(Vec<chrono::DateTime<chrono::Utc>>),
-    IsNull(bool),
-    Lt(chrono::DateTime<chrono::Utc>),
-    Lte(chrono::DateTime<chrono::Utc>),
-    Gt(chrono::DateTime<chrono::Utc>),
-    Gte(chrono::DateTime<chrono::Utc>),
-    Not(Box<DateTimeNullableFilter>),
+pub struct BigIntNullableFilter {
+    pub equals: Option<i64>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<i64>>,
+    pub not_in: Option<Vec<i64>>,
+    pub is_null: Option<bool>,
+    pub lt: Option<i64>,
+    pub lte: Option<i64>,
+    pub gt: Option<i64>,
+    pub gte: Option<i64>,
+    pub not: Option<Box<BigIntNullableFilter>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum UuidFilter {
-    Equals(uuid::Uuid),
-    In(Vec<uuid::Uuid>),
-    NotIn(Vec<uuid::Uuid>),
-    Not(Box<UuidFilter>),
-    Mode(QueryMode),
+pub struct FloatFilter {
+    pub equals: Option<f64>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<f64>>,
+    pub not_in: Option<Vec<f64>>,
+    pub lt: Option<f64>,
+    pub lte: Option<f64>,
+    pub gt: Option<f64>,
+    pub gte: Option<f64>,
+    pub not: Option<Box<FloatFilter>>,
 }
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum UuidNullableFilter {
-    Equals(Option<uuid::Uuid>),
-    In(Vec<uuid::Uuid>),
-    NotIn(Vec<uuid::Uuid>),
-    IsNull(bool),
-    Not(Box<UuidNullableFilter>),
-    Mode(QueryMode),
-}
-
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub enum BytesFilter {
-    Equals(Vec<u8>),
-    In(Vec<Vec<u8>>),
-    NotIn(Vec<Vec<u8>>),
-    Not(Box<BytesFilter>),
-}
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub enum BytesNullableFilter {
-    Equals(Option<Vec<u8>>),
-    In(Vec<Vec<u8>>),
-    NotIn(Vec<Vec<u8>>),
-    IsNull(bool),
-    Not(Box<BytesNullableFilter>),
+pub struct FloatNullableFilter {
+    pub equals: Option<f64>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<f64>>,
+    pub not_in: Option<Vec<f64>>,
+    pub is_null: Option<bool>,
+    pub lt: Option<f64>,
+    pub lte: Option<f64>,
+    pub gt: Option<f64>,
+    pub gte: Option<f64>,
+    pub not: Option<Box<FloatNullableFilter>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum BoolFilter {
-    Equals(bool),
-    In(Vec<bool>),
-    NotIn(Vec<bool>),
-    Not(Box<BoolFilter>),
+pub struct DecimalFilter {
+    pub equals: Option<rust_decimal::Decimal>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<rust_decimal::Decimal>>,
+    pub not_in: Option<Vec<rust_decimal::Decimal>>,
+    pub lt: Option<rust_decimal::Decimal>,
+    pub lte: Option<rust_decimal::Decimal>,
+    pub gt: Option<rust_decimal::Decimal>,
+    pub gte: Option<rust_decimal::Decimal>,
+    pub not: Option<Box<DecimalFilter>>,
 }
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum BoolNullableFilter {
-    Equals(Option<bool>),
-    In(Vec<bool>),
-    NotIn(Vec<bool>),
-    IsNull(bool),
-    Not(Box<BoolNullableFilter>),
+pub struct DecimalNullableFilter {
+    pub equals: Option<rust_decimal::Decimal>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<rust_decimal::Decimal>>,
+    pub not_in: Option<Vec<rust_decimal::Decimal>>,
+    pub is_null: Option<bool>,
+    pub lt: Option<rust_decimal::Decimal>,
+    pub lte: Option<rust_decimal::Decimal>,
+    pub gt: Option<rust_decimal::Decimal>,
+    pub gte: Option<rust_decimal::Decimal>,
+    pub not: Option<Box<DecimalNullableFilter>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum JsonFilter {
-    Equals(serde_json::Value),
-    In(Vec<serde_json::Value>),
-    NotIn(Vec<serde_json::Value>),
-    Not(Box<JsonFilter>),
+pub struct DateTimeFilter {
+    pub equals: Option<chrono::DateTime<chrono::Utc>>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<chrono::DateTime<chrono::Utc>>>,
+    pub not_in: Option<Vec<chrono::DateTime<chrono::Utc>>>,
+    pub lt: Option<chrono::DateTime<chrono::Utc>>,
+    pub lte: Option<chrono::DateTime<chrono::Utc>>,
+    pub gt: Option<chrono::DateTime<chrono::Utc>>,
+    pub gte: Option<chrono::DateTime<chrono::Utc>>,
+    pub not: Option<Box<DateTimeFilter>>,
 }
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum JsonNullableFilter {
-    Equals(Option<serde_json::Value>),
-    In(Vec<serde_json::Value>),
-    NotIn(Vec<serde_json::Value>),
-    IsNull(bool),
-    Not(Box<JsonNullableFilter>),
+pub struct DateTimeNullableFilter {
+    pub equals: Option<chrono::DateTime<chrono::Utc>>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<chrono::DateTime<chrono::Utc>>>,
+    pub not_in: Option<Vec<chrono::DateTime<chrono::Utc>>>,
+    pub is_null: Option<bool>,
+    pub lt: Option<chrono::DateTime<chrono::Utc>>,
+    pub lte: Option<chrono::DateTime<chrono::Utc>>,
+    pub gt: Option<chrono::DateTime<chrono::Utc>>,
+    pub gte: Option<chrono::DateTime<chrono::Utc>>,
+    pub not: Option<Box<DateTimeNullableFilter>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UuidFilter {
+    pub equals: Option<uuid::Uuid>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<uuid::Uuid>>,
+    pub not_in: Option<Vec<uuid::Uuid>>,
+    pub mode: Option<QueryMode>,
+    pub not: Option<Box<UuidFilter>>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UuidNullableFilter {
+    pub equals: Option<uuid::Uuid>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<uuid::Uuid>>,
+    pub not_in: Option<Vec<uuid::Uuid>>,
+    pub is_null: Option<bool>,
+    pub mode: Option<QueryMode>,
+    pub not: Option<Box<UuidNullableFilter>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BytesFilter {
+    pub equals: Option<Vec<u8>>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<Vec<u8>>>,
+    pub not_in: Option<Vec<Vec<u8>>>,
+    pub not: Option<Box<BytesFilter>>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BytesNullableFilter {
+    pub equals: Option<Vec<u8>>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<Vec<u8>>>,
+    pub not_in: Option<Vec<Vec<u8>>>,
+    pub is_null: Option<bool>,
+    pub not: Option<Box<BytesNullableFilter>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BoolFilter {
+    pub equals: Option<bool>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<bool>>,
+    pub not_in: Option<Vec<bool>>,
+    pub not: Option<Box<BoolFilter>>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BoolNullableFilter {
+    pub equals: Option<bool>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<bool>>,
+    pub not_in: Option<Vec<bool>>,
+    pub is_null: Option<bool>,
+    pub not: Option<Box<BoolNullableFilter>>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct JsonFilter {
+    pub equals: Option<serde_json::Value>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<serde_json::Value>>,
+    pub not_in: Option<Vec<serde_json::Value>>,
+    pub not: Option<Box<JsonFilter>>,
+}
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct JsonNullableFilter {
+    pub equals: Option<serde_json::Value>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<serde_json::Value>>,
+    pub not_in: Option<Vec<serde_json::Value>>,
+    pub is_null: Option<bool>,
+    pub not: Option<Box<JsonNullableFilter>>,
 }
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]

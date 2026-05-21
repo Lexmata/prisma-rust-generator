@@ -24,7 +24,7 @@ function emitChecked(w: RustWriter, m: ModelIR, opts: CreateOpts): void {
   for (const f of m.scalarFields) {
     if (f.isFk) continue;
     if (f.hasDefault) continue;
-    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f));
+    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f, opts.moduleOf));
   }
   for (const r of m.relations) {
     w.field(`pub ${r.rustName}`, nestedCreateRefForRelation(r, m, opts.moduleOf, false));
@@ -36,9 +36,8 @@ function emitUnchecked(w: RustWriter, m: ModelIR, opts: CreateOpts): void {
   openInput(w, opts, `${m.name}UncheckedCreateInput`);
   for (const f of m.scalarFields) {
     if (f.hasDefault) continue;
-    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f));
+    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f, opts.moduleOf));
   }
-  void opts;
   w.close();
 }
 
@@ -46,16 +45,15 @@ function emitCreateMany(w: RustWriter, m: ModelIR, opts: CreateOpts): void {
   openInput(w, opts, `${m.name}CreateManyInput`);
   for (const f of m.scalarFields) {
     if (f.hasDefault) continue;
-    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f));
+    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f, opts.moduleOf));
   }
-  void opts;
   w.close();
 }
 
-function scalarTypeForCreate(f: FieldIR): string {
+function scalarTypeForCreate(f: FieldIR, moduleOf: ModuleResolver): string {
   const inner = renderScalarFieldType(
     { ...f, optional: false, list: false },
-    () => "",
+    moduleOf,
   );
   if (f.list) return `Option<Vec<${inner}>>`;
   if (f.optional) return `Option<${inner}>`;

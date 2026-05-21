@@ -7,7 +7,65 @@ source will be a major-version bump.
 
 ## Unreleased
 
-_No changes yet._
+### Added
+
+- Optional `engine = "sqlx-postgres"` generator block field. When set,
+  the per-file layout emits an additional `engine/sqlx_postgres/`
+  subtree alongside the ORM-agnostic types: per-model `sqlx::FromRow`
+  impls, `*WhereInput` → `QueryBuilder` translators (with EXISTS
+  subqueries for relation filters and `and`/`or`/`not` recursion), one
+  `push_<family>_filter` and `push_<family>_nullable_filter` per scalar
+  family + Prisma enum, a `find_unique` / `find_first` / `find_many`
+  builder family, `count`, `create` / `create_many` / `update` /
+  `update_many` / `delete` / `delete_many`, and `aggregate` per model.
+  Prisma enums also get `sqlx::Type` / `Decode` / `Encode` /
+  `PgHasArrayType` impls so they can round-trip through Postgres enum
+  columns. Supported on `outputLayout = "per-file"` (default) and
+  `"per-model"`; combining with `outputLayout = "single"` raises a
+  config validation error.
+- `<M>AggregateInput` struct (and matching `<M>AggregateResult` in the
+  engine module) — top-level bundle that pairs an optional `WhereInput`
+  with the five `_count`/`_avg`/`_sum`/`_min`/`_max` selector inputs,
+  consumed by the sqlx-postgres `aggregate` method. Count returns
+  `Option<i64>` per scalar (plus `_all`); Avg/Sum flatten to
+  `Option<f64>` (Postgres `AVG`/`SUM` are cast to `double precision`,
+  trading Decimal precision for binding simplicity); Min/Max preserve
+  the source column's Rust type wrapped in `Option<T>`.
+
+### Fixed — generated output
+
+- `*WhereUniqueInput` now always includes single-field `@id` columns.
+  Previously only fields surfaced by DMMF's `uniqueIndexes`,
+  `primaryKey` (composite `@@id`), or `@unique` were emitted, leaving
+  models with a plain single-column `@id` and no `@unique` shipping an
+  empty struct that couldn't address a row uniquely.
+- `outputLayout = "per-model"` now resolves enum type paths through the
+  layout's module resolver instead of the IR's source-file stem.
+  Previously, generated code under per-model layout referenced enum
+  filter and field-update types as `crate::<file_stem>::Role*` (where
+  `<file_stem>` is the Prisma file name, e.g. `schema`), which never
+  resolved because per-model puts enums under `crate::enums::<snake>`.
+  Affected: `*WhereInput`, `*ScalarWhereInput`, `*UpdateInput`,
+  `*UncheckedUpdateInput`, `*UpdateManyMutationInput`,
+  `*UncheckedUpdateManyInput`, `*CreateInput`, `*UncheckedCreateInput`,
+  `*CreateManyInput`, and the `*UpdateWithout*Input` nested variants.
+
+### Breaking — generated output
+
+- **`*Filter` / `*NullableFilter` types (per scalar family and per enum)
+  switched from Rust enums to structs with optional fields.** The struct
+  form lets consumers combine multiple operators on one filter (e.g.
+  `equals` + `not_in` + `not` in a single expression) and matches
+  Prisma's TS client conventions and the documentation in
+  `docs/sqlx.md` / `docs/raw-*.md` (which previously documented the
+  intended struct form, mismatched against the actual enum emission).
+  - **Migration:** rewrite call sites that pattern-matched on filter
+    variants. Before: `StringFilter::Equals("foo".to_string())`. After:
+    `StringFilter { equals: Some("foo".to_string()), ..Default::default() }`.
+  - `Default` is now derived on every `*Filter`/`*NullableFilter` to
+    support the sparse-construction idiom above.
+  - `Eq`/`Hash` are no longer derived on enum-target filter structs;
+    they were artifacts of the old enum form.
 
 ## 0.1.2 — 2026-05-20
 

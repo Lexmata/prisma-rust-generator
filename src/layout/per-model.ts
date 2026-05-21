@@ -19,6 +19,9 @@ import { emitCommonSharedTypes } from "../emit/shared/common.js";
 import { emitFieldUpdateOps } from "../emit/inputs/field-update-ops.js";
 import { toSnakeCase } from "../ir/names.js";
 import type { ModuleResolver } from "../emit/type-ref.js";
+import { selectEngine } from "../emit/engines/index.js";
+import { emitSqlxEnumImpls } from "../emit/engines/sqlx-postgres/enums.js";
+import type { EnumIR } from "../ir/types.js";
 
 export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> {
   const files = new Map<string, string>();
@@ -89,6 +92,7 @@ export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> 
       emitModelScalarWhereInput(m, {
         serde: cfg.serde,
         vis: cfg.moduleVisibility,
+        moduleOf,
       }),
     );
     parts.push(
@@ -134,12 +138,98 @@ export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> 
     files.set("enums/mod.rs", `${emitFileHeader(cfg)}\n${enumsMod}\n`);
   }
 
+  const engine = selectEngine(cfg);
+  if (engine) {
+    for (const m of ir.models) {
+      const parts: string[] = [
+        emitFileHeader(cfg),
+        `use sqlx::Row as _;`,
+        "",
+        engine.emitForModel(m, allModels, ir, cfg, { moduleOf }),
+      ];
+      const file = `engine/${engine.dirName}/models/${toSnakeCase(m.name)}.rs`;
+      files.set(file, parts.join("\n"));
+    }
+
+    // Per-enum engine files — host sqlx Type/Decode/Encode impls for enums.
+    // In per-model layout each enum lives in its own module
+    // (`crate::enums::<snake>`), so the natural place for its sqlx impls is a
+    // parallel `engine/<dir>/enums/<snake>.rs`. `emitForModel` above only
+    // groups enum impls onto the first model in the same resolved module —
+    // since enums and models never share a module in per-model layout, the
+    // per-model loop produces no enum impls. We emit them here explicitly.
+    for (const e of ir.enums) {
+      const parts: string[] = [
+        emitFileHeader(cfg),
+        "",
+        // Inline the enum impls (same emitter the per-file engine uses).
+        // Lifted here to avoid expanding the EngineEmitter surface for a
+        // layout-specific need.
+        ...renderEnumEngineFile(e, moduleOf),
+      ];
+      const file = `engine/${engine.dirName}/enums/${toSnakeCase(e.name)}.rs`;
+      files.set(file, parts.join("\n"));
+    }
+
+    // Shared filter pushers
+    files.set(
+      `engine/${engine.dirName}/filters.rs`,
+      [emitFileHeader(cfg), engine.emitShared(ir, cfg, { moduleOf })].join("\n"),
+    );
+
+    // engine/<dirName>/models/mod.rs
+    const modelMods: string[] = [emitFileHeader(cfg)];
+    for (const m of ir.models) modelMods.push(`pub mod ${toSnakeCase(m.name)};`);
+    files.set(
+      `engine/${engine.dirName}/models/mod.rs`,
+      modelMods.join("\n") + "\n",
+    );
+
+    // engine/<dirName>/enums/mod.rs (only when there are enums)
+    if (ir.enums.length > 0) {
+      const enumMods: string[] = [emitFileHeader(cfg)];
+      for (const e of ir.enums) enumMods.push(`pub mod ${toSnakeCase(e.name)};`);
+      files.set(
+        `engine/${engine.dirName}/enums/mod.rs`,
+        enumMods.join("\n") + "\n",
+      );
+    }
+
+    // engine/<dirName>/mod.rs
+    const engineMods: string[] = [
+      emitFileHeader(cfg),
+      `pub mod models;`,
+      ...(ir.enums.length > 0 ? [`pub mod enums;`] : []),
+      `pub mod filters;`,
+    ];
+    files.set(
+      `engine/${engine.dirName}/mod.rs`,
+      engineMods.join("\n") + "\n",
+    );
+
+    // engine/mod.rs (top-level)
+    files.set(
+      "engine/mod.rs",
+      [emitFileHeader(cfg), `pub mod ${engine.dirName};`].join("\n") + "\n",
+    );
+  }
+
   const rootName = cfg.moduleName ? "mod.rs" : "lib.rs";
   const lib: string[] = [emitFileHeader(cfg), CRATE_RECURSION_LIMIT_ATTR];
   if (ir.models.length > 0) lib.push(`pub mod models;`);
   if (ir.enums.length > 0) lib.push(`pub mod enums;`);
+  if (engine) lib.push(`pub mod engine;`);
   lib.push(`pub mod shared;`, `pub use shared::*;`);
   files.set(rootName, lib.join("\n") + "\n");
 
   return files;
+}
+
+/**
+ * Per-model layout helper: emit the sqlx Type/Decode/Encode impls for a
+ * single enum into its own `engine/<dir>/enums/<snake>.rs` file. Defers to
+ * the existing enum-impl emitter.
+ */
+function renderEnumEngineFile(e: EnumIR, moduleOf: ModuleResolver): string[] {
+  return [emitSqlxEnumImpls(e, moduleOf)];
 }

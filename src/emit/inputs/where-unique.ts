@@ -15,6 +15,10 @@ export function emitWhereUniqueInput(
 
   const uniqueFieldNames = new Set<string>();
   for (const g of m.uniqueGroups) for (const f of g.fields) uniqueFieldNames.add(f);
+  // Always include @id fields — DMMF only puts them in `primaryKey` when it's
+  // a composite key (`@@id`). For single-field `@id` we'd otherwise miss the
+  // primary key here, leaving callers no way to address a row uniquely.
+  for (const id of m.idFields) uniqueFieldNames.add(id);
 
   const emitted = new Set<string>();
   for (const f of m.scalarFields) {

@@ -5,6 +5,7 @@ import type { FieldIR, ModelIR, RelationIR } from "../../src/ir/types.js";
 const stringField = (n: string): FieldIR => ({
   prismaName: n,
   rustName: n,
+  dbName: n,
   type: { kind: "scalar", rust: "String", eq: true, copy: false },
   optional: false,
   list: false,
@@ -43,6 +44,7 @@ describe("computeEqEligibility", () => {
       {
         name: "A",
         module: "x",
+        dbName: "A",
         scalarFields: [stringField("id")],
         relations: [],
         idFields: ["id"],
@@ -59,6 +61,7 @@ describe("computeEqEligibility", () => {
       {
         name: "A",
         module: "x",
+        dbName: "A",
         scalarFields: [stringField("id"), f64Field("score")],
         relations: [],
         idFields: ["id"],
@@ -75,6 +78,7 @@ describe("computeEqEligibility", () => {
       {
         name: "A",
         module: "x",
+        dbName: "A",
         scalarFields: [stringField("id")],
         relations: [relation("b", "A", "B")],
         idFields: ["id"],
@@ -84,6 +88,7 @@ describe("computeEqEligibility", () => {
       {
         name: "B",
         module: "x",
+        dbName: "B",
         scalarFields: [stringField("id"), f64Field("v")],
         relations: [],
         idFields: ["id"],
@@ -103,6 +108,7 @@ describe("computeEqEligibility", () => {
       {
         name: "A",
         module: "x",
+        dbName: "A",
         scalarFields: [stringField("id")],
         relations: [relation("parent", "A", "A")],
         idFields: ["id"],
@@ -121,6 +127,7 @@ describe("computeEqEligibility", () => {
       {
         name: "A",
         module: "x",
+        dbName: "A",
         scalarFields: [stringField("id")],
         relations: [relation("b", "A", "B")],
         idFields: ["id"],
@@ -130,6 +137,7 @@ describe("computeEqEligibility", () => {
       {
         name: "B",
         module: "x",
+        dbName: "B",
         scalarFields: [stringField("id")],
         relations: [],
         idFields: ["id"],
@@ -139,6 +147,7 @@ describe("computeEqEligibility", () => {
       {
         name: "C",
         module: "x",
+        dbName: "C",
         scalarFields: [stringField("id")],
         relations: [relation("d", "C", "D")],
         idFields: ["id"],
@@ -148,6 +157,7 @@ describe("computeEqEligibility", () => {
       {
         name: "D",
         module: "x",
+        dbName: "D",
         scalarFields: [stringField("id"), f64Field("v")],
         relations: [],
         idFields: ["id"],
@@ -170,6 +180,7 @@ describe("computeEqEligibility", () => {
       {
         name: "A",
         module: "x",
+        dbName: "A",
         scalarFields: [stringField("id")],
         relations: [relation("b", "A", "B")],
         idFields: ["id"],
@@ -179,6 +190,7 @@ describe("computeEqEligibility", () => {
       {
         name: "B",
         module: "x",
+        dbName: "B",
         scalarFields: [stringField("id")],
         relations: [relation("c", "B", "C")],
         idFields: ["id"],
@@ -188,6 +200,7 @@ describe("computeEqEligibility", () => {
       {
         name: "C",
         module: "x",
+        dbName: "C",
         scalarFields: [stringField("id")],
         relations: [relation("d", "C", "D")],
         idFields: ["id"],
@@ -197,6 +210,7 @@ describe("computeEqEligibility", () => {
       {
         name: "D",
         module: "x",
+        dbName: "D",
         scalarFields: [stringField("id"), f64Field("v")],
         relations: [],
         idFields: ["id"],

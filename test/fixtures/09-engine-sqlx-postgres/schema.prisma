@@ -1,0 +1,41 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://app:app@localhost:5432/app"
+}
+
+generator rust {
+  provider = "node ../../../dist/index.js"
+  output   = "../../compile/09-engine-sqlx-postgres/src"
+  engine   = "sqlx-postgres"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id         String   @id @default(uuid()) @db.Uuid
+  email      String   @unique
+  role       Role     @default(USER)
+  loginCount Int      @default(0)
+  createdAt  DateTime @default(now()) @db.Timestamptz
+  firmId     String   @db.Uuid
+  firm       Firm     @relation(fields: [firmId], references: [id])
+  posts      Post[]
+}
+
+model Firm {
+  id    String @id @default(uuid()) @db.Uuid
+  name  String
+  users User[]
+}
+
+model Post {
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String
+  body      String?
+  createdAt DateTime @default(now()) @db.Timestamptz
+  authorId  String   @db.Uuid
+  author    User     @relation(fields: [authorId], references: [id])
+}

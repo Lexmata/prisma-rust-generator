@@ -43,7 +43,9 @@ pub struct FirmListRelationFilter {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FirmWhereUniqueInput {}
+pub struct FirmWhereUniqueInput {
+    pub id: Option<String>,
+}
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -281,6 +283,23 @@ pub struct FirmOrderByWithAggregationInput {
     pub aggregate_max: Option<FirmMaxAggregateInput>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FirmAggregateInput {
+    #[serde(rename = "where")]
+    pub r#where: Option<FirmWhereInput>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<FirmCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<FirmAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<FirmSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<FirmMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<FirmMaxAggregateInput>,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct User {
@@ -327,6 +346,7 @@ pub struct UserListRelationFilter {
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct UserWhereUniqueInput {
+    pub id: Option<String>,
     pub email: Option<String>,
 }
 
@@ -648,6 +668,23 @@ pub struct UserOrderByWithAggregationInput {
     pub aggregate_max: Option<UserMaxAggregateInput>,
 }
 
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserAggregateInput {
+    #[serde(rename = "where")]
+    pub r#where: Option<UserWhereInput>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<UserCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<UserAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<UserSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<UserMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<UserMaxAggregateInput>,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Post {
@@ -690,7 +727,9 @@ pub struct PostListRelationFilter {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct PostWhereUniqueInput {}
+pub struct PostWhereUniqueInput {
+    pub id: Option<String>,
+}
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -897,6 +936,23 @@ pub struct PostOrderByWithAggregationInput {
     pub id: Option<crate::shared::filters::SortOrder>,
     pub title: Option<crate::shared::filters::SortOrder>,
     pub author_id: Option<crate::shared::filters::SortOrder>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<PostCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<PostAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<PostSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<PostMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<PostMaxAggregateInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PostAggregateInput {
+    #[serde(rename = "where")]
+    pub r#where: Option<PostWhereInput>,
     #[serde(rename = "_count")]
     pub aggregate_count: Option<PostCountAggregateInput>,
     #[serde(rename = "_avg")]

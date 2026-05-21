@@ -26,7 +26,7 @@ function emitChecked(w: RustWriter, m: ModelIR, opts: UpdateOpts): void {
   openInput(w, opts, `${m.name}UpdateInput`);
   for (const f of m.scalarFields) {
     if (f.isFk) continue;
-    w.field(`pub ${f.rustName}`, opInputType(f));
+    w.field(`pub ${f.rustName}`, opInputType(f, opts.moduleOf));
   }
   for (const r of m.relations) {
     w.field(`pub ${r.rustName}`, nestedUpdateRefForRelation(r, m, opts.moduleOf));
@@ -37,7 +37,7 @@ function emitChecked(w: RustWriter, m: ModelIR, opts: UpdateOpts): void {
 function emitUnchecked(w: RustWriter, m: ModelIR, opts: UpdateOpts): void {
   openInput(w, opts, `${m.name}UncheckedUpdateInput`);
   for (const f of m.scalarFields) {
-    w.field(`pub ${f.rustName}`, opInputType(f));
+    w.field(`pub ${f.rustName}`, opInputType(f, opts.moduleOf));
   }
   w.close();
 }
@@ -46,7 +46,7 @@ function emitUpdateMany(w: RustWriter, m: ModelIR, opts: UpdateOpts): void {
   openInput(w, opts, `${m.name}UpdateManyMutationInput`);
   for (const f of m.scalarFields) {
     if (f.isFk) continue;
-    w.field(`pub ${f.rustName}`, opInputType(f));
+    w.field(`pub ${f.rustName}`, opInputType(f, opts.moduleOf));
   }
   w.close();
 }
@@ -54,19 +54,20 @@ function emitUpdateMany(w: RustWriter, m: ModelIR, opts: UpdateOpts): void {
 function emitUncheckedUpdateMany(w: RustWriter, m: ModelIR, opts: UpdateOpts): void {
   openInput(w, opts, `${m.name}UncheckedUpdateManyInput`);
   for (const f of m.scalarFields) {
-    w.field(`pub ${f.rustName}`, opInputType(f));
+    w.field(`pub ${f.rustName}`, opInputType(f, opts.moduleOf));
   }
   w.close();
 }
 
-function opInputType(f: FieldIR): string {
+function opInputType(f: FieldIR, moduleOf?: ModuleResolver): string {
   if (f.type.kind === "scalar") {
     const family = filterFamilyForRustType(f.type.rust);
     const prefix = f.optional ? "Nullable" : "";
     return `Option<crate::shared::filters::${prefix}${family}FieldUpdateOperationsInput>`;
   }
   if (f.type.kind === "enumRef") {
-    const mod = f.type.module ? `crate::${f.type.module}::` : `crate::`;
+    const resolved = moduleOf ? moduleOf(f.type.enumName) : f.type.module;
+    const mod = resolved ? `crate::${resolved}::` : `crate::`;
     const prefix = f.optional ? "Nullable" : "";
     return `Option<${mod}${prefix}${f.type.enumName}FieldUpdateOperationsInput>`;
   }

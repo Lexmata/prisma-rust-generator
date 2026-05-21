@@ -103,6 +103,7 @@ generator rust {
   bytesCrate       = "std"              // "std" | "bytes"
   jsonCrate        = "serde_json"       // "serde_json" | "string"
   serde            = "true"             // emit Serialize/Deserialize derives
+  engine           = ""                  // "" | "sqlx-postgres" — see "Engine" below
   edition          = "2021"             // "2021" | "2024" (passed to rustfmt)
   runRustfmt       = "true"
   requireRustfmt   = "true"
@@ -111,6 +112,56 @@ generator rust {
   rustfmtShardSize = "16"
 }
 ```
+
+## Engine (pre-generated integration layer)
+
+Setting `engine = "sqlx-postgres"` adds a parallel `engine/sqlx_postgres/`
+subtree to the generated output. Each model gains inherent methods that
+implement the full CRUD + aggregation surface on top of `sqlx`'s
+`QueryBuilder`:
+
+```rust
+use rust_out::users::{User, UserWhereInput, UserWhereUniqueInput,
+    UserUncheckedCreateInput, UserUncheckedUpdateInput, UserAggregateInput};
+
+let users: Vec<User> = User::find_many(&pool, &where_input)
+    .order_by(&[...])
+    .take(50)
+    .exec()
+    .await?;
+
+let one: Option<User> = User::find_unique(&pool, &where_unique).await?;
+User::create(&pool, create_input).await?;
+User::update(&pool, &where_unique, update_input).await?;
+User::delete(&pool, &where_unique).await?;
+let n: i64 = User::count(&pool, Some(&where_input)).await?;
+let agg = User::aggregate(&pool, &agg_input).await?;
+```
+
+Methods are reachable directly on the model struct — no need to
+`use rust_out::engine::*`. Every method takes `E: sqlx::Executor<'e,
+Database = sqlx::Postgres>`, so the same surface works against
+`&PgPool`, `&mut PgConnection`, and `&mut Transaction<'_, Postgres>`.
+
+The engine field is opt-in; default-unset preserves the ORM-agnostic
+output bit-for-bit. Supported with `outputLayout = "per-file"`
+(default) or `"per-model"`; combining with `outputLayout = "single"`
+raises a config validation error.
+
+Required `Cargo.toml` deps when `engine = "sqlx-postgres"`:
+
+```toml
+sqlx = { version = "0.8", default-features = false, features = [
+  "runtime-tokio", "postgres",
+  "uuid", "chrono", "json", "rust_decimal",
+  "macros",
+] }
+```
+
+The five integration guides ([sqlx](docs/sqlx.md),
+[raw-postgres](docs/raw-postgres.md), etc.) remain useful as
+reference — they document the same translation strategy the engine
+emitter applies, plus per-target dialect notes.
 
 ## Skipping generation
 

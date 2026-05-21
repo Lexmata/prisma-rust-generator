@@ -28,6 +28,7 @@ export type RustTypeRef =
 export interface FieldIR {
   readonly prismaName: string;      // original Prisma name (camelCase)
   readonly rustName: string;        // snake_case, with r# prefix if reserved
+  readonly dbName: string;          // @map value, or prismaName when no @map
   readonly type: RustTypeRef;
   readonly optional: boolean;       // ? in Prisma
   readonly list: boolean;           // [] in Prisma
@@ -59,6 +60,7 @@ export interface UniqueGroup {
 export interface ModelIR {
   readonly name: string;            // PascalCase, original Prisma name
   readonly module: string;          // source-file stem
+  readonly dbName: string;          // @@map value, or `name` when no @@map
   readonly scalarFields: readonly FieldIR[];
   readonly relations: readonly RelationIR[];
   readonly idFields: readonly string[];

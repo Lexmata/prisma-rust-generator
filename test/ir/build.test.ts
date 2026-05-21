@@ -94,3 +94,98 @@ describe("buildIR", () => {
     expect(user.scalarFields[1]!.isUnique).toBe(true);
   });
 });
+
+describe("buildIR — dbName lifting", () => {
+  function makeDmmf(modelOverrides: {
+    dbName?: string | null;
+    fields?: Partial<DMMF.Field>[];
+  }): DMMF.Document {
+    const defaultFields: Partial<DMMF.Field>[] = [
+      {
+        name: "id",
+        kind: "scalar",
+        isList: false,
+        isRequired: true,
+        isUnique: false,
+        isId: true,
+        isReadOnly: false,
+        hasDefaultValue: true,
+        type: "String",
+        isGenerated: false,
+        isUpdatedAt: false,
+      },
+    ];
+    const fields = (modelOverrides.fields ?? defaultFields).map((f) => ({
+      ...defaultFields[0]!,
+      ...f,
+    })) as DMMF.Field[];
+    return {
+      datamodel: {
+        models: [
+          {
+            name: "User",
+            dbName: modelOverrides.dbName ?? null,
+            fields,
+            primaryKey: { name: null, fields: ["id"] },
+            uniqueFields: [],
+            uniqueIndexes: [],
+            isGenerated: false,
+          } as unknown as DMMF.Model,
+        ],
+        enums: [],
+        types: [],
+        indexes: [],
+      },
+      schema: {
+        inputObjectTypes: { prisma: [] },
+        outputObjectTypes: { prisma: [], model: [] },
+        enumTypes: { prisma: [] },
+        fieldRefTypes: { prisma: [] },
+      },
+      mappings: { modelOperations: [], otherOperations: { read: [], write: [] } },
+    };
+  }
+
+  it("uses model name when @@map is absent", async () => {
+    const dmmf = makeDmmf({ dbName: null });
+    const ir = await buildIR(dmmf, new Map([["User", "users"]]), cfg);
+    expect(ir.models[0]!.dbName).toBe("User");
+  });
+
+  it("uses @@map value when present on the model", async () => {
+    const dmmf = makeDmmf({ dbName: "app_users" });
+    const ir = await buildIR(dmmf, new Map([["User", "users"]]), cfg);
+    expect(ir.models[0]!.dbName).toBe("app_users");
+  });
+
+  it("uses field name when @map is absent on a field", async () => {
+    const dmmf = makeDmmf({
+      fields: [
+        {
+          name: "createdAt",
+          type: "DateTime",
+          isId: false,
+          hasDefaultValue: false,
+        },
+      ],
+    });
+    const ir = await buildIR(dmmf, new Map([["User", "users"]]), cfg);
+    expect(ir.models[0]!.scalarFields[0]!.dbName).toBe("createdAt");
+  });
+
+  it("uses @map value on a field when present", async () => {
+    const dmmf = makeDmmf({
+      fields: [
+        {
+          name: "createdAt",
+          type: "DateTime",
+          isId: false,
+          hasDefaultValue: false,
+          dbName: "created_at",
+        },
+      ],
+    });
+    const ir = await buildIR(dmmf, new Map([["User", "users"]]), cfg);
+    expect(ir.models[0]!.scalarFields[0]!.dbName).toBe("created_at");
+  });
+});

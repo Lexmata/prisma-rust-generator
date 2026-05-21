@@ -8,6 +8,8 @@ const { getDMMF } = internals as { getDMMF: typeof import("@prisma/internals").g
 import { buildFileMap } from "../../src/ir/file-map.js";
 import { buildIR } from "../../src/ir/build.js";
 import { emitPerFile } from "../../src/layout/per-file.js";
+import { emitPerModel } from "../../src/layout/per-model.js";
+import { emitSingle } from "../../src/layout/single.js";
 import type { GeneratorConfig } from "../../src/types.js";
 
 const exec = promisify(execFile);
@@ -17,9 +19,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export async function runFixture(
   name: string,
   cfg: Partial<GeneratorConfig> = {},
+  compileDirName?: string,
 ): Promise<void> {
   const fixtureDir = resolve(__dirname, "..", "fixtures", name);
-  const outDir = resolve(__dirname, "..", "compile", name, "src");
+  const outDir = resolve(__dirname, "..", "compile", compileDirName ?? name, "src");
   const single = join(fixtureDir, "schema.prisma");
   let schemaPath: string;
   let schema: string;
@@ -41,7 +44,11 @@ export async function runFixture(
   const fileMap = await buildFileMap(schemaPath);
   const fullCfg: GeneratorConfig = { ...DEFAULT_CFG, ...cfg, output: outDir };
   const ir = await buildIR(dmmf, fileMap, fullCfg);
-  const files = emitPerFile(ir, fullCfg);
+  const files = (() => {
+    if (fullCfg.outputLayout === "per-model") return emitPerModel(ir, fullCfg);
+    if (fullCfg.outputLayout === "single") return emitSingle(ir, fullCfg);
+    return emitPerFile(ir, fullCfg);
+  })();
 
   await rm(outDir, { recursive: true, force: true });
   const written: string[] = [];
@@ -55,8 +62,8 @@ export async function runFixture(
   await exec("rustfmt", ["--edition", fullCfg.edition, "--emit", "files", ...written]);
 }
 
-export async function rustVerify(name: string): Promise<void> {
-  const dir = resolve(__dirname, "..", "compile", name);
+export async function rustVerify(compileDirName: string): Promise<void> {
+  const dir = resolve(__dirname, "..", "compile", compileDirName);
   const big = { cwd: dir, maxBuffer: 256 * 1024 * 1024 };
   await exec("cargo", ["fmt", "--all", "--", "--check"], big);
   await exec("cargo", ["clippy", "--all-targets", "--", "-D", "warnings"], big);
@@ -83,4 +90,5 @@ const DEFAULT_CFG: GeneratorConfig = {
   concurrency: 1,
   rustfmtShardSize: 16,
   filePreamble: "",
+  engine: null,
 };
