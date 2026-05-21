@@ -17,6 +17,7 @@ import { emitEnumFilter } from "../emit/filters/enum.js";
 import { emitSharedScalarFilters } from "../emit/filters/scalar.js";
 import { emitCommonSharedTypes } from "../emit/shared/common.js";
 import { emitFieldUpdateOps } from "../emit/inputs/field-update-ops.js";
+import { selectEngine } from "../emit/engines/index.js";
 import type { ModuleResolver } from "../emit/type-ref.js";
 
 export function emitPerFile(ir: IR, cfg: GeneratorConfig): Map<string, string> {
@@ -118,9 +119,49 @@ export function emitPerFile(ir: IR, cfg: GeneratorConfig): Map<string, string> {
     `${emitFileHeader(cfg)}\npub mod filters;\npub use filters::*;\n`,
   );
 
+  const engine = selectEngine(cfg);
+  if (engine) {
+    for (const module of modules) {
+      const modelsInModule = ir.models.filter((m) => m.module === module);
+      if (modelsInModule.length === 0) continue;
+      const parts: string[] = [
+        emitFileHeader(cfg),
+        `use sqlx::Row as _;`,
+        "",
+      ];
+      for (const m of modelsInModule) {
+        parts.push(engine.emitForModel(m, allModels, ir, cfg, { moduleOf }));
+      }
+      files.set(`engine/${engine.dirName}/${module}.rs`, parts.join("\n"));
+    }
+
+    // Shared filter pushers + sort_order_sql helper
+    files.set(
+      `engine/${engine.dirName}/filters.rs`,
+      [emitFileHeader(cfg), engine.emitShared(ir, cfg, { moduleOf })].join("\n"),
+    );
+
+    // engine/<dirName>/mod.rs
+    const engineMods: string[] = [emitFileHeader(cfg)];
+    for (const module of [...modules].toSorted()) {
+      const modelsInModule = ir.models.filter((m) => m.module === module);
+      if (modelsInModule.length === 0) continue;
+      engineMods.push(`pub mod ${module};`);
+    }
+    engineMods.push(`pub mod filters;`);
+    files.set(`engine/${engine.dirName}/mod.rs`, engineMods.join("\n") + "\n");
+
+    // engine/mod.rs (top-level)
+    files.set(
+      "engine/mod.rs",
+      [emitFileHeader(cfg), `pub mod ${engine.dirName};`].join("\n") + "\n",
+    );
+  }
+
   const rootName = cfg.moduleName ? "mod.rs" : "lib.rs";
   const lib: string[] = [emitFileHeader(cfg), CRATE_RECURSION_LIMIT_ATTR];
   for (const mod of [...modules].toSorted()) lib.push(`pub mod ${mod};`);
+  if (engine) lib.push(`pub mod engine;`);
   lib.push(`pub mod shared;`, `pub use shared::*;`);
   files.set(rootName, lib.join("\n") + "\n");
 

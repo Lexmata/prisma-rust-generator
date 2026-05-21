@@ -6,10 +6,12 @@ import type { ModelIR, RelationIR } from "../../src/ir/types.js";
 const noRelations: ModelIR = {
   name: "AllScalars",
   module: "schema",
+  dbName: "AllScalars",
   scalarFields: [
     {
       prismaName: "id",
       rustName: "id",
+      dbName: "id",
       type: { kind: "scalar", rust: "uuid::Uuid", eq: true, copy: true },
       optional: false,
       list: false,
@@ -23,6 +25,7 @@ const noRelations: ModelIR = {
     {
       prismaName: "text",
       rustName: "text",
+      dbName: "text",
       type: { kind: "scalar", rust: "String", eq: true, copy: false },
       optional: false,
       list: false,
@@ -36,6 +39,7 @@ const noRelations: ModelIR = {
     {
       prismaName: "count",
       rustName: "count",
+      dbName: "count",
       type: { kind: "scalar", rust: "i32", eq: true, copy: true },
       optional: false,
       list: false,
@@ -111,10 +115,12 @@ describe("emitUpdateInputs", () => {
 const oneRelation: ModelIR = {
   name: "Post",
   module: "posts",
+  dbName: "Post",
   scalarFields: [
     {
       prismaName: "id",
       rustName: "id",
+      dbName: "id",
       type: { kind: "scalar", rust: "uuid::Uuid", eq: true, copy: true },
       optional: false,
       list: false,

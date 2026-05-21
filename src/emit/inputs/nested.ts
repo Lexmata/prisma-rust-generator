@@ -131,7 +131,7 @@ function emitCreateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
   for (const f of ctx.target.scalarFields) {
     if (!unchecked && f.isFk) continue;
     if (f.hasDefault) continue;
-    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f));
+    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f, ctx.opts.moduleOf));
   }
   for (const r of ctx.target.relations) {
     if (r.toModel === ctx.source.name) continue;
@@ -213,7 +213,7 @@ function emitCreateManyAInput(w: RustWriter, ctx: Ctx): void {
   openInput(w, ctx.opts, name, false);
   for (const f of ctx.target.scalarFields) {
     if (f.hasDefault) continue;
-    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f));
+    w.field(`pub ${f.rustName}`, scalarTypeForCreate(f, ctx.opts.moduleOf));
   }
   w.close();
   w.blank();
@@ -224,7 +224,7 @@ function emitUpdateWithout(w: RustWriter, ctx: Ctx, unchecked: boolean): void {
   openInput(w, ctx.opts, name);
   for (const f of ctx.target.scalarFields) {
     if (!unchecked && f.isFk) continue;
-    w.field(`pub ${f.rustName}`, opInputTypeForField(f));
+    w.field(`pub ${f.rustName}`, opInputTypeForField(f, ctx.opts.moduleOf));
   }
   for (const r of ctx.target.relations) {
     if (r.toModel === ctx.source.name) continue;
@@ -422,24 +422,25 @@ function emitUpdateManyWithWhere(w: RustWriter, ctx: Ctx): void {
   w.blank();
 }
 
-function scalarTypeForCreate(f: FieldIR): string {
+function scalarTypeForCreate(f: FieldIR, moduleOf: ModuleResolver): string {
   const inner = renderScalarFieldType(
     { ...f, optional: false, list: false },
-    () => "",
+    moduleOf,
   );
   if (f.list) return `Option<Vec<${inner}>>`;
   if (f.optional) return `Option<${inner}>`;
   return inner;
 }
 
-function opInputTypeForField(f: FieldIR): string {
+function opInputTypeForField(f: FieldIR, moduleOf?: ModuleResolver): string {
   if (f.type.kind === "scalar") {
     const family = filterFamilyForRustType(f.type.rust);
     const prefix = f.optional ? "Nullable" : "";
     return `Option<crate::shared::filters::${prefix}${family}FieldUpdateOperationsInput>`;
   }
   if (f.type.kind === "enumRef") {
-    const mod = f.type.module ? `crate::${f.type.module}::` : `crate::`;
+    const resolved = moduleOf ? moduleOf(f.type.enumName) : f.type.module;
+    const mod = resolved ? `crate::${resolved}::` : `crate::`;
     const prefix = f.optional ? "Nullable" : "";
     return `Option<${mod}${prefix}${f.type.enumName}FieldUpdateOperationsInput>`;
   }

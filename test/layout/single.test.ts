@@ -34,10 +34,12 @@ describe("emitSingle", () => {
         {
           name: "User",
           module: "auth",
+          dbName: "User",
           scalarFields: [
             {
               prismaName: "id",
               rustName: "id",
+              dbName: "id",
               type: { kind: "scalar", rust: "uuid::Uuid", eq: true, copy: true },
               optional: false,
               list: false,
@@ -65,7 +67,7 @@ describe("emitSingle", () => {
     expect(files.has("lib.rs")).toBe(true);
     const lib = files.get("lib.rs")!;
     expect(lib).toContain("pub struct User");
-    expect(lib).toContain("pub enum StringFilter");
+    expect(lib).toContain("pub struct StringFilter");
     expect(lib).toContain("pub struct UserWhereInput");
   });
 });

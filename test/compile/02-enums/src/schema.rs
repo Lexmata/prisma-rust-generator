@@ -22,23 +22,25 @@ pub struct NullableRoleFieldUpdateOperationsInput {
     pub set: Option<Option<Role>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum RoleFilter {
-    Equals(crate::schema::Role),
-    In(Vec<crate::schema::Role>),
-    NotIn(Vec<crate::schema::Role>),
-    Not(Box<RoleFilter>),
+pub struct RoleFilter {
+    pub equals: Option<crate::schema::Role>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<crate::schema::Role>>,
+    pub not_in: Option<Vec<crate::schema::Role>>,
+    pub not: Option<Box<RoleFilter>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum RoleNullableFilter {
-    Equals(Option<crate::schema::Role>),
-    In(Vec<crate::schema::Role>),
-    NotIn(Vec<crate::schema::Role>),
-    IsNull(bool),
-    Not(Box<RoleNullableFilter>),
+pub struct RoleNullableFilter {
+    pub equals: Option<crate::schema::Role>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<crate::schema::Role>>,
+    pub not_in: Option<Vec<crate::schema::Role>>,
+    pub is_null: Option<bool>,
+    pub not: Option<Box<RoleNullableFilter>>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -63,23 +65,25 @@ pub struct NullableCaseStatusFieldUpdateOperationsInput {
     pub set: Option<Option<CaseStatus>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum CaseStatusFilter {
-    Equals(crate::schema::CaseStatus),
-    In(Vec<crate::schema::CaseStatus>),
-    NotIn(Vec<crate::schema::CaseStatus>),
-    Not(Box<CaseStatusFilter>),
+pub struct CaseStatusFilter {
+    pub equals: Option<crate::schema::CaseStatus>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<crate::schema::CaseStatus>>,
+    pub not_in: Option<Vec<crate::schema::CaseStatus>>,
+    pub not: Option<Box<CaseStatusFilter>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub enum CaseStatusNullableFilter {
-    Equals(Option<crate::schema::CaseStatus>),
-    In(Vec<crate::schema::CaseStatus>),
-    NotIn(Vec<crate::schema::CaseStatus>),
-    IsNull(bool),
-    Not(Box<CaseStatusNullableFilter>),
+pub struct CaseStatusNullableFilter {
+    pub equals: Option<crate::schema::CaseStatus>,
+    #[serde(rename = "in")]
+    pub r#in: Option<Vec<crate::schema::CaseStatus>>,
+    pub not_in: Option<Vec<crate::schema::CaseStatus>>,
+    pub is_null: Option<bool>,
+    pub not: Option<Box<CaseStatusNullableFilter>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -121,7 +125,9 @@ pub struct UserListRelationFilter {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct UserWhereUniqueInput {}
+pub struct UserWhereUniqueInput {
+    pub id: Option<String>,
+}
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -246,6 +252,23 @@ pub struct UserOrderByWithAggregationInput {
     pub id: Option<crate::shared::filters::SortOrder>,
     pub role: Option<crate::shared::filters::SortOrder>,
     pub status: Option<crate::shared::filters::SortOrder>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<UserCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<UserAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<UserSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<UserMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<UserMaxAggregateInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UserAggregateInput {
+    #[serde(rename = "where")]
+    pub r#where: Option<UserWhereInput>,
     #[serde(rename = "_count")]
     pub aggregate_count: Option<UserCountAggregateInput>,
     #[serde(rename = "_avg")]

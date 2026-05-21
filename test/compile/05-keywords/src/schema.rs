@@ -44,7 +44,9 @@ pub struct ItemListRelationFilter {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct ItemWhereUniqueInput {}
+pub struct ItemWhereUniqueInput {
+    pub id: Option<String>,
+}
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -190,6 +192,23 @@ pub struct ItemOrderByWithAggregationInput {
     pub r#type: Option<crate::shared::filters::SortOrder>,
     pub r#match: Option<crate::shared::filters::SortOrder>,
     pub r#ref: Option<crate::shared::filters::SortOrder>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<ItemCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<ItemAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<ItemSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<ItemMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<ItemMaxAggregateInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ItemAggregateInput {
+    #[serde(rename = "where")]
+    pub r#where: Option<ItemWhereInput>,
     #[serde(rename = "_count")]
     pub aggregate_count: Option<ItemCountAggregateInput>,
     #[serde(rename = "_avg")]

@@ -32,6 +32,8 @@ export function emitAggregateInputs(m: ModelIR, opts: AggregateOpts): string {
   emitOrderableAggregate(w, m, opts, "Max");
   w.blank();
   emitOrderByWithAggregation(w, m, opts);
+  w.blank();
+  emitAggregateRequest(w, m, opts);
   return w.toString();
 }
 
@@ -90,6 +92,42 @@ function emitOrderByWithAggregation(
   for (const f of m.scalarFields) {
     w.field(`pub ${f.rustName}`, `Option<crate::shared::filters::SortOrder>`);
   }
+  if (opts.serde) w.line(`#[serde(rename = "_count")]`);
+  w.field(`pub aggregate_count`, `Option<${m.name}CountAggregateInput>`);
+  if (opts.serde) w.line(`#[serde(rename = "_avg")]`);
+  w.field(`pub aggregate_avg`, `Option<${m.name}AvgAggregateInput>`);
+  if (opts.serde) w.line(`#[serde(rename = "_sum")]`);
+  w.field(`pub aggregate_sum`, `Option<${m.name}SumAggregateInput>`);
+  if (opts.serde) w.line(`#[serde(rename = "_min")]`);
+  w.field(`pub aggregate_min`, `Option<${m.name}MinAggregateInput>`);
+  if (opts.serde) w.line(`#[serde(rename = "_max")]`);
+  w.field(`pub aggregate_max`, `Option<${m.name}MaxAggregateInput>`);
+  w.close();
+}
+
+/**
+ * Top-level `<M>AggregateInput` — the parameter shape engines consume when a
+ * caller asks for aggregates on a model. Bundles an optional `WhereInput` to
+ * scope the rows together with the five per-aggregation selector inputs.
+ *
+ * Engine emitters (e.g. sqlx-postgres) reference this type so the public
+ * `<M>::aggregate(...)` method has a single ergonomic input struct rather than
+ * six positional parameters.
+ */
+function emitAggregateRequest(
+  w: RustWriter,
+  m: ModelIR,
+  opts: AggregateOpts,
+): void {
+  // No Eq/Hash here: <M>WhereInput is not Eq (filters carry floats etc.), so
+  // the bundle inherits that constraint.
+  const derives = ["Debug", "Clone", "Default", "PartialEq"];
+  if (opts.serde) derives.push("Serialize", "Deserialize");
+  w.deriveLine(derives);
+  if (opts.serde) w.line(`#[serde(rename_all = "camelCase")]`);
+  w.openStruct(opts.vis, `${m.name}AggregateInput`);
+  if (opts.serde) w.line(`#[serde(rename = "where")]`);
+  w.field(`pub r#where`, `Option<${m.name}WhereInput>`);
   if (opts.serde) w.line(`#[serde(rename = "_count")]`);
   w.field(`pub aggregate_count`, `Option<${m.name}CountAggregateInput>`);
   if (opts.serde) w.line(`#[serde(rename = "_avg")]`);

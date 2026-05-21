@@ -93,6 +93,7 @@ export async function buildIR(
     models.push({
       name: m.name,
       module,
+      dbName: m.dbName ?? m.name,
       scalarFields,
       relations,
       idFields: m.primaryKey
@@ -121,6 +122,7 @@ function makeField(f: DMMF.Field, type: RustTypeRef): FieldIR {
   return {
     prismaName: f.name,
     rustName: rustFieldIdent(f.name),
+    dbName: f.dbName ?? f.name,
     type,
     optional: !f.isRequired,
     list: f.isList,

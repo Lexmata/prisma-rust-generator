@@ -8,10 +8,12 @@ const ir: IR = {
     {
       name: "User",
       module: "users",
+      dbName: "User",
       scalarFields: [
         {
           prismaName: "id",
           rustName: "id",
+          dbName: "id",
           type: { kind: "scalar", rust: "uuid::Uuid", eq: true, copy: true },
           optional: false,
           list: false,
@@ -31,10 +33,12 @@ const ir: IR = {
     {
       name: "Firm",
       module: "firms",
+      dbName: "Firm",
       scalarFields: [
         {
           prismaName: "id",
           rustName: "id",
+          dbName: "id",
           type: { kind: "scalar", rust: "uuid::Uuid", eq: true, copy: true },
           optional: false,
           list: false,

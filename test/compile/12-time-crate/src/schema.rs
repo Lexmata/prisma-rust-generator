@@ -48,7 +48,9 @@ pub struct TimeRowListRelationFilter {
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct TimeRowWhereUniqueInput {}
+pub struct TimeRowWhereUniqueInput {
+    pub id: Option<String>,
+}
 
 #[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -222,6 +224,23 @@ pub struct TimeRowOrderByWithAggregationInput {
     pub time_only: Option<crate::shared::filters::SortOrder>,
     pub with_tz: Option<crate::shared::filters::SortOrder>,
     pub without_tz: Option<crate::shared::filters::SortOrder>,
+    #[serde(rename = "_count")]
+    pub aggregate_count: Option<TimeRowCountAggregateInput>,
+    #[serde(rename = "_avg")]
+    pub aggregate_avg: Option<TimeRowAvgAggregateInput>,
+    #[serde(rename = "_sum")]
+    pub aggregate_sum: Option<TimeRowSumAggregateInput>,
+    #[serde(rename = "_min")]
+    pub aggregate_min: Option<TimeRowMinAggregateInput>,
+    #[serde(rename = "_max")]
+    pub aggregate_max: Option<TimeRowMaxAggregateInput>,
+}
+
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct TimeRowAggregateInput {
+    #[serde(rename = "where")]
+    pub r#where: Option<TimeRowWhereInput>,
     #[serde(rename = "_count")]
     pub aggregate_count: Option<TimeRowCountAggregateInput>,
     #[serde(rename = "_avg")]

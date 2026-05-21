@@ -1,10 +1,12 @@
 import { RustWriter } from "../rust-writer.js";
 import type { ModelIR } from "../../ir/types.js";
 import { scalarFilterRefFor } from "../filters/model.js";
+import type { ModuleResolver } from "../type-ref.js";
 
 export interface ScalarWhereOpts {
   serde: boolean;
   vis: "pub" | "pub(crate)";
+  moduleOf?: ModuleResolver;
 }
 
 // `{Model}ScalarWhereInput` is a per-target-model type, NOT per-relation. It is
@@ -23,7 +25,7 @@ export function emitModelScalarWhereInput(
   if (opts.serde) w.line(`#[serde(rename_all = "camelCase")]`);
   w.openStruct(opts.vis, name);
   for (const f of m.scalarFields) {
-    w.field(`pub ${f.rustName}`, `Option<${scalarFilterRefFor(f)}>`);
+    w.field(`pub ${f.rustName}`, `Option<${scalarFilterRefFor(f, opts.moduleOf)}>`);
   }
   for (const [rust, prisma] of [
     ["and", "AND"],

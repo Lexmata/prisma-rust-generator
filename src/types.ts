@@ -1,3 +1,5 @@
+export type Engine = null | "sqlx-postgres";
+
 export interface GeneratorConfig {
   output: string;
   outputLayout: "per-file" | "per-model" | "single";
@@ -18,4 +20,5 @@ export interface GeneratorConfig {
   concurrency: number;
   rustfmtShardSize: number;
   filePreamble: string;
+  engine: Engine;
 }

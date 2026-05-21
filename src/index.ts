@@ -14,7 +14,7 @@ generatorHandler({
     return {
       defaultOutput: "../rust-out/src",
       prettyName: "Prisma Rust Generator",
-      version: "0.1.2",
+      version: "0.2.0",
     };
   },
   async onGenerate(opts) {

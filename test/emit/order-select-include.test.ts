@@ -6,10 +6,12 @@ import type { ModelIR } from "../../src/ir/types.js";
 const model: ModelIR = {
   name: "User",
   module: "users",
+  dbName: "User",
   scalarFields: [
     {
       prismaName: "id",
       rustName: "id",
+      dbName: "id",
       type: { kind: "scalar", rust: "uuid::Uuid", eq: true, copy: true },
       optional: false,
       list: false,

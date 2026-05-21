@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { isSkipRequested } from "../src/options.js";
+import { isSkipRequested, parseGeneratorConfig } from "../src/options.js";
 
 describe("isSkipRequested", () => {
   it("returns false for non-string values", () => {
@@ -30,4 +30,74 @@ describe("isSkipRequested", () => {
       expect(isSkipRequested(v)).toBe(true);
     },
   );
+});
+
+function makeOpts(
+  overrides: Record<string, string> = {},
+): Parameters<typeof parseGeneratorConfig>[0] {
+  return {
+    generator: {
+      output: { value: "/tmp/out", fromEnvVar: null },
+      config: overrides,
+    },
+    schemaPath: "",
+    datamodel: "",
+    datasources: [],
+    otherGenerators: [],
+    version: "",
+    binaryPaths: undefined,
+    dmmf: undefined as never,
+  } as unknown as Parameters<typeof parseGeneratorConfig>[0];
+}
+
+describe("parseGeneratorConfig — engine field", () => {
+  it("defaults engine to null when unset", () => {
+    const cfg = parseGeneratorConfig(makeOpts());
+    expect(cfg.engine).toBeNull();
+  });
+
+  it("accepts engine = 'sqlx-postgres'", () => {
+    const cfg = parseGeneratorConfig(makeOpts({ engine: "sqlx-postgres" }));
+    expect(cfg.engine).toBe("sqlx-postgres");
+  });
+
+  it("rejects unknown engine values", () => {
+    expect(() =>
+      parseGeneratorConfig(makeOpts({ engine: "not-an-engine" })),
+    ).toThrow(/engine must be one of/);
+  });
+});
+
+describe("parseGeneratorConfig — engine x outputLayout validation", () => {
+  it("accepts engine = 'sqlx-postgres' + outputLayout = 'per-file'", () => {
+    const cfg = parseGeneratorConfig(
+      makeOpts({ engine: "sqlx-postgres", outputLayout: "per-file" }),
+    );
+    expect(cfg.engine).toBe("sqlx-postgres");
+    expect(cfg.outputLayout).toBe("per-file");
+  });
+
+  it("accepts engine = 'sqlx-postgres' + outputLayout = 'per-model'", () => {
+    const cfg = parseGeneratorConfig(
+      makeOpts({ engine: "sqlx-postgres", outputLayout: "per-model" }),
+    );
+    expect(cfg.engine).toBe("sqlx-postgres");
+    expect(cfg.outputLayout).toBe("per-model");
+  });
+
+  it("rejects engine = 'sqlx-postgres' + outputLayout = 'single'", () => {
+    expect(() =>
+      parseGeneratorConfig(
+        makeOpts({ engine: "sqlx-postgres", outputLayout: "single" }),
+      ),
+    ).toThrow(
+      /engine = "sqlx-postgres" is not yet supported with outputLayout = "single"/,
+    );
+  });
+
+  it("allows outputLayout = 'single' when engine is unset", () => {
+    const cfg = parseGeneratorConfig(makeOpts({ outputLayout: "single" }));
+    expect(cfg.engine).toBeNull();
+    expect(cfg.outputLayout).toBe("single");
+  });
 });

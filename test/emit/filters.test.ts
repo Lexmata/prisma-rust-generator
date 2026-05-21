@@ -28,17 +28,27 @@ function defaultCfg(): GeneratorConfig {
 }
 
 describe("emitSharedScalarFilters", () => {
-  it("emits StringFilter with full operator set", () => {
+  it("emits StringFilter as a struct with the full operator set", () => {
     const out = emitSharedScalarFilters({ serde: true, vis: "pub", cfg: defaultCfg() });
-    expect(out).toContain("pub enum StringFilter {");
-    expect(out).toContain("Equals(String)");
-    expect(out).toContain("Contains(String)");
-    expect(out).toContain("Not(Box<StringFilter>)");
-    expect(out).toContain("Mode(QueryMode)");
-    expect(out).toContain("pub enum StringNullableFilter {");
-    expect(out).toContain("IsNull(bool)");
+    expect(out).toContain("pub struct StringFilter {");
+    expect(out).toContain("pub equals: Option<String>,");
+    expect(out).toContain(`#[serde(rename = "in")]`);
+    expect(out).toContain("pub r#in: Option<Vec<String>>,");
+    expect(out).toContain("pub not_in: Option<Vec<String>>,");
+    expect(out).toContain("pub lt: Option<String>,");
+    expect(out).toContain("pub lte: Option<String>,");
+    expect(out).toContain("pub gt: Option<String>,");
+    expect(out).toContain("pub gte: Option<String>,");
+    expect(out).toContain("pub contains: Option<String>,");
+    expect(out).toContain("pub starts_with: Option<String>,");
+    expect(out).toContain("pub ends_with: Option<String>,");
+    expect(out).toContain("pub mode: Option<QueryMode>,");
+    expect(out).toContain("pub not: Option<Box<StringFilter>>,");
+    expect(out).toContain("pub struct StringNullableFilter {");
+    expect(out).toContain("pub is_null: Option<bool>,");
   });
-  it("emits all scalar filter families", () => {
+
+  it("emits all scalar filter families as structs", () => {
     const out = emitSharedScalarFilters({ serde: true, vis: "pub", cfg: defaultCfg() });
     for (const fam of [
       "StringFilter",
@@ -52,20 +62,83 @@ describe("emitSharedScalarFilters", () => {
       "BytesFilter",
       "JsonFilter",
     ]) {
-      expect(out).toContain(`pub enum ${fam} {`);
-      expect(out).toContain(`pub enum ${fam.replace("Filter", "NullableFilter")} {`);
+      expect(out).toContain(`pub struct ${fam} {`);
+      expect(out).toContain(`pub struct ${fam.replace("Filter", "NullableFilter")} {`);
     }
+  });
+
+  it("derives Default on every filter struct so consumers can use ..Default::default()", () => {
+    const out = emitSharedScalarFilters({ serde: true, vis: "pub", cfg: defaultCfg() });
+    // Every derive line on a filter struct must include Default.
+    const lines = out.split("\n");
+    const deriveLines = lines.filter((l) => l.includes("#[derive("));
+    expect(deriveLines.length).toBeGreaterThan(0);
+    for (const l of deriveLines) {
+      expect(l).toContain("Default");
+    }
+  });
+
+  it("emits UuidFilter with mode (case-insensitive) but no lt/lte/gt/gte", () => {
+    const out = emitSharedScalarFilters({ serde: true, vis: "pub", cfg: defaultCfg() });
+    const uuidBlock = extractBlock(out, "pub struct UuidFilter {");
+    expect(uuidBlock).toContain("pub mode: Option<QueryMode>,");
+    expect(uuidBlock).not.toContain("pub lt:");
+    expect(uuidBlock).not.toContain("pub contains:");
+  });
+
+  it("emits IntFilter with ordering but no mode/contains", () => {
+    const out = emitSharedScalarFilters({ serde: true, vis: "pub", cfg: defaultCfg() });
+    const intBlock = extractBlock(out, "pub struct IntFilter {");
+    expect(intBlock).toContain("pub lt: Option<i32>,");
+    expect(intBlock).toContain("pub gte: Option<i32>,");
+    expect(intBlock).not.toContain("pub mode:");
+    expect(intBlock).not.toContain("pub contains:");
+  });
+
+  it("omits serde attributes when serde is off", () => {
+    const cfg = defaultCfg();
+    const out = emitSharedScalarFilters({ serde: false, vis: "pub", cfg });
+    expect(out).not.toContain("Serialize");
+    expect(out).not.toContain("Deserialize");
+    expect(out).not.toContain("#[serde");
+    // Struct shape and Default derive must still be present.
+    expect(out).toContain("pub struct StringFilter {");
+    expect(out).toContain("Default");
   });
 });
 
 describe("emitEnumFilter", () => {
-  it("emits RoleFilter and RoleNullableFilter with Equals/In/NotIn/Not", () => {
+  it("emits RoleFilter and RoleNullableFilter as structs", () => {
     const out = emitEnumFilter("Role", "auth", { serde: true, vis: "pub" });
-    expect(out).toContain("pub enum RoleFilter {");
-    expect(out).toContain("Equals(crate::auth::Role)");
-    expect(out).toContain("In(Vec<crate::auth::Role>)");
-    expect(out).toContain("Not(Box<RoleFilter>)");
-    expect(out).toContain("pub enum RoleNullableFilter {");
-    expect(out).toContain("IsNull(bool)");
+    expect(out).toContain("pub struct RoleFilter {");
+    expect(out).toContain("pub equals: Option<crate::auth::Role>,");
+    expect(out).toContain("pub r#in: Option<Vec<crate::auth::Role>>,");
+    expect(out).toContain("pub not_in: Option<Vec<crate::auth::Role>>,");
+    expect(out).toContain("pub not: Option<Box<RoleFilter>>,");
+    expect(out).toContain("pub struct RoleNullableFilter {");
+    expect(out).toContain("pub is_null: Option<bool>,");
+  });
+
+  it("derives Default on enum filter structs and omits Eq/Hash", () => {
+    const out = emitEnumFilter("Role", "auth", { serde: true, vis: "pub" });
+    const lines = out.split("\n");
+    const deriveLines = lines.filter((l) => l.includes("#[derive("));
+    expect(deriveLines.length).toBe(2);
+    for (const l of deriveLines) {
+      expect(l).toContain("Default");
+      expect(l).not.toMatch(/\bEq\b/);
+      expect(l).not.toContain("Hash");
+    }
   });
 });
+
+/** Pull out the lines from `header` (inclusive) up to the next closing `}` at column 0. */
+function extractBlock(src: string, header: string): string {
+  const start = src.indexOf(header);
+  if (start === -1) throw new Error(`block not found: ${header}`);
+  const tail = src.slice(start);
+  // Match through the first `}` that appears at the start of its line.
+  const end = tail.search(/\n\}\n/);
+  if (end === -1) return tail;
+  return tail.slice(0, end + 3);
+}

@@ -5,10 +5,12 @@ import type { ModelIR } from "../../src/ir/types.js";
 const model: ModelIR = {
   name: "User",
   module: "users",
+  dbName: "User",
   scalarFields: [
     {
       prismaName: "id",
       rustName: "id",
+      dbName: "id",
       type: { kind: "scalar", rust: "String", eq: true, copy: false },
       optional: false,
       list: false,
@@ -22,6 +24,7 @@ const model: ModelIR = {
     {
       prismaName: "score",
       rustName: "score",
+      dbName: "score",
       type: { kind: "scalar", rust: "i32", eq: true, copy: true },
       optional: false,
       list: false,
@@ -35,6 +38,7 @@ const model: ModelIR = {
     {
       prismaName: "meta",
       rustName: "meta",
+      dbName: "meta",
       type: { kind: "scalar", rust: "serde_json::Value", eq: false, copy: false },
       optional: false,
       list: false,
@@ -83,5 +87,16 @@ describe("emitAggregateInputs", () => {
     expect(out).toContain("pub struct UserOrderByWithAggregationInput {");
     expect(out).toContain(`#[serde(rename = "_count")]`);
     expect(out).toContain("pub aggregate_count: Option<UserCountAggregateInput>,");
+  });
+  it("emits the top-level AggregateInput bundling where + selectors", () => {
+    const out = emitAggregateInputs(model, { serde: true, vis: "pub" });
+    expect(out).toContain("pub struct UserAggregateInput {");
+    expect(out).toContain(`#[serde(rename = "where")]`);
+    expect(out).toContain("pub r#where: Option<UserWhereInput>,");
+    expect(out).toContain("pub aggregate_count: Option<UserCountAggregateInput>,");
+    expect(out).toContain("pub aggregate_avg: Option<UserAvgAggregateInput>,");
+    expect(out).toContain("pub aggregate_sum: Option<UserSumAggregateInput>,");
+    expect(out).toContain("pub aggregate_min: Option<UserMinAggregateInput>,");
+    expect(out).toContain("pub aggregate_max: Option<UserMaxAggregateInput>,");
   });
 });

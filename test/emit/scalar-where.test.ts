@@ -5,6 +5,7 @@ import type { FieldIR, ModelIR } from "../../src/ir/types.js";
 const idField: FieldIR = {
   prismaName: "id",
   rustName: "id",
+  dbName: "id",
   type: { kind: "scalar", rust: "uuid::Uuid", eq: true, copy: true },
   optional: false,
   list: false,
@@ -19,6 +20,7 @@ const idField: FieldIR = {
 const nameField: FieldIR = {
   prismaName: "name",
   rustName: "name",
+  dbName: "name",
   type: { kind: "scalar", rust: "String", eq: true, copy: false },
   optional: true,
   list: false,
@@ -33,6 +35,7 @@ const nameField: FieldIR = {
 const userModel: ModelIR = {
   name: "User",
   module: "users",
+  dbName: "User",
   scalarFields: [idField, nameField],
   relations: [],
   idFields: ["id"],

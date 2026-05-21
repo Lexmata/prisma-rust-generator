@@ -10,8 +10,12 @@ export interface SharedFilterOpts {
 interface FilterSpec {
   family: string;
   ty: string;
-  ops: readonly string[];
-  hasMode?: boolean;
+  /** Ordering operators (lt/lte/gt/gte) apply. */
+  orderable: boolean;
+  /** Whether `contains`/`starts_with`/`ends_with` and `mode` apply. */
+  stringOps: boolean;
+  /** Whether `mode: Option<QueryMode>` is emitted even outside stringOps (Uuid). */
+  hasMode: boolean;
 }
 
 function buildSpecs(cfg: GeneratorConfig): readonly FilterSpec[] {
@@ -22,21 +26,16 @@ function buildSpecs(cfg: GeneratorConfig): readonly FilterSpec[] {
   const bytes = cfg.bytesCrate === "bytes" ? "bytes::Bytes" : "Vec<u8>";
   const json = cfg.jsonCrate === "string" ? "String" : "serde_json::Value";
   return [
-    {
-      family: "String",
-      ty: "String",
-      ops: ["Lt", "Lte", "Gt", "Gte", "Contains", "StartsWith", "EndsWith"],
-      hasMode: true,
-    },
-    { family: "Int", ty: "i32", ops: ["Lt", "Lte", "Gt", "Gte"] },
-    { family: "BigInt", ty: "i64", ops: ["Lt", "Lte", "Gt", "Gte"] },
-    { family: "Float", ty: "f64", ops: ["Lt", "Lte", "Gt", "Gte"] },
-    { family: "Decimal", ty: decimal, ops: ["Lt", "Lte", "Gt", "Gte"] },
-    { family: "DateTime", ty: datetime, ops: ["Lt", "Lte", "Gt", "Gte"] },
-    { family: "Uuid", ty: "uuid::Uuid", ops: [], hasMode: true },
-    { family: "Bytes", ty: bytes, ops: [] },
-    { family: "Bool", ty: "bool", ops: [] },
-    { family: "Json", ty: json, ops: [] },
+    { family: "String", ty: "String", orderable: true, stringOps: true, hasMode: true },
+    { family: "Int", ty: "i32", orderable: true, stringOps: false, hasMode: false },
+    { family: "BigInt", ty: "i64", orderable: true, stringOps: false, hasMode: false },
+    { family: "Float", ty: "f64", orderable: true, stringOps: false, hasMode: false },
+    { family: "Decimal", ty: decimal, orderable: true, stringOps: false, hasMode: false },
+    { family: "DateTime", ty: datetime, orderable: true, stringOps: false, hasMode: false },
+    { family: "Uuid", ty: "uuid::Uuid", orderable: false, stringOps: false, hasMode: true },
+    { family: "Bytes", ty: bytes, orderable: false, stringOps: false, hasMode: false },
+    { family: "Bool", ty: "bool", orderable: false, stringOps: false, hasMode: false },
+    { family: "Json", ty: json, orderable: false, stringOps: false, hasMode: false },
   ];
 }
 
@@ -51,19 +50,46 @@ export function emitSharedScalarFilters(opts: SharedFilterOpts): string {
   return w.toString();
 }
 
+// `*Filter` / `*NullableFilter` are emitted as structs of optional fields
+// (mirroring Prisma's TS client and the docs in docs/sqlx.md / docs/raw-*.md).
+// The struct shape lets consumers combine multiple operators on one filter
+// (e.g. `equals` + `not_in` + `not` in a single expression). `Default` is
+// derived so a sparse filter can be written as
+// `StringFilter { equals: Some(..), ..Default::default() }`.
 function emitOne(w: RustWriter, s: FilterSpec, nullable: boolean, opts: SharedFilterOpts): void {
   const name = nullable ? `${s.family}NullableFilter` : `${s.family}Filter`;
-  const derives = ["Debug", "Clone", "PartialEq"];
+  const derives = ["Debug", "Clone", "Default", "PartialEq"];
   if (opts.serde) derives.push("Serialize", "Deserialize");
   w.deriveLine(derives);
   if (opts.serde) w.line(`#[serde(rename_all = "camelCase")]`);
-  w.openEnum(opts.vis, name);
-  w.variant(nullable ? `Equals(Option<${s.ty}>)` : `Equals(${s.ty})`);
-  w.variant(`In(Vec<${s.ty}>)`);
-  w.variant(`NotIn(Vec<${s.ty}>)`);
-  if (nullable) w.variant(`IsNull(bool)`);
-  for (const op of s.ops) w.variant(`${op}(${s.ty})`);
-  w.variant(`Not(Box<${name}>)`);
-  if (s.hasMode) w.variant(`Mode(QueryMode)`);
+  w.openStruct(opts.vis, name);
+
+  // Always present: equals, in, not_in, not.
+  // `in` is a Rust keyword, so we use the raw identifier `r#in` and rename
+  // the serde wire-name explicitly back to `"in"` — `rename_all = camelCase`
+  // alone is not guaranteed to strip the `r#` prefix across serde versions.
+  w.field(`pub equals`, `Option<${s.ty}>`);
+  if (opts.serde) w.line(`#[serde(rename = "in")]`);
+  w.field(`pub r#in`, `Option<Vec<${s.ty}>>`);
+  w.field(`pub not_in`, `Option<Vec<${s.ty}>>`);
+  if (nullable) {
+    w.field(`pub is_null`, `Option<bool>`);
+  }
+  if (s.orderable) {
+    w.field(`pub lt`, `Option<${s.ty}>`);
+    w.field(`pub lte`, `Option<${s.ty}>`);
+    w.field(`pub gt`, `Option<${s.ty}>`);
+    w.field(`pub gte`, `Option<${s.ty}>`);
+  }
+  if (s.stringOps) {
+    w.field(`pub contains`, `Option<${s.ty}>`);
+    w.field(`pub starts_with`, `Option<${s.ty}>`);
+    w.field(`pub ends_with`, `Option<${s.ty}>`);
+  }
+  if (s.hasMode) {
+    w.field(`pub mode`, `Option<QueryMode>`);
+  }
+  w.field(`pub not`, `Option<Box<${name}>>`);
+
   w.close();
 }

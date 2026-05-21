@@ -7,10 +7,12 @@ function stubModel(name: string, module: string): ModelIR {
   return {
     name,
     module,
+    dbName: name,
     scalarFields: [
       {
         prismaName: "id",
         rustName: "id",
+        dbName: "id",
         type: { kind: "scalar", rust: "uuid::Uuid", eq: true, copy: true },
         optional: false,
         list: false,
