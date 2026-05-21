@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { emitFinds } from "../../../../src/emit/engines/sqlx-postgres/finds.js";
+import { POSTGRES } from "../../../../src/emit/engines/sqlx/backends/index.js";
+import { emitFinds } from "../../../../src/emit/engines/sqlx/finds.js";
 import type { ModelIR } from "../../../../src/ir/types.js";
 
 const user: ModelIR = {
@@ -43,7 +44,7 @@ const user: ModelIR = {
 };
 
 describe("emitFinds (sqlx-postgres) — find_unique", () => {
-  const out = emitFinds(user);
+  const out = emitFinds(user, POSTGRES);
 
   it("emits an inherent impl with the expected signature", () => {
     expect(out).toContain("impl crate::users::User {");
@@ -84,7 +85,7 @@ describe("emitFinds (sqlx-postgres) — find_unique", () => {
       ...user,
       idFields: ["a", "b"],
     };
-    const compositeOut = emitFinds(compositeIdModel);
+    const compositeOut = emitFinds(compositeIdModel, POSTGRES);
     expect(compositeOut).toContain(
       `todo!("composite unique not yet supported")`,
     );
@@ -94,7 +95,7 @@ describe("emitFinds (sqlx-postgres) — find_unique", () => {
 });
 
 describe("emitFinds (sqlx-postgres) — find_first", () => {
-  const out = emitFinds(user);
+  const out = emitFinds(user, POSTGRES);
 
   it("emits an inherent impl with the expected signature", () => {
     expect(out).toContain("pub async fn find_first<'e, E>(");
@@ -122,7 +123,7 @@ describe("emitFinds (sqlx-postgres) — find_first", () => {
 });
 
 describe("emitFinds (sqlx-postgres) — find_many builder", () => {
-  const out = emitFinds(user);
+  const out = emitFinds(user, POSTGRES);
 
   it("emits a builder struct over an executor type parameter", () => {
     expect(out).toContain("pub struct UserFindManyBuilder<'a, E> {");
@@ -197,7 +198,7 @@ describe("emitFinds (sqlx-postgres) — find_many builder", () => {
         },
       ],
     };
-    const relOut = emitFinds(userWithRel);
+    const relOut = emitFinds(userWithRel, POSTGRES);
     expect(relOut).toContain("// TODO(prisma-rust-generator): sorting by relation `firm`");
     expect(relOut).toContain("let _ = &ob.firm;");
   });

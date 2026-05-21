@@ -1,9 +1,11 @@
 import type { FieldIR, ModelIR } from "../../../ir/types.js";
 import { toSnakeCase } from "../../../ir/names.js";
+import type { Backend } from "./backend.js";
+import { quoteIdent } from "./quote-ident.js";
 import type { ModuleResolver } from "../../type-ref.js";
 
 /**
- * Aggregate-method emitter for the sqlx-postgres engine.
+ * Aggregate-method emitter for the sqlx engine.
  *
  * Emits two artifacts per model:
  *   1. `<M>AggregateResult` (+ `<M>{Count,Avg,Sum,Min,Max}AggregateResult`) —
@@ -188,27 +190,30 @@ function maxAlias(f: FieldIR): string {
  * is computed regardless of what the caller asked for. Trades a few unused
  * column computations for trivial unpacking.
  */
-function buildSelectClause(m: ModelIR): string {
+function buildSelectClause(m: ModelIR, backend: Backend): string {
   // COUNT(*) is always present so the result struct can populate `_all`
   // without relying on any per-field column existing.
   const parts: string[] = [`COUNT(*) AS count_all`];
   for (const f of m.scalarFields) {
-    parts.push(`COUNT("${f.dbName}") AS ${countAlias(f)}`);
+    parts.push(`COUNT(${quoteIdent(backend, f.dbName)}) AS ${countAlias(f)}`);
   }
   for (const f of m.scalarFields) {
     if (!isNumeric(f)) continue;
-    // Cast to double precision so the binding type is always f64. Sidesteps
-    // Postgres's NUMERIC returns for SUM(int) and AVG(decimal).
+    // Cast to double precision (Postgres) / REAL (SQLite) so the binding type
+    // is always f64. Sidesteps the engine's variable return types for SUM(int)
+    // and AVG(decimal).
+    const colQ = quoteIdent(backend, f.dbName);
     parts.push(
-      `AVG("${f.dbName}")::double precision AS ${avgAlias(f)}`,
-      `SUM("${f.dbName}")::double precision AS ${sumAlias(f)}`,
+      `${backend.castToDouble(`AVG(${colQ})`)} AS ${avgAlias(f)}`,
+      `${backend.castToDouble(`SUM(${colQ})`)} AS ${sumAlias(f)}`,
     );
   }
   for (const f of m.scalarFields) {
     if (!isOrderable(f)) continue;
+    const colQ = quoteIdent(backend, f.dbName);
     parts.push(
-      `MIN("${f.dbName}") AS ${minAlias(f)}`,
-      `MAX("${f.dbName}") AS ${maxAlias(f)}`,
+      `MIN(${colQ}) AS ${minAlias(f)}`,
+      `MAX(${colQ}) AS ${maxAlias(f)}`,
     );
   }
   return parts.join(", ");
@@ -307,7 +312,11 @@ function emitOrderableUnpack(
 /**
  * Emit the `aggregate` inherent method on the model.
  */
-function emitAggregateMethod(m: ModelIR, moduleOf?: ModuleResolver): string {
+function emitAggregateMethod(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   const modelSnake = toSnakeCase(m.name);
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const modelPath = `crate::${modulePath}::${m.name}`;
@@ -315,13 +324,14 @@ function emitAggregateMethod(m: ModelIR, moduleOf?: ModuleResolver): string {
   // Result structs live in the engine module alongside the method, so the
   // return type is a bare path (the method body is in the same module).
   const resultPath = `${m.name}AggregateResult`;
-  const pushWhere = `crate::engine::sqlx_postgres::${modulePath}::push_${modelSnake}_where`;
+  const pushWhere = `crate::engine::${backend.dirName}::${modulePath}::push_${modelSnake}_where`;
+  const tableQ = quoteIdent(backend, m.dbName);
 
-  const selectClause = buildSelectClause(m);
+  const selectClause = buildSelectClause(m, backend);
 
   const body: string[] = [
     `        let mut qb = sqlx::QueryBuilder::new(`,
-    `            r#"SELECT ${selectClause} FROM "${m.dbName}" WHERE "#,`,
+    `            r#"SELECT ${selectClause} FROM ${tableQ} WHERE "#,`,
     `        );`,
     `        if let Some(w) = &input.r#where {`,
     `            if !${pushWhere}(&mut qb, w) {`,
@@ -348,7 +358,7 @@ function emitAggregateMethod(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        input: &${inputPath},`,
     `    ) -> sqlx::Result<${resultPath}>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     ...body,
     `    }`,
@@ -364,6 +374,14 @@ function emitAggregateMethod(m: ModelIR, moduleOf?: ModuleResolver): string {
  * module stays focused on shape definitions and the engine owns its own
  * unpacking types.
  */
-export function emitAggregate(m: ModelIR, moduleOf?: ModuleResolver): string {
-  return [emitResultStructs(m, moduleOf), ``, emitAggregateMethod(m, moduleOf)].join("\n");
+export function emitAggregate(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
+  return [
+    emitResultStructs(m, moduleOf),
+    ``,
+    emitAggregateMethod(m, backend, moduleOf),
+  ].join("\n");
 }

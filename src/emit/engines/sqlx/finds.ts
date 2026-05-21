@@ -1,15 +1,17 @@
 import type { ModelIR, FieldIR } from "../../../ir/types.js";
 import { toSnakeCase } from "../../../ir/names.js";
+import type { Backend } from "./backend.js";
 import { bindFromBorrow } from "./bind-ref.js";
+import { quoteIdent } from "./quote-ident.js";
 import type { ModuleResolver } from "../../type-ref.js";
 
 /**
- * Build the comma-separated, double-quoted column list for a `SELECT` against
+ * Build the comma-separated, backend-quoted column list for a `SELECT` against
  * the model's database table. Order matches `m.scalarFields` so a `FromRow`
  * impl that reads by name stays correct regardless of column ordering.
  */
-function colsSelect(m: ModelIR): string {
-  return m.scalarFields.map((f) => `"${f.dbName}"`).join(", ");
+function colsSelect(m: ModelIR, backend: Backend): string {
+  return m.scalarFields.map((f) => quoteIdent(backend, f.dbName)).join(", ");
 }
 
 /**
@@ -23,8 +25,12 @@ function singleIdField(m: ModelIR): FieldIR | null {
   return m.scalarFields.find((f) => f.prismaName === idPrismaName) ?? null;
 }
 
-function pushWhereCall(module: string, modelSnake: string): string {
-  return `crate::engine::sqlx_postgres::${module}::push_${modelSnake}_where`;
+function pushWhereCall(
+  backend: Backend,
+  module: string,
+  modelSnake: string,
+): string {
+  return `crate::engine::${backend.dirName}::${module}::push_${modelSnake}_where`;
 }
 
 /**
@@ -40,8 +46,12 @@ function pushWhereCall(module: string, modelSnake: string): string {
  * Callers with composite uniques should use `find_first` against a
  * `WhereInput` for now.
  */
-export function emitFinds(m: ModelIR, moduleOf?: ModuleResolver): string {
-  const cols = colsSelect(m);
+export function emitFinds(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
+  const cols = colsSelect(m, backend);
   const modelSnake = toSnakeCase(m.name);
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const modelPath = `crate::${modulePath}::${m.name}`;
@@ -49,7 +59,8 @@ export function emitFinds(m: ModelIR, moduleOf?: ModuleResolver): string {
   const whereUniquePath = `crate::${modulePath}::${m.name}WhereUniqueInput`;
   const orderByPath = `crate::${modulePath}::${m.name}OrderByWithRelationInput`;
   const builderName = `${m.name}FindManyBuilder`;
-  const pushWhere = pushWhereCall(modulePath, modelSnake);
+  const pushWhere = pushWhereCall(backend, modulePath, modelSnake);
+  const tableQ = quoteIdent(backend, m.dbName);
 
   const findUniqueBody: string[] = [];
   const idField = singleIdField(m);
@@ -61,17 +72,18 @@ export function emitFinds(m: ModelIR, moduleOf?: ModuleResolver): string {
       `        todo!("composite unique not yet supported")`,
     );
   } else {
+    const idCol = quoteIdent(backend, idField.dbName);
     findUniqueBody.push(
       `        let cols = ${JSON.stringify(cols)};`,
       `        let mut qb = sqlx::QueryBuilder::new(format!(`,
-      `            r#"SELECT {} FROM "${m.dbName}" WHERE "#,`,
+      `            r#"SELECT {} FROM ${tableQ} WHERE "#,`,
       `            cols,`,
       `        ));`,
       `        // For v1, support only the @id field. Composite uniques are out of scope.`,
       `        // The WhereUniqueInput has Option<T> per @id/@unique field; we pick the`,
       `        // first Some(). Multi-Some inputs cover composite uniques — TODO Task v2.`,
       `        if let Some(value) = &w.${idField.rustName} {`,
-      `            qb.push(${JSON.stringify(`"${idField.dbName}" = `)});`,
+      `            qb.push(${JSON.stringify(`${idCol} = `)});`,
       `            qb.push_bind(${bindFromBorrow(idField, "value")});`,
       `        } else {`,
       `            return Ok(None);`,
@@ -87,7 +99,7 @@ export function emitFinds(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        w: &${whereUniquePath},`,
     `    ) -> sqlx::Result<Option<Self>>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     ...findUniqueBody,
     `    }`,
@@ -101,10 +113,10 @@ export function emitFinds(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        w: &${whereInputPath},`,
     `    ) -> sqlx::Result<Option<Self>>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     `        let mut qb = sqlx::QueryBuilder::new(`,
-    `            r#"SELECT ${cols} FROM "${m.dbName}" WHERE "#,`,
+    `            r#"SELECT ${cols} FROM ${tableQ} WHERE "#,`,
     `        );`,
     `        if !${pushWhere}(&mut qb, w) {`,
     `            qb.push("TRUE");`,
@@ -120,12 +132,13 @@ export function emitFinds(m: ModelIR, moduleOf?: ModuleResolver): string {
   // yet); we bind them to `_` to keep the unused-field lint quiet.
   const orderByBlocks: string[] = [];
   for (const f of m.scalarFields) {
+    const colQ = quoteIdent(backend, f.dbName);
     orderByBlocks.push(
       `                if let Some(o) = ob.${f.rustName} {`,
       `                    if !first { qb.push(", "); }`,
       `                    first = false;`,
-      `                    qb.push(${JSON.stringify(`"${f.dbName}" `)});`,
-      `                    qb.push(crate::engine::sqlx_postgres::filters::sort_order_sql(o));`,
+      `                    qb.push(${JSON.stringify(`${colQ} `)});`,
+      `                    qb.push(crate::engine::${backend.dirName}::filters::sort_order_sql(o));`,
       `                }`,
     );
   }
@@ -166,10 +179,10 @@ export function emitFinds(m: ModelIR, moduleOf?: ModuleResolver): string {
     ``,
     `    pub async fn exec<'e>(self) -> sqlx::Result<Vec<${modelPath}>>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     `        let mut qb = sqlx::QueryBuilder::new(`,
-    `            r#"SELECT ${cols} FROM "${m.dbName}" WHERE "#,`,
+    `            r#"SELECT ${cols} FROM ${tableQ} WHERE "#,`,
     `        );`,
     `        if !${pushWhere}(&mut qb, self.where_input) {`,
     `            qb.push("TRUE");`,

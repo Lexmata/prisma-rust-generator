@@ -19,8 +19,9 @@ import { emitCommonSharedTypes } from "../emit/shared/common.js";
 import { emitFieldUpdateOps } from "../emit/inputs/field-update-ops.js";
 import { toSnakeCase } from "../ir/names.js";
 import type { ModuleResolver } from "../emit/type-ref.js";
-import { selectEngine } from "../emit/engines/index.js";
-import { emitSqlxEnumImpls } from "../emit/engines/sqlx-postgres/enums.js";
+import { selectBackend, selectEngine } from "../emit/engines/index.js";
+import type { Backend } from "../emit/engines/sqlx/backend.js";
+import { emitSqlxEnumImpls } from "../emit/engines/sqlx/enums.js";
 import type { EnumIR } from "../ir/types.js";
 
 export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> {
@@ -139,7 +140,8 @@ export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> 
   }
 
   const engine = selectEngine(cfg);
-  if (engine) {
+  const backend = selectBackend(cfg);
+  if (engine && backend) {
     for (const m of ir.models) {
       const parts: string[] = [
         emitFileHeader(cfg),
@@ -165,7 +167,7 @@ export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> 
         // Inline the enum impls (same emitter the per-file engine uses).
         // Lifted here to avoid expanding the EngineEmitter surface for a
         // layout-specific need.
-        ...renderEnumEngineFile(e, moduleOf),
+        ...renderEnumEngineFile(e, backend, moduleOf),
       ];
       const file = `engine/${engine.dirName}/enums/${toSnakeCase(e.name)}.rs`;
       files.set(file, parts.join("\n"));
@@ -230,6 +232,10 @@ export function emitPerModel(ir: IR, cfg: GeneratorConfig): Map<string, string> 
  * single enum into its own `engine/<dir>/enums/<snake>.rs` file. Defers to
  * the existing enum-impl emitter.
  */
-function renderEnumEngineFile(e: EnumIR, moduleOf: ModuleResolver): string[] {
-  return [emitSqlxEnumImpls(e, moduleOf)];
+function renderEnumEngineFile(
+  e: EnumIR,
+  backend: Backend,
+  moduleOf: ModuleResolver,
+): string[] {
+  return [emitSqlxEnumImpls(e, backend, moduleOf)];
 }

@@ -1,0 +1,38 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator rust {
+  provider = "node ../../../dist/index.js"
+  output   = "../../compile/11-engine-sqlx-sqlite/src"
+  engine   = "sqlx-sqlite"
+}
+
+// Prisma's SQLite connector does not support enums (P1012 at
+// `enum` declarations on sqlite). Use a String field instead;
+// consumers wanting type-safe enum values on top of sqlite can
+// add an `engine = "sqlx-postgres"` mirror schema or wrap the
+// String at the application layer.
+model User {
+  id      String  @id @default(uuid())
+  email   String  @unique
+  role    String  @default("USER")
+  firmId  String
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  posts   Post[]
+}
+
+model Firm {
+  id    String @id @default(uuid())
+  name  String
+  users User[]
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  body      String?
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+}

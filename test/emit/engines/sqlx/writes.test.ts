@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { emitWrites } from "../../../../src/emit/engines/sqlx-postgres/writes.js";
+import { POSTGRES } from "../../../../src/emit/engines/sqlx/backends/index.js";
+import { emitWrites } from "../../../../src/emit/engines/sqlx/writes.js";
 import type { FieldIR, ModelIR } from "../../../../src/ir/types.js";
 
 const idField: FieldIR = {
@@ -73,7 +74,7 @@ const user: ModelIR = {
   docs: [],
 };
 
-const out = emitWrites(user);
+const out = emitWrites(user, POSTGRES);
 
 describe("emitWrites (sqlx-postgres) — create", () => {
   it("emits an inherent impl with the expected signature", () => {
@@ -215,7 +216,7 @@ describe("emitWrites (sqlx-postgres) — update", () => {
 
   it("emits a todo!() body for composite-id models", () => {
     const composite: ModelIR = { ...user, idFields: ["a", "b"] };
-    const compositeOut = emitWrites(composite);
+    const compositeOut = emitWrites(composite, POSTGRES);
     expect(compositeOut).toContain(
       `todo!("composite unique not yet supported")`,
     );

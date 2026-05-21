@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { emitFromRow } from "../../../../src/emit/engines/sqlx-postgres/from-row.js";
+import { POSTGRES } from "../../../../src/emit/engines/sqlx/backends/index.js";
+import { emitFromRow } from "../../../../src/emit/engines/sqlx/from-row.js";
 import type { ModelIR } from "../../../../src/ir/types.js";
 
 const user: ModelIR = {
@@ -81,7 +82,7 @@ const user: ModelIR = {
 
 describe("emitFromRow (sqlx-postgres)", () => {
   it("emits a FromRow impl that reads scalars via try_get and zero-inits relations", () => {
-    const out = emitFromRow(user);
+    const out = emitFromRow(user, POSTGRES);
     expect(out).toContain(
       "impl sqlx::FromRow<'_, sqlx::postgres::PgRow> for crate::users::User",
     );
@@ -118,7 +119,7 @@ describe("emitFromRow (sqlx-postgres)", () => {
       ],
       relations: [],
     };
-    const out = emitFromRow(renamed);
+    const out = emitFromRow(renamed, POSTGRES);
     expect(out).toContain(`created_at: row.try_get("created_at_col")?`);
     expect(out).not.toContain(`row.try_get("createdAt")`);
     expect(out).not.toContain(`row.try_get("created_at")?`);
@@ -129,7 +130,7 @@ describe("emitFromRow (sqlx-postgres)", () => {
     // engine/<dir>/<module>.rs file. Re-importing inside every FromRow impl
     // is redundant and trips clippy's unused_imports lint, so the emitter
     // intentionally omits the local `use`.
-    const out = emitFromRow(user);
+    const out = emitFromRow(user, POSTGRES);
     expect(out).not.toContain("use sqlx::Row;");
     expect(out).toContain("row.try_get(");
   });

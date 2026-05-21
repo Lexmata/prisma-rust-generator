@@ -9,6 +9,42 @@ source will be a major-version bump.
 
 _No changes yet._
 
+## 0.3.0 — 2026-05-21
+
+### Added
+
+- **`engine = "sqlx-sqlite"`** as the second backend variant. Generated
+  Rust uses `sqlx::Sqlite` type bounds, `sqlx::sqlite::SqliteRow` rows,
+  `IN (?, ?, ?)` placeholders for array binding,
+  `LOWER(col) LIKE LOWER(?)` for case-insensitive matching, and
+  `CAST(... AS REAL)` / `CAST(... AS INTEGER)` aggregate casts.
+  Supported on `outputLayout = "per-file"` (default) and `"per-model"`;
+  combining with `"single"` raises a config validation error (same as
+  `sqlx-postgres`).
+  - **Decimal limitation.** sqlx 0.8 provides no
+    `sqlx::Type<Sqlite>`/`Encode`/`Decode` for `rust_decimal::Decimal`
+    or `bigdecimal::BigDecimal`. Decimal fields still appear in the
+    model struct and `*WhereInput`, but the engine skips filter
+    pushers and Avg/Sum aggregate result fields for them on sqlite.
+  - **No enums.** Prisma's sqlite connector rejects `enum`
+    declarations (P1012); use `String` columns and application-layer
+    validation. The engine's `enumStorage = "text"` emission path
+    (explicit `sqlx::Type`/`Decode`/`Encode` impls) is wired and
+    unit-tested but unreachable until Prisma's sqlite support lands.
+
+### Internal
+
+- Refactored `src/emit/engines/sqlx-postgres/` into a shared
+  `src/emit/engines/sqlx/` emitter family parameterized by a `Backend`
+  value. The Postgres backend (under `backends/postgres.ts`) reproduces
+  v0.2.0 output bit-for-bit. Future backends (e.g. `sqlx-mysql`) plug
+  in as additional Backend impls without touching the shared emitter.
+- `Backend` interface adds `scalarFamilies: ReadonlySet<string>`
+  declaring which scalar filter families a backend supports. Drives
+  conditional emission in `filter-pushers.ts` and `where-translator.ts`
+  so backends like sqlite (no Decimal) can compile their generated
+  crate without dragging in unsupported impls.
+
 ## 0.2.0 — 2026-05-21
 
 ### Added

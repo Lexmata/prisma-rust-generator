@@ -101,3 +101,18 @@ describe("parseGeneratorConfig — engine x outputLayout validation", () => {
     expect(cfg.outputLayout).toBe("single");
   });
 });
+
+describe("parseGeneratorConfig — sqlx-sqlite engine", () => {
+  it("accepts engine = 'sqlx-sqlite'", () => {
+    const cfg = parseGeneratorConfig(makeOpts({ engine: "sqlx-sqlite" }));
+    expect(cfg.engine).toBe("sqlx-sqlite");
+  });
+
+  it("rejects engine = 'sqlx-sqlite' with outputLayout = 'single'", () => {
+    expect(() =>
+      parseGeneratorConfig(
+        makeOpts({ engine: "sqlx-sqlite", outputLayout: "single" }),
+      ),
+    ).toThrow(/sqlx-sqlite.*single|single.*sqlx-sqlite/);
+  });
+});
