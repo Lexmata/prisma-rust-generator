@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { emitWhereTranslator } from "../../../../src/emit/engines/sqlx-postgres/where-translator.js";
+import { POSTGRES } from "../../../../src/emit/engines/sqlx/backends/index.js";
+import { emitWhereTranslator } from "../../../../src/emit/engines/sqlx/where-translator.js";
 import type { ModelIR } from "../../../../src/ir/types.js";
 
 const user: ModelIR = {
@@ -73,7 +74,7 @@ const user: ModelIR = {
 const emptyModels: ReadonlyMap<string, ModelIR> = new Map([["User", user]]);
 
 describe("emitWhereTranslator (sqlx-postgres)", () => {
-  const out = emitWhereTranslator(user, emptyModels);
+  const out = emitWhereTranslator(user, emptyModels, POSTGRES);
 
   it("emits a push_<m>_where with the correct signature", () => {
     expect(out).toContain("pub(crate) fn push_user_where(");
@@ -210,7 +211,7 @@ describe("emitWhereTranslator — to-one relation EXISTS subquery", () => {
     ["User", userWithFirm],
     ["Firm", firm],
   ]);
-  const out = emitWhereTranslator(userWithFirm, allModels);
+  const out = emitWhereTranslator(userWithFirm, allModels, POSTGRES);
 
   it("opens an `is` branch on the relation filter wrapper", () => {
     expect(out).toContain("if let Some(rel) = &w.firm {");
@@ -316,7 +317,7 @@ describe("emitWhereTranslator — to-many relation EXISTS subquery", () => {
     ["User", userWithPosts],
     ["Post", post],
   ]);
-  const out = emitWhereTranslator(userWithPosts, allModels);
+  const out = emitWhereTranslator(userWithPosts, allModels, POSTGRES);
 
   it("opens branches for every / some / none on the list relation filter", () => {
     expect(out).toContain("if let Some(rel) = &w.posts {");

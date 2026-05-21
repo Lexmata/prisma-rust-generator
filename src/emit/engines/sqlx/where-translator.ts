@@ -1,5 +1,7 @@
 import type { FieldIR, ModelIR, RelationIR } from "../../../ir/types.js";
 import { toSnakeCase } from "../../../ir/names.js";
+import type { Backend } from "./backend.js";
+import { quoteIdent } from "./quote-ident.js";
 import type { ModuleResolver } from "../../type-ref.js";
 
 /**
@@ -83,6 +85,7 @@ function emitToOneRelationBlock(
   source: ModelIR,
   rel: RelationIR,
   target: ModelIR,
+  backend: Backend,
   moduleOf?: ModuleResolver,
 ): string[] {
   // Multi-FK relations (composite foreign keys) are rare and out of scope
@@ -108,11 +111,15 @@ function emitToOneRelationBlock(
   }
   const targetSnake = toSnakeCase(target.name);
   const targetModule = moduleOf ? moduleOf(target.name) : target.module;
-  const targetPush = `crate::engine::sqlx_postgres::${targetModule}::push_${targetSnake}_where`;
+  const targetPush = `crate::engine::${backend.dirName}::${targetModule}::push_${targetSnake}_where`;
+  const targetTableQ = quoteIdent(backend, target.dbName);
+  const sourceTableQ = quoteIdent(backend, source.dbName);
+  const targetIdQ = quoteIdent(backend, targetIdCol);
+  const fkColQ = quoteIdent(backend, fkCol);
   const isHead =
-    `EXISTS (SELECT 1 FROM "${target.dbName}" t WHERE t."${targetIdCol}" = "${source.dbName}"."${fkCol}" AND (`;
+    `EXISTS (SELECT 1 FROM ${targetTableQ} t WHERE t.${targetIdQ} = ${sourceTableQ}.${fkColQ} AND (`;
   const isNotHead =
-    `NOT EXISTS (SELECT 1 FROM "${target.dbName}" t WHERE t."${targetIdCol}" = "${source.dbName}"."${fkCol}" AND (`;
+    `NOT EXISTS (SELECT 1 FROM ${targetTableQ} t WHERE t.${targetIdQ} = ${sourceTableQ}.${fkColQ} AND (`;
   return [
     `    if let Some(rel) = &w.${rel.rustName} {`,
     `        if let Some(sub) = &rel.is {`,
@@ -141,6 +148,7 @@ function emitToManyRelationBlock(
   source: ModelIR,
   rel: RelationIR,
   target: ModelIR,
+  backend: Backend,
   moduleOf?: ModuleResolver,
 ): string[] {
   const sourceIdField = source.idFields[0];
@@ -169,13 +177,17 @@ function emitToManyRelationBlock(
   }
   const targetSnake = toSnakeCase(target.name);
   const targetModule = moduleOf ? moduleOf(target.name) : target.module;
-  const targetPush = `crate::engine::sqlx_postgres::${targetModule}::push_${targetSnake}_where`;
+  const targetPush = `crate::engine::${backend.dirName}::${targetModule}::push_${targetSnake}_where`;
+  const targetTableQ = quoteIdent(backend, target.dbName);
+  const sourceTableQ = quoteIdent(backend, source.dbName);
+  const targetFkQ = quoteIdent(backend, targetFkCol);
+  const sourceIdQ = quoteIdent(backend, sourceIdCol);
   const everyHead =
-    `NOT EXISTS (SELECT 1 FROM "${target.dbName}" t WHERE t."${targetFkCol}" = "${source.dbName}"."${sourceIdCol}" AND NOT (`;
+    `NOT EXISTS (SELECT 1 FROM ${targetTableQ} t WHERE t.${targetFkQ} = ${sourceTableQ}.${sourceIdQ} AND NOT (`;
   const someHead =
-    `EXISTS (SELECT 1 FROM "${target.dbName}" t WHERE t."${targetFkCol}" = "${source.dbName}"."${sourceIdCol}" AND (`;
+    `EXISTS (SELECT 1 FROM ${targetTableQ} t WHERE t.${targetFkQ} = ${sourceTableQ}.${sourceIdQ} AND (`;
   const noneHead =
-    `NOT EXISTS (SELECT 1 FROM "${target.dbName}" t WHERE t."${targetFkCol}" = "${source.dbName}"."${sourceIdCol}" AND (`;
+    `NOT EXISTS (SELECT 1 FROM ${targetTableQ} t WHERE t.${targetFkQ} = ${sourceTableQ}.${sourceIdQ} AND (`;
   return [
     `    if let Some(rel) = &w.${rel.rustName} {`,
     `        if let Some(sub) = &rel.every {`,
@@ -217,6 +229,7 @@ function emitToManyRelationBlock(
 export function emitWhereTranslator(
   m: ModelIR,
   allModels: ReadonlyMap<string, ModelIR>,
+  backend: Backend,
   moduleOf?: ModuleResolver,
 ): string {
   const fnName = `push_${toSnakeCase(m.name)}_where`;
@@ -226,6 +239,17 @@ export function emitWhereTranslator(
   const fieldBlocks: string[] = [];
   for (const f of m.scalarFields) {
     const family = filterFamilyForField(f);
+    // Skip fields whose scalar family isn't supported by this backend
+    // — no pusher exists to dispatch to (e.g. Decimal on sqlite). Enum
+    // fields (kind === "enumRef") have per-enum pushers emitted via a
+    // separate code path and aren't affected by scalarFamilies.
+    if (f.type.kind === "scalar" && !backend.scalarFamilies.has(family)) {
+      fieldBlocks.push(
+        `    // backend.scalarFamilies omits "${family}" — skipping push for \`${f.rustName}\`.`,
+        `    let _ = &w.${f.rustName};`,
+      );
+      continue;
+    }
     const pusher = f.optional
       ? `push_${family}_nullable_filter`
       : `push_${family}_filter`;
@@ -233,7 +257,7 @@ export function emitWhereTranslator(
       `    if let Some(f) = &w.${f.rustName} {`,
       `        if any { qb.push(" AND "); }`,
       `        any = true;`,
-      `        crate::engine::sqlx_postgres::filters::${pusher}(qb, ${JSON.stringify(f.dbName)}, f);`,
+      `        crate::engine::${backend.dirName}::filters::${pusher}(qb, ${JSON.stringify(f.dbName)}, f);`,
       `    }`,
     );
   }
@@ -249,9 +273,13 @@ export function emitWhereTranslator(
       continue;
     }
     if (r.cardinality === "one") {
-      relationBlocks.push(...emitToOneRelationBlock(m, r, target, moduleOf));
+      relationBlocks.push(
+        ...emitToOneRelationBlock(m, r, target, backend, moduleOf),
+      );
     } else {
-      relationBlocks.push(...emitToManyRelationBlock(m, r, target, moduleOf));
+      relationBlocks.push(
+        ...emitToManyRelationBlock(m, r, target, backend, moduleOf),
+      );
     }
   }
 
@@ -298,7 +326,7 @@ export function emitWhereTranslator(
 
   const lines = [
     `pub(crate) fn ${fnName}(`,
-    `    qb: &mut sqlx::QueryBuilder<'_, sqlx::Postgres>,`,
+    `    qb: &mut sqlx::QueryBuilder<'_, ${backend.dbType}>,`,
     `    w: &${whereType},`,
     `) -> bool {`,
     `    let mut any = false;`,

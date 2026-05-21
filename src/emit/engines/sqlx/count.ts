@@ -1,5 +1,7 @@
 import type { ModelIR } from "../../../ir/types.js";
 import { toSnakeCase } from "../../../ir/names.js";
+import type { Backend } from "./backend.js";
+import { quoteIdent } from "./quote-ident.js";
 import type { ModuleResolver } from "../../type-ref.js";
 
 /**
@@ -9,12 +11,17 @@ import type { ModuleResolver } from "../../type-ref.js";
  *
  * The result is `i64` because Postgres `COUNT(*)` returns `bigint`.
  */
-export function emitCount(m: ModelIR, moduleOf?: ModuleResolver): string {
+export function emitCount(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   const modelSnake = toSnakeCase(m.name);
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const modelPath = `crate::${modulePath}::${m.name}`;
   const whereInputPath = `crate::${modulePath}::${m.name}WhereInput`;
-  const pushWhere = `crate::engine::sqlx_postgres::${modulePath}::push_${modelSnake}_where`;
+  const pushWhere = `crate::engine::${backend.dirName}::${modulePath}::push_${modelSnake}_where`;
+  const tableQ = quoteIdent(backend, m.dbName);
 
   const lines: string[] = [
     `impl ${modelPath} {`,
@@ -23,10 +30,10 @@ export function emitCount(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        w: Option<&${whereInputPath}>,`,
     `    ) -> sqlx::Result<i64>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     `        let mut qb = sqlx::QueryBuilder::new(`,
-    `            r#"SELECT COUNT(*) FROM "${m.dbName}" WHERE "#,`,
+    `            r#"SELECT COUNT(*) FROM ${tableQ} WHERE "#,`,
     `        );`,
     `        if let Some(w) = w {`,
     `            if !${pushWhere}(&mut qb, w) {`,

@@ -103,7 +103,7 @@ generator rust {
   bytesCrate       = "std"              // "std" | "bytes"
   jsonCrate        = "serde_json"       // "serde_json" | "string"
   serde            = "true"             // emit Serialize/Deserialize derives
-  engine           = ""                  // "" | "sqlx-postgres" — see "Engine" below
+  engine           = ""                  // "" | "sqlx-postgres" | "sqlx-sqlite" — see "Engine"
   edition          = "2021"             // "2021" | "2024" (passed to rustfmt)
   runRustfmt       = "true"
   requireRustfmt   = "true"
@@ -115,10 +115,10 @@ generator rust {
 
 ## Engine (pre-generated integration layer)
 
-Setting `engine = "sqlx-postgres"` adds a parallel `engine/sqlx_postgres/`
-subtree to the generated output. Each model gains inherent methods that
-implement the full CRUD + aggregation surface on top of `sqlx`'s
-`QueryBuilder`:
+Set `engine = "sqlx-postgres"` or `engine = "sqlx-sqlite"` to add a
+parallel `engine/<backend>/` subtree to the generated output. Each
+model gains inherent methods that implement the full CRUD +
+aggregation surface on top of `sqlx`'s `QueryBuilder`:
 
 ```rust
 use rust_out::users::{User, UserWhereInput, UserWhereUniqueInput,
@@ -139,16 +139,19 @@ let agg = User::aggregate(&pool, &agg_input).await?;
 ```
 
 Methods are reachable directly on the model struct — no need to
-`use rust_out::engine::*`. Every method takes `E: sqlx::Executor<'e,
-Database = sqlx::Postgres>`, so the same surface works against
-`&PgPool`, `&mut PgConnection`, and `&mut Transaction<'_, Postgres>`.
+`use rust_out::engine::*`. Every method takes
+`E: sqlx::Executor<'e, Database = <Postgres or Sqlite>>`, so the same
+surface works against the backend's pool, connection, and transaction
+handles.
 
 The engine field is opt-in; default-unset preserves the ORM-agnostic
 output bit-for-bit. Supported with `outputLayout = "per-file"`
 (default) or `"per-model"`; combining with `outputLayout = "single"`
 raises a config validation error.
 
-Required `Cargo.toml` deps when `engine = "sqlx-postgres"`:
+### Required `Cargo.toml` deps
+
+`engine = "sqlx-postgres"`:
 
 ```toml
 sqlx = { version = "0.8", default-features = false, features = [
@@ -157,6 +160,35 @@ sqlx = { version = "0.8", default-features = false, features = [
   "macros",
 ] }
 ```
+
+`engine = "sqlx-sqlite"`:
+
+```toml
+sqlx = { version = "0.8", default-features = false, features = [
+  "runtime-tokio", "sqlite",
+  "uuid", "chrono", "json", "rust_decimal",
+  "macros",
+] }
+```
+
+### SQLite specifics
+
+- **No native enums.** Prisma's SQLite connector rejects `enum`
+  declarations entirely (P1012). Use a `String` field instead and
+  validate at the application layer.
+- **No native UUID / Decimal / Timestamptz columns.** UUIDs and
+  datetimes round-trip as TEXT via the corresponding sqlx feature
+  flags. `Decimal` has no `sqlx::Type<Sqlite>` impl in sqlx 0.8 — the
+  engine still emits the model struct field, but skips the engine-side
+  filter pusher and Avg/Sum aggregate result for Decimal columns on
+  sqlite. Application-side filtering on Decimal columns still works
+  via raw sqlx; the engine just doesn't help.
+- **`IN_LIST` instead of `= ANY(...)`** — SQLite has no array
+  binding, so `r#in` / `not_in` branches emit
+  `IN (?, ?, ?)` with one placeholder per element.
+- **`LOWER(col) LIKE LOWER(?)` instead of `ILIKE`** — SQLite has no
+  ILIKE; `QueryMode::Insensitive` flows through `LOWER()` wrapping for
+  unicode-aware case-insensitive matching.
 
 The five integration guides ([sqlx](docs/sqlx.md),
 [raw-postgres](docs/raw-postgres.md), etc.) remain useful as

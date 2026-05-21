@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { emitCount } from "../../../../src/emit/engines/sqlx-postgres/count.js";
+import { POSTGRES } from "../../../../src/emit/engines/sqlx/backends/index.js";
+import { emitCount } from "../../../../src/emit/engines/sqlx/count.js";
 import type { ModelIR } from "../../../../src/ir/types.js";
 
 const user: ModelIR = {
@@ -43,7 +44,7 @@ const user: ModelIR = {
 };
 
 describe("emitCount (sqlx-postgres)", () => {
-  const out = emitCount(user);
+  const out = emitCount(user, POSTGRES);
 
   it("emits an inherent impl with the expected signature", () => {
     expect(out).toContain("impl crate::users::User {");
@@ -84,7 +85,7 @@ describe("emitCount (sqlx-postgres)", () => {
       dbName: "users_table",
       module: "auth",
     };
-    const remappedOut = emitCount(remapped);
+    const remappedOut = emitCount(remapped, POSTGRES);
     expect(remappedOut).toContain(`FROM "users_table" WHERE`);
     expect(remappedOut).toContain(
       "crate::engine::sqlx_postgres::auth::push_user_where",

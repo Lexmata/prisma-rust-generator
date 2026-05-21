@@ -1,16 +1,18 @@
 import type { FieldIR, ModelIR } from "../../../ir/types.js";
 import { toSnakeCase } from "../../../ir/names.js";
 import { filterFamilyForRustType } from "../../filters/model.js";
+import type { Backend } from "./backend.js";
 import { bindFromBorrow, bindFromStruct } from "./bind-ref.js";
+import { quoteIdent } from "./quote-ident.js";
 import type { ModuleResolver } from "../../type-ref.js";
 
 /**
- * Build the comma-separated, double-quoted column list for a `RETURNING`
+ * Build the comma-separated, backend-quoted column list for a `RETURNING`
  * clause. Order matches `m.scalarFields` so the `FromRow` impl (which reads
  * by name) stays correct regardless of column ordering.
  */
-function colsList(m: ModelIR): string {
-  return m.scalarFields.map((f) => `"${f.dbName}"`).join(", ");
+function colsList(m: ModelIR, backend: Backend): string {
+  return m.scalarFields.map((f) => quoteIdent(backend, f.dbName)).join(", ");
 }
 
 /**
@@ -55,8 +57,12 @@ function fieldHasNumericOps(f: FieldIR): boolean {
   );
 }
 
-function pushWhereCall(module: string, modelSnake: string): string {
-  return `crate::engine::sqlx_postgres::${module}::push_${modelSnake}_where`;
+function pushWhereCall(
+  backend: Backend,
+  module: string,
+  modelSnake: string,
+): string {
+  return `crate::engine::${backend.dirName}::${module}::push_${modelSnake}_where`;
 }
 
 /**
@@ -79,7 +85,7 @@ function pushWhereCall(module: string, modelSnake: string): string {
  * Lines are emitted as a flat string array so the caller can splice them
  * between fixed surrounding lines without nested template indentation.
  */
-function emitCreateColumnPushes(m: ModelIR): string[] {
+function emitCreateColumnPushes(m: ModelIR, backend: Backend): string[] {
   const lines: string[] = [];
   const addressable = m.scalarFields.filter((f) => !f.hasDefault);
   const required = addressable.filter((f) => !(f.optional || f.list));
@@ -87,7 +93,7 @@ function emitCreateColumnPushes(m: ModelIR): string[] {
 
   // Required scalars — hardcoded separators, no runtime flag needed.
   required.forEach((f, idx) => {
-    const colLit = JSON.stringify(`"${f.dbName}"`);
+    const colLit = JSON.stringify(quoteIdent(backend, f.dbName));
     if (idx > 0) {
       lines.push(`        cols.push_str(", ");`);
     }
@@ -102,7 +108,7 @@ function emitCreateColumnPushes(m: ModelIR): string[] {
     if (required.length > 0) {
       // Every activated optional gets a leading ", ".
       for (const f of optional) {
-        const colLit = JSON.stringify(`"${f.dbName}"`);
+        const colLit = JSON.stringify(quoteIdent(backend, f.dbName));
         lines.push(
           `        if input.${f.rustName}.is_some() {`,
           `            cols.push_str(", ");`,
@@ -117,7 +123,7 @@ function emitCreateColumnPushes(m: ModelIR): string[] {
       // including the first.
       lines.push(`        let mut any_col = false;`);
       for (const f of optional) {
-        const colLit = JSON.stringify(`"${f.dbName}"`);
+        const colLit = JSON.stringify(quoteIdent(backend, f.dbName));
         lines.push(
           `        if input.${f.rustName}.is_some() {`,
           `            if any_col { cols.push_str(", "); }`,
@@ -186,12 +192,17 @@ function emitCreateValuePushes(m: ModelIR): string[] {
  * Models without explicit non-default scalars (everything @default()-ed)
  * still need a valid INSERT — we emit `DEFAULT VALUES` in that case.
  */
-function emitCreate(m: ModelIR, moduleOf?: ModuleResolver): string {
+function emitCreate(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const modelPath = `crate::${modulePath}::${m.name}`;
   const inputPath = `crate::${modulePath}::${m.name}UncheckedCreateInput`;
-  const cols = colsList(m);
-  const colPushes = emitCreateColumnPushes(m);
+  const cols = colsList(m, backend);
+  const tableQ = quoteIdent(backend, m.dbName);
+  const colPushes = emitCreateColumnPushes(m, backend);
   const valPushes = emitCreateValuePushes(m);
 
   const addressable = m.scalarFields.filter((f) => !f.hasDefault);
@@ -206,7 +217,7 @@ function emitCreate(m: ModelIR, moduleOf?: ModuleResolver): string {
     body.push(
       `        let _ = input;`,
       `        let mut qb = sqlx::QueryBuilder::new(`,
-      `            r#"INSERT INTO "${m.dbName}" DEFAULT VALUES RETURNING ${cols}"#,`,
+      `            r#"INSERT INTO ${tableQ} DEFAULT VALUES RETURNING ${cols}"#,`,
       `        );`,
       `        qb.build_query_as::<Self>().fetch_one(executor).await`,
     );
@@ -217,7 +228,7 @@ function emitCreate(m: ModelIR, moduleOf?: ModuleResolver): string {
       `        let mut cols = String::new();`,
       ...colPushes,
       `        let mut qb = sqlx::QueryBuilder::new(format!(`,
-      `            r#"INSERT INTO "${m.dbName}" ({}) VALUES ("#,`,
+      `            r#"INSERT INTO ${tableQ} ({}) VALUES ("#,`,
       `            cols,`,
       `        ));`,
       ...valPushes,
@@ -232,12 +243,12 @@ function emitCreate(m: ModelIR, moduleOf?: ModuleResolver): string {
       ...colPushes,
       `        if cols.is_empty() {`,
       `            let mut qb = sqlx::QueryBuilder::new(`,
-      `                r#"INSERT INTO "${m.dbName}" DEFAULT VALUES RETURNING ${cols}"#,`,
+      `                r#"INSERT INTO ${tableQ} DEFAULT VALUES RETURNING ${cols}"#,`,
       `            );`,
       `            return qb.build_query_as::<Self>().fetch_one(executor).await;`,
       `        }`,
       `        let mut qb = sqlx::QueryBuilder::new(format!(`,
-      `            r#"INSERT INTO "${m.dbName}" ({}) VALUES ("#,`,
+      `            r#"INSERT INTO ${tableQ} ({}) VALUES ("#,`,
       `            cols,`,
       `        ));`,
       ...valPushes,
@@ -253,7 +264,7 @@ function emitCreate(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        input: ${inputPath},`,
     `    ) -> sqlx::Result<Self>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     ...body,
     `    }`,
@@ -269,13 +280,20 @@ function emitCreate(m: ModelIR, moduleOf?: ModuleResolver): string {
  *
  * Returns `u64` rows_affected (no `RETURNING`).
  */
-function emitCreateMany(m: ModelIR, moduleOf?: ModuleResolver): string {
+function emitCreateMany(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const modelPath = `crate::${modulePath}::${m.name}`;
   const inputPath = `crate::${modulePath}::${m.name}UncheckedCreateInput`;
+  const tableQ = quoteIdent(backend, m.dbName);
 
   const addressable = m.scalarFields.filter((f) => !f.hasDefault);
-  const colsCsv = addressable.map((f) => `"${f.dbName}"`).join(", ");
+  const colsCsv = addressable
+    .map((f) => quoteIdent(backend, f.dbName))
+    .join(", ");
 
   const valueBinds = addressable.map(
     (f) => `            row.push_bind(${bindFromStruct(f, `input.${f.rustName}`)});`,
@@ -296,7 +314,7 @@ function emitCreateMany(m: ModelIR, moduleOf?: ModuleResolver): string {
     body.push(
       `        if inputs.is_empty() { return Ok(0); }`,
       `        let mut qb = sqlx::QueryBuilder::new(`,
-      `            r#"INSERT INTO "${m.dbName}" (${colsCsv}) "#,`,
+      `            r#"INSERT INTO ${tableQ} (${colsCsv}) "#,`,
       `        );`,
       `        qb.push_values(inputs, |mut row, input| {`,
       ...valueBinds,
@@ -313,7 +331,7 @@ function emitCreateMany(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        inputs: &[${inputPath}],`,
     `    ) -> sqlx::Result<u64>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     ...body,
     `    }`,
@@ -333,10 +351,11 @@ function emitCreateMany(m: ModelIR, moduleOf?: ModuleResolver): string {
  * the value or NULL, so we can bind the inner Option directly without
  * unwrapping.
  */
-function emitUpdateSetClauses(m: ModelIR): string[] {
+function emitUpdateSetClauses(m: ModelIR, backend: Backend): string[] {
   const lines: string[] = [];
   for (const f of m.scalarFields) {
-    const colEq = JSON.stringify(`"${f.dbName}" = `);
+    const colQ = quoteIdent(backend, f.dbName);
+    const colEq = JSON.stringify(`${colQ} = `);
     lines.push(`        if let Some(op) = input.${f.rustName} {`);
     // `set` arm. For nullable fields op.set is Option<Option<T>>; for
     // non-nullable it's Option<T>. Either way, the outer `if let Some(v)`
@@ -352,10 +371,10 @@ function emitUpdateSetClauses(m: ModelIR): string[] {
     if (fieldHasNumericOps(f)) {
       // For numeric ops the op-input struct stores Option<T> (never
       // Option<Option<T>>) — increment by NULL would be meaningless.
-      const incLit = JSON.stringify(`"${f.dbName}" = "${f.dbName}" + `);
-      const decLit = JSON.stringify(`"${f.dbName}" = "${f.dbName}" - `);
-      const mulLit = JSON.stringify(`"${f.dbName}" = "${f.dbName}" * `);
-      const divLit = JSON.stringify(`"${f.dbName}" = "${f.dbName}" / `);
+      const incLit = JSON.stringify(`${colQ} = ${colQ} + `);
+      const decLit = JSON.stringify(`${colQ} = ${colQ} - `);
+      const mulLit = JSON.stringify(`${colQ} = ${colQ} * `);
+      const divLit = JSON.stringify(`${colQ} = ${colQ} / `);
       lines.push(
         `            if let Some(v) = op.increment {`,
         `                if !first { qb.push(", "); }`,
@@ -393,12 +412,17 @@ function emitUpdateSetClauses(m: ModelIR): string[] {
  * `*UncheckedUpdateInput`. Composite-id models emit a `todo!()` body
  * (same v1 deferral as `find_unique`).
  */
-function emitUpdate(m: ModelIR, moduleOf?: ModuleResolver): string {
+function emitUpdate(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const modelPath = `crate::${modulePath}::${m.name}`;
   const inputPath = `crate::${modulePath}::${m.name}UncheckedUpdateInput`;
   const whereUniquePath = `crate::${modulePath}::${m.name}WhereUniqueInput`;
-  const cols = colsList(m);
+  const cols = colsList(m, backend);
+  const tableQ = quoteIdent(backend, m.dbName);
 
   const idField = singleIdField(m);
 
@@ -409,11 +433,11 @@ function emitUpdate(m: ModelIR, moduleOf?: ModuleResolver): string {
       `        todo!("composite unique not yet supported")`,
     );
   } else {
-    const idColEq = JSON.stringify(`"${idField.dbName}" = `);
-    const setClauses = emitUpdateSetClauses(m);
+    const idColEq = JSON.stringify(`${quoteIdent(backend, idField.dbName)} = `);
+    const setClauses = emitUpdateSetClauses(m, backend);
     body.push(
       `        let mut qb = sqlx::QueryBuilder::new(`,
-      `            r#"UPDATE "${m.dbName}" SET "#,`,
+      `            r#"UPDATE ${tableQ} SET "#,`,
       `        );`,
       `        let mut first = true;`,
       ...setClauses,
@@ -442,7 +466,7 @@ function emitUpdate(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        input: ${inputPath},`,
     `    ) -> sqlx::Result<Self>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     ...body,
     `    }`,
@@ -455,15 +479,20 @@ function emitUpdate(m: ModelIR, moduleOf?: ModuleResolver): string {
  * rows_affected, no `RETURNING`. Skips when no SET clauses were produced
  * (avoids invalid `UPDATE t SET WHERE ...` SQL).
  */
-function emitUpdateMany(m: ModelIR, moduleOf?: ModuleResolver): string {
+function emitUpdateMany(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const modelPath = `crate::${modulePath}::${m.name}`;
   const inputPath = `crate::${modulePath}::${m.name}UncheckedUpdateManyInput`;
   const whereInputPath = `crate::${modulePath}::${m.name}WhereInput`;
   const modelSnake = toSnakeCase(m.name);
-  const pushWhere = pushWhereCall(modulePath, modelSnake);
+  const pushWhere = pushWhereCall(backend, modulePath, modelSnake);
+  const tableQ = quoteIdent(backend, m.dbName);
 
-  const setClauses = emitUpdateSetClauses(m);
+  const setClauses = emitUpdateSetClauses(m, backend);
 
   return [
     `impl ${modelPath} {`,
@@ -473,10 +502,10 @@ function emitUpdateMany(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        input: ${inputPath},`,
     `    ) -> sqlx::Result<u64>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     `        let mut qb = sqlx::QueryBuilder::new(`,
-    `            r#"UPDATE "${m.dbName}" SET "#,`,
+    `            r#"UPDATE ${tableQ} SET "#,`,
     `        );`,
     `        let mut first = true;`,
     ...setClauses,
@@ -500,11 +529,16 @@ function emitUpdateMany(m: ModelIR, moduleOf?: ModuleResolver): string {
  * returning the deleted row via `RETURNING`. Composite-id models emit a
  * `todo!()` body.
  */
-function emitDelete(m: ModelIR, moduleOf?: ModuleResolver): string {
+function emitDelete(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const modelPath = `crate::${modulePath}::${m.name}`;
   const whereUniquePath = `crate::${modulePath}::${m.name}WhereUniqueInput`;
-  const cols = colsList(m);
+  const cols = colsList(m, backend);
+  const tableQ = quoteIdent(backend, m.dbName);
   const idField = singleIdField(m);
 
   const body: string[] = [];
@@ -514,10 +548,10 @@ function emitDelete(m: ModelIR, moduleOf?: ModuleResolver): string {
       `        todo!("composite unique not yet supported")`,
     );
   } else {
-    const idColEq = JSON.stringify(`"${idField.dbName}" = `);
+    const idColEq = JSON.stringify(`${quoteIdent(backend, idField.dbName)} = `);
     body.push(
       `        let mut qb = sqlx::QueryBuilder::new(`,
-      `            r#"DELETE FROM "${m.dbName}" WHERE "#,`,
+      `            r#"DELETE FROM ${tableQ} WHERE "#,`,
       `        );`,
       `        if let Some(value) = &w.${idField.rustName} {`,
       `            qb.push(${idColEq});`,
@@ -537,7 +571,7 @@ function emitDelete(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        w: &${whereUniquePath},`,
     `    ) -> sqlx::Result<Self>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     ...body,
     `    }`,
@@ -550,12 +584,17 @@ function emitDelete(m: ModelIR, moduleOf?: ModuleResolver): string {
  * rows_affected. Empty WHERE inputs translate to `WHERE TRUE` (delete all),
  * matching Prisma's semantics.
  */
-function emitDeleteMany(m: ModelIR, moduleOf?: ModuleResolver): string {
+function emitDeleteMany(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const modelPath = `crate::${modulePath}::${m.name}`;
   const whereInputPath = `crate::${modulePath}::${m.name}WhereInput`;
   const modelSnake = toSnakeCase(m.name);
-  const pushWhere = pushWhereCall(modulePath, modelSnake);
+  const pushWhere = pushWhereCall(backend, modulePath, modelSnake);
+  const tableQ = quoteIdent(backend, m.dbName);
 
   return [
     `impl ${modelPath} {`,
@@ -564,10 +603,10 @@ function emitDeleteMany(m: ModelIR, moduleOf?: ModuleResolver): string {
     `        w: &${whereInputPath},`,
     `    ) -> sqlx::Result<u64>`,
     `    where`,
-    `        E: sqlx::Executor<'e, Database = sqlx::Postgres>,`,
+    `        E: sqlx::Executor<'e, Database = ${backend.dbType}>,`,
     `    {`,
     `        let mut qb = sqlx::QueryBuilder::new(`,
-    `            r#"DELETE FROM "${m.dbName}" WHERE "#,`,
+    `            r#"DELETE FROM ${tableQ} WHERE "#,`,
     `        );`,
     `        if !${pushWhere}(&mut qb, w) {`,
     `            qb.push("TRUE");`,
@@ -591,14 +630,18 @@ function emitDeleteMany(m: ModelIR, moduleOf?: ModuleResolver): string {
  * the affected row. Bulk ops (`create_many`, `update_many`, `delete_many`)
  * return `u64` rows_affected.
  */
-export function emitWrites(m: ModelIR, moduleOf?: ModuleResolver): string {
+export function emitWrites(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   return [
-    emitCreate(m, moduleOf),
-    emitCreateMany(m, moduleOf),
-    emitUpdate(m, moduleOf),
-    emitUpdateMany(m, moduleOf),
-    emitDelete(m, moduleOf),
-    emitDeleteMany(m, moduleOf),
+    emitCreate(m, backend, moduleOf),
+    emitCreateMany(m, backend, moduleOf),
+    emitUpdate(m, backend, moduleOf),
+    emitUpdateMany(m, backend, moduleOf),
+    emitDelete(m, backend, moduleOf),
+    emitDeleteMany(m, backend, moduleOf),
     "",
   ].join("\n\n");
 }

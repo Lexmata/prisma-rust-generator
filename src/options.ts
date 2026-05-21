@@ -44,7 +44,12 @@ export function parseGeneratorConfig(opts: GeneratorOptions): GeneratorConfig {
   const engine =
     raw.engine == null
       ? null
-      : pickEnum(raw.engine, ["sqlx-postgres"] as const, "sqlx-postgres", "engine");
+      : pickEnum(
+          raw.engine,
+          ["sqlx-postgres", "sqlx-sqlite"] as const,
+          "sqlx-postgres",
+          "engine",
+        );
 
   if (engine !== null && layout === "single") {
     throw new Error(

@@ -1,7 +1,9 @@
 import type { IR, ModelIR } from "../../ir/types.js";
 import type { GeneratorConfig } from "../../types.js";
 import type { ModuleResolver } from "../type-ref.js";
-import { emitSqlxPostgres } from "./sqlx-postgres/index.js";
+import type { Backend } from "./sqlx/backend.js";
+import { POSTGRES, SQLITE } from "./sqlx/backends/index.js";
+import { emitSqlx } from "./sqlx/index.js";
 
 /**
  * Layout-supplied context the engine emitters need to resolve type paths.
@@ -36,6 +38,20 @@ export interface EngineEmitter {
 
 export function selectEngine(cfg: GeneratorConfig): EngineEmitter | null {
   if (cfg.engine === null) return null;
-  if (cfg.engine === "sqlx-postgres") return emitSqlxPostgres;
+  if (cfg.engine === "sqlx-postgres") return emitSqlx(POSTGRES);
+  if (cfg.engine === "sqlx-sqlite") return emitSqlx(SQLITE);
+  return null;
+}
+
+/**
+ * Resolve the sqlx `Backend` value for the configured engine, or null when
+ * no engine (or a non-sqlx engine) is selected. Used by layouts that need
+ * to call into the engine's per-enum emitters directly without going
+ * through the `EngineEmitter` surface — see `per-model.ts`.
+ */
+export function selectBackend(cfg: GeneratorConfig): Backend | null {
+  if (cfg.engine === null) return null;
+  if (cfg.engine === "sqlx-postgres") return POSTGRES;
+  if (cfg.engine === "sqlx-sqlite") return SQLITE;
   return null;
 }

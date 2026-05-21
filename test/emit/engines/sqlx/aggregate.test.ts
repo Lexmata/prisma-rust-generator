@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { emitAggregate } from "../../../../src/emit/engines/sqlx-postgres/aggregate.js";
+import { POSTGRES } from "../../../../src/emit/engines/sqlx/backends/index.js";
+import { emitAggregate } from "../../../../src/emit/engines/sqlx/aggregate.js";
 import type { FieldIR, ModelIR } from "../../../../src/ir/types.js";
 
 const idField: FieldIR = {
@@ -78,7 +79,7 @@ const user: ModelIR = {
   docs: [],
 };
 
-const out = emitAggregate(user);
+const out = emitAggregate(user, POSTGRES);
 
 describe("emitAggregate (sqlx-postgres) — result structs", () => {
   it("emits the bundle UserAggregateResult with five sub-aggregations", () => {
@@ -231,7 +232,7 @@ describe("emitAggregate (sqlx-postgres) — method", () => {
       dbName: "users_table",
       module: "auth",
     };
-    const remappedOut = emitAggregate(remapped);
+    const remappedOut = emitAggregate(remapped, POSTGRES);
     expect(remappedOut).toContain(`FROM "users_table" WHERE`);
     expect(remappedOut).toContain(
       "crate::engine::sqlx_postgres::auth::push_user_where",

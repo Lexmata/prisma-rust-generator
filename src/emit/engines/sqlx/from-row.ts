@@ -1,9 +1,11 @@
 import type { ModelIR } from "../../../ir/types.js";
 import type { ModuleResolver } from "../../type-ref.js";
+import type { Backend } from "./backend.js";
 
 /**
  * Emit a `sqlx::FromRow` implementation for the given model targeting
- * `sqlx::postgres::PgRow`.
+ * the backend's row type (`backend.rowType` — e.g. `sqlx::postgres::PgRow`
+ * for Postgres, `sqlx::sqlite::SqliteRow` for SQLite).
  *
  * Scalar fields read their value via `row.try_get("<dbName>")?`. Relation
  * fields are zero-initialized: to-one relations become `None`, to-many
@@ -15,8 +17,16 @@ import type { ModuleResolver } from "../../type-ref.js";
  * `crate::<file>` (per-file) or `crate::models::<m>` (per-model). When
  * omitted, the resolver defaults to `m.module` (preserves per-file
  * behaviour for unit tests that build IRs by hand).
+ *
+ * The `row.try_get("...")` argument is a sqlx column-name lookup and is
+ * always double-quoted regardless of dialect; it is not an SQL identifier
+ * and does not go through the backend's quote helper.
  */
-export function emitFromRow(m: ModelIR, moduleOf?: ModuleResolver): string {
+export function emitFromRow(
+  m: ModelIR,
+  backend: Backend,
+  moduleOf?: ModuleResolver,
+): string {
   const modulePath = moduleOf ? moduleOf(m.name) : m.module;
   const scalarLines = m.scalarFields.map(
     (f) => `            ${f.rustName}: row.try_get(${JSON.stringify(f.dbName)})?,`,
@@ -27,8 +37,8 @@ export function emitFromRow(m: ModelIR, moduleOf?: ModuleResolver): string {
   });
 
   const lines = [
-    `impl sqlx::FromRow<'_, sqlx::postgres::PgRow> for crate::${modulePath}::${m.name} {`,
-    `    fn from_row(row: &sqlx::postgres::PgRow) -> sqlx::Result<Self> {`,
+    `impl sqlx::FromRow<'_, ${backend.rowType}> for crate::${modulePath}::${m.name} {`,
+    `    fn from_row(row: &${backend.rowType}) -> sqlx::Result<Self> {`,
     `        Ok(crate::${modulePath}::${m.name} {`,
     ...scalarLines,
     ...relationLines,
