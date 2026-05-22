@@ -103,7 +103,7 @@ generator rust {
   bytesCrate       = "std"              // "std" | "bytes"
   jsonCrate        = "serde_json"       // "serde_json" | "string"
   serde            = "true"             // emit Serialize/Deserialize derives
-  engine           = ""                  // "" | "sqlx-postgres" | "sqlx-sqlite" — see "Engine"
+  engine           = ""                  // "" | "sqlx-postgres" | "sqlx-sqlite" | "sqlx-mysql"
   edition          = "2021"             // "2021" | "2024" (passed to rustfmt)
   runRustfmt       = "true"
   requireRustfmt   = "true"
@@ -115,8 +115,8 @@ generator rust {
 
 ## Engine (pre-generated integration layer)
 
-Set `engine = "sqlx-postgres"` or `engine = "sqlx-sqlite"` to add a
-parallel `engine/<backend>/` subtree to the generated output. Each
+Set `engine = "sqlx-postgres"`, `"sqlx-sqlite"`, or `"sqlx-mysql"` to
+add a parallel `engine/<backend>/` subtree to the generated output. Each
 model gains inherent methods that implement the full CRUD +
 aggregation surface on top of `sqlx`'s `QueryBuilder`:
 
@@ -171,6 +171,20 @@ sqlx = { version = "0.8", default-features = false, features = [
 ] }
 ```
 
+`engine = "sqlx-mysql"`:
+
+```toml
+sqlx = { version = "0.8", default-features = false, features = [
+  "runtime-tokio", "mysql",
+  "uuid", "chrono", "json", "rust_decimal",
+  "macros",
+] }
+uuid = { version = "1", features = ["serde", "v4"] }
+```
+
+(`uuid v4` feature lets `uuid::Uuid::new_v4()` resolve — needed by the
+MySQL requery path for `String @id @default(uuid())` fields.)
+
 ### SQLite specifics
 
 - **No native enums.** Prisma's SQLite connector rejects `enum`
@@ -189,6 +203,36 @@ sqlx = { version = "0.8", default-features = false, features = [
 - **`LOWER(col) LIKE LOWER(?)` instead of `ILIKE`** — SQLite has no
   ILIKE; `QueryMode::Insensitive` flows through `LOWER()` wrapping for
   unicode-aware case-insensitive matching.
+
+### MySQL specifics
+
+- **No portable `RETURNING`.** MySQL 8.0 didn't ship `RETURNING` until
+  8.0.21 (with limits) and MariaDB requires 10.5+. The engine emits
+  each write as an `INSERT`/`UPDATE`/`DELETE` followed by a
+  `find_unique` SELECT — one extra round-trip per write. Consumers
+  needing single-round-trip writes drop to raw sqlx.
+
+- **`Acquire` bound on writes.** `create`/`update`/`delete` take
+  `A: sqlx::Acquire<'e, Database = sqlx::MySql>` instead of the
+  `Executor` bound the other backends use. `&Pool`, `&mut Pool`,
+  `&mut Transaction` work directly; passing a raw `&mut Connection`
+  needs `&mut *conn` (one extra deref at the call site).
+
+- **Inserted id discovery.** Integer `@id @default(autoincrement())`
+  reads back via `LAST_INSERT_ID()`. `String @id @default(uuid())`
+  generates client-side via `uuid::Uuid::new_v4()` before the
+  INSERT. User-supplied ids come straight from the input. Composite
+  ids, `@default(dbgenerated(...))` on the @id, and `@default(now())`
+  on the @id are not supported (`todo!()` in the generated body).
+
+- **No timezone-aware timestamp.** MySQL's `DATETIME` is a wall-clock
+  type; `chrono::DateTime<Utc>` round-trips but the consumer is
+  responsible for keeping values in UTC.
+
+- **Dialect output:** backtick identifier quoting, `IN (?, ?, ?)`
+  array binding, `LOWER(col) LIKE LOWER(?)` case-insensitive
+  matching, `CAST(... AS DOUBLE)` / `CAST(... AS SIGNED)` aggregate
+  casts.
 
 The five integration guides ([sqlx](docs/sqlx.md),
 [raw-postgres](docs/raw-postgres.md), etc.) remain useful as

@@ -46,7 +46,7 @@ export function parseGeneratorConfig(opts: GeneratorOptions): GeneratorConfig {
       ? null
       : pickEnum(
           raw.engine,
-          ["sqlx-postgres", "sqlx-sqlite"] as const,
+          ["sqlx-postgres", "sqlx-sqlite", "sqlx-mysql"] as const,
           "sqlx-postgres",
           "engine",
         );

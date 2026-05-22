@@ -23,4 +23,6 @@ export const POSTGRES: Backend = {
     "bytes",
     "json",
   ]),
+  writeStrategy: "returning",
+  insertedIdStrategy: () => "unsupported",
 };

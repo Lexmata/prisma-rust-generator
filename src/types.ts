@@ -1,4 +1,4 @@
-export type Engine = null | "sqlx-postgres" | "sqlx-sqlite";
+export type Engine = null | "sqlx-postgres" | "sqlx-sqlite" | "sqlx-mysql";
 
 export interface GeneratorConfig {
   output: string;

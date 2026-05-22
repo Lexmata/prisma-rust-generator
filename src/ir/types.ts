@@ -25,6 +25,15 @@ export type RustTypeRef =
   | RustEnumRefKind
   | RustModelRefKind;
 
+export type DefaultKind =
+  | "autoincrement"
+  | "uuid"
+  | "cuid"
+  | "now"
+  | "literal"
+  | "dbgenerated"
+  | "other";
+
 export interface FieldIR {
   readonly prismaName: string;      // original Prisma name (camelCase)
   readonly rustName: string;        // snake_case, with r# prefix if reserved
@@ -36,6 +45,7 @@ export interface FieldIR {
   readonly isId: boolean;
   readonly isUnique: boolean;
   readonly hasDefault: boolean;
+  readonly defaultKind: DefaultKind | null;
   readonly docs: readonly string[]; // one entry per line
   readonly serdeRenameOverride: string | null;
 }

@@ -28,4 +28,6 @@ export const SQLITE: Backend = {
     "bytes",
     "json",
   ]),
+  writeStrategy: "returning",
+  insertedIdStrategy: () => "unsupported",
 };
