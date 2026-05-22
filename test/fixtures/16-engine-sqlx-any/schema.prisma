@@ -1,0 +1,44 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator rust {
+  provider = "node ../../../dist/index.js"
+  output   = "../../compile/16-engine-sqlx-any/src"
+  engine   = "sqlx-any"
+}
+
+// sqlx::Any natively supports only bool / i16 / i32 / i64 / f32 / f64 /
+// String / Vec<u8>. No Type<Any> impls exist for chrono::DateTime,
+// uuid::Uuid, rust_decimal::Decimal, or serde_json::Value, so this
+// fixture deliberately restricts itself to that subset. The provider
+// `sqlite` is chosen as the host because it's the simplest Prisma
+// connector that accepts both Int @id @default(autoincrement()) and
+// BigInt; the `sqlx-any` backend itself is provider-agnostic at runtime.
+model User {
+  id      Int     @id @default(autoincrement())
+  email   String  @unique
+  active  Boolean @default(true)
+  score   Float
+  bio     String?
+  avatar  Bytes?
+  firmId  Int
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  posts   Post[]
+}
+
+model Firm {
+  id    Int    @id @default(autoincrement())
+  name  String
+  users User[]
+}
+
+model Post {
+  id       Int     @id @default(autoincrement())
+  title    String
+  body     String?
+  views    BigInt  @default(0)
+  authorId Int
+  author   User    @relation(fields: [authorId], references: [id])
+}
