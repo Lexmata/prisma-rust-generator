@@ -1,0 +1,73 @@
+enum Enum4 {
+  SIGN_UP
+  PASSWORD_RESET
+}
+
+model Entity5 {
+  id        String   @id @default(cuid()) @map("id") @db.VarChar(25)
+  relFkId_1    String   @map("rel_fk_id_1") @db.Uuid
+  rel_1      Entity74     @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  field_1   DateTime @map("field_1") @db.Timestamp(6)
+
+  @@map("table_entity5")
+}
+
+model Entity6 {
+  id        String    @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1    String    @map("rel_fk_id_1") @db.Uuid
+  rel_1      Entity74      @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1  String    @map("field_1") @db.VarChar(128)
+  field_2    DateTime? @map("field_2") @db.Timestamp(6)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity6_1")
+  @@map("table_entity6")
+}
+
+model Entity7 {
+  id          String                @id @default(cuid()) @map("id") @db.VarChar(25)
+  email       String                @map("email") @db.VarChar(255)
+  field_1    String                @map("field_1") @db.VarChar(64)
+  type        Enum4 @map("type")
+  field_2    Int                   @default(0) @map("field_2") @db.Integer
+  field_3 Int                   @default(5) @map("field_3") @db.Integer
+  field_4   DateTime              @map("field_4") @db.Timestamp(6)
+  field_5      DateTime?             @map("field_5") @db.Timestamp(6)
+  createdAt   DateTime              @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt   DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  relFkId_1      String                @map("rel_fk_id_1") @db.Uuid
+  rel_1        Entity74                  @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([email, type], map: "idx_entity7_1")
+  @@index([field_4], map: "idx_entity7_2")
+  @@map("table_entity7")
+}
+
+model Entity8 {
+  id        String   @id @default(cuid())
+  field_1  String   @map("field_1") @db.VarChar(255)
+  field_2     String   @map("field_2") @db.VarChar(1024)
+  field_3  String?  @map("field_3") @db.VarChar(255)
+  field_4    String   @map("field_4") @db.Uuid
+  field_5 DateTime @map("field_5") @db.Timestamp(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([field_4], map: "idx_entity8_1")
+  @@index([field_5], map: "idx_entity8_2")
+  @@map("table_entity8")
+}
+
+model Entity9 {
+  id         String    @id @default(uuid()) @db.Uuid
+  field_1  String    @unique @map("field_1") @db.VarChar(64)
+  field_2  String    @map("field_2") @db.VarChar(255)
+  field_3    Boolean   @default(false)
+  field_4  DateTime? @map("field_4") @db.Timestamp(6)
+  field_5 DateTime? @map("field_5") @db.Timestamp(6)
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([field_1], map: "idx_entity9_1")
+  @@map("table_entity9")
+}

@@ -581,7 +581,22 @@ function emitCreateRequery(
 
   // Compute the id used to look up the inserted row.
   if (strategy.kind === "last-insert-id") {
-    body.push(`        let id: ${idRustType} = result.last_insert_id() as ${idRustType};`);
+    // `sqlx::any::AnyQueryResult::last_insert_id() -> Option<i64>` (unlike
+    // MySQL's `i64`), because not every driver Any wraps supports
+    // last-insert-id. Unwrap or surface RowNotFound — the only meaningful
+    // failure here is "this driver doesn't support last-insert-id", which
+    // shows up as None at runtime.
+    if (backend.engine === "sqlx-any") {
+      body.push(
+        `        let id: ${idRustType} = result`,
+        `            .last_insert_id()`,
+        `            .ok_or(sqlx::Error::RowNotFound)? as ${idRustType};`,
+      );
+    } else {
+      body.push(
+        `        let id: ${idRustType} = result.last_insert_id() as ${idRustType};`,
+      );
+    }
   } else if (strategy.kind === "client-generated") {
     body.push(`        let id: ${idRustType} = _generated_id;`);
   } else {

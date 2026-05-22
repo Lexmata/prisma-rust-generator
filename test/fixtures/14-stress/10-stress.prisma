@@ -1,0 +1,139 @@
+enum Enum25 {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum Enum26 {
+  TEXT
+  TEXTAREA
+  NUMBER
+  DATE
+  EMAIL
+  PHONE
+  CHECKBOX
+  RADIO
+  DROPDOWN
+  FILE_UPLOAD
+  SIGNATURE
+  ADDRESS
+  RICH_TEXT
+  SECTION_HEADER
+}
+
+enum Enum27 {
+  PENDING
+  OPENED
+  SUBMITTED
+  EXPIRED
+  REVOKED
+}
+
+enum Enum28 {
+  SUBMITTED
+  UNDER_REVIEW
+  VERIFIED
+  REJECTED
+  RESUBMISSION_REQUESTED
+}
+
+model Entity44 {
+  id             String                @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1         String                @map("rel_fk_id_1") @db.Uuid
+  rel_1           Entity37                  @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  name           String                @map("name") @db.VarChar(255)
+  field_1    String?               @map("field_1") @db.Text
+  status         Enum25    @default(DRAFT) @map("status")
+  field_2 Int                   @default(1) @map("field_2") @db.Integer
+  relFkId_2    String                @map("rel_fk_id_2") @db.Uuid
+  rel_2      Entity74                  @relation("rel_name_17", fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  createdAt      DateTime              @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt      DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  rel_3       Entity45[]
+  rel_4  Entity46[]
+  rel_5    Entity47[]
+
+  @@index([relFkId_1], map: "idx_entity44_1")
+  @@index([relFkId_2], map: "idx_entity44_2")
+  @@map("table_entity44")
+}
+
+model Entity45 {
+  id            String             @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1    String             @map("rel_fk_id_1") @db.Uuid
+  rel_1      Entity44       @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  field_1 Int                @map("field_1") @db.Integer
+  field_2        Json               @map("field_2")
+  createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamp(6)
+  rel_2 Entity46[]
+  rel_3   Entity47[]
+
+  @@unique([relFkId_1, field_1], map: "idx_entity45_1")
+  @@index([relFkId_1], map: "idx_entity45_2")
+  @@map("table_entity45")
+}
+
+model Entity46 {
+  id                String              @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1        String              @map("rel_fk_id_1") @db.Uuid
+  rel_1          Entity44        @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  relFkId_2 String              @map("rel_fk_id_2") @db.Uuid
+  rel_2   Entity45 @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  relFkId_3            String              @map("rel_fk_id_3") @db.Uuid
+  rel_3              Entity37                @relation(fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  field_1       String              @map("field_1") @db.VarChar(255)
+  field_2        String              @map("field_2") @db.VarChar(255)
+  field_3             String              @unique @map("field_3") @db.VarChar(64)
+  field_4         DateTime            @map("field_4") @db.Timestamp(6)
+  status            Enum27  @default(PENDING) @map("status")
+  field_5         Boolean             @default(true) @map("field_5") @db.Boolean
+  relFkId_4       String              @map("rel_fk_id_4") @db.Uuid
+  rel_4         Entity74                @relation("rel_name_18", fields: [relFkId_4], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamp(6)
+  field_6       DateTime?           @map("field_6") @db.Timestamp(6)
+  rel_5       Entity47[]
+
+  @@index([relFkId_1], map: "idx_entity46_1")
+  @@index([relFkId_3], map: "idx_entity46_2")
+  @@index([field_3], map: "idx_entity46_3")
+  @@index([relFkId_4], map: "idx_entity46_4")
+  @@map("table_entity46")
+}
+
+model Entity47 {
+  id                String              @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1    String              @map("rel_fk_id_1") @db.Uuid
+  rel_1      Entity46    @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  relFkId_2        String              @map("rel_fk_id_2") @db.Uuid
+  rel_2          Entity44        @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  relFkId_3 String              @map("rel_fk_id_3") @db.Uuid
+  rel_3   Entity45 @relation(fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  relFkId_4            String              @map("rel_fk_id_4") @db.Uuid
+  rel_4              Entity37                @relation(fields: [relFkId_4], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  data              Json                @map("data") @db.JsonB
+  status            Enum28    @default(SUBMITTED) @map("status")
+  field_1       DateTime            @default(now()) @map("field_1") @db.Timestamp(6)
+  field_2        DateTime?           @map("field_2") @db.Timestamp(6)
+  relFkId_5      String?             @map("rel_fk_id_5") @db.Uuid
+  rel_5        Entity74?               @relation("rel_name_19", fields: [relFkId_5], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  rel_6             Entity48[]
+  rel_7        Entity60[]
+
+  @@index([relFkId_1], map: "idx_entity47_1")
+  @@index([relFkId_2], map: "idx_entity47_2")
+  @@index([relFkId_4], map: "idx_entity47_3")
+  @@map("table_entity47")
+}
+
+model Entity48 {
+  id           String         @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1 String         @map("rel_fk_id_1") @db.Uuid
+  rel_1   Entity47 @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  field_1      String         @map("field_1") @db.Text
+  relFkId_2  String         @map("rel_fk_id_2") @db.Uuid
+  rel_2    Entity74           @relation("rel_name_20", fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity48_1")
+  @@map("table_entity48")
+}

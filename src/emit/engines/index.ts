@@ -2,7 +2,7 @@ import type { IR, ModelIR } from "../../ir/types.js";
 import type { GeneratorConfig } from "../../types.js";
 import type { ModuleResolver } from "../type-ref.js";
 import type { Backend } from "./sqlx/backend.js";
-import { POSTGRES, SQLITE, MYSQL } from "./sqlx/backends/index.js";
+import { POSTGRES, SQLITE, MYSQL, ANY } from "./sqlx/backends/index.js";
 import { emitSqlx } from "./sqlx/index.js";
 
 /**
@@ -41,6 +41,7 @@ export function selectEngine(cfg: GeneratorConfig): EngineEmitter | null {
   if (cfg.engine === "sqlx-postgres") return emitSqlx(POSTGRES);
   if (cfg.engine === "sqlx-sqlite") return emitSqlx(SQLITE);
   if (cfg.engine === "sqlx-mysql") return emitSqlx(MYSQL);
+  if (cfg.engine === "sqlx-any") return emitSqlx(ANY);
   return null;
 }
 
@@ -55,5 +56,6 @@ export function selectBackend(cfg: GeneratorConfig): Backend | null {
   if (cfg.engine === "sqlx-postgres") return POSTGRES;
   if (cfg.engine === "sqlx-sqlite") return SQLITE;
   if (cfg.engine === "sqlx-mysql") return MYSQL;
+  if (cfg.engine === "sqlx-any") return ANY;
   return null;
 }

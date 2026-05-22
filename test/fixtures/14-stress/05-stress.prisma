@@ -1,0 +1,375 @@
+enum Enum9 {
+  MVA
+  TRUCKING
+  MOTORCYCLE
+  BICYCLE
+  PEDESTRIAN
+  RIDESHARE
+  BUS_TRANSIT
+  BOATING
+  AVIATION
+  RAILROAD_FELA
+  MARITIME_JONES_ACT
+  LONGSHORE_HARBOR
+  PREMISES_LIABILITY
+  SLIP_AND_FALL
+  NEGLIGENT_SECURITY
+  DOG_BITE
+  ANIMAL_ATTACK_OTHER
+  SWIMMING_POOL
+  MED_MAL
+  BIRTH_INJURY
+  SURGICAL_ERROR
+  MISDIAGNOSIS
+  HOSPITAL_NEGLIGENCE
+  DENTAL_MALPRACTICE
+  PHARMACY_ERROR
+  NURSING_HOME_ABUSE
+  ASSISTED_LIVING_NEGLECT
+  PRODUCT_LIABILITY
+  DEFECTIVE_DRUG
+  DEFECTIVE_MEDICAL_DEVICE
+  DEFECTIVE_AUTO_PART
+  DEFECTIVE_CONSUMER_PRODUCT
+  FOOD_POISONING
+  RECALL_RELATED
+  TOXIC_TORT
+  ASBESTOS_MESOTHELIOMA
+  LEAD_PAINT
+  CHEMICAL_EXPOSURE
+  WATER_CONTAMINATION
+  MOLD_EXPOSURE
+  RADIATION_EXPOSURE
+  WORKERS_COMP
+  CONSTRUCTION_INJURY
+  OSHA_VIOLATION_INJURY
+  WRONGFUL_DEATH
+  SURVIVAL_ACTION
+  MASS_TORT
+  CLASS_ACTION
+  MDL
+  ASSAULT_BATTERY
+  SEXUAL_ABUSE
+  CLERGY_ABUSE
+  INSTITUTIONAL_ABUSE
+  FALSE_IMPRISONMENT
+  DEFAMATION
+  INVASION_OF_PRIVACY
+  IIED
+  CIVIL_RIGHTS_1983
+  POLICE_MISCONDUCT
+  EXCESSIVE_FORCE
+  WRONGFUL_CONVICTION
+  JAIL_PRISON_NEGLIGENCE
+  BAD_FAITH_INSURANCE
+  UNINSURED_MOTORIST
+  DRAM_SHOP
+  FIRE_EXPLOSION
+  ELECTROCUTION
+  LEGAL_MALPRACTICE
+  PROFESSIONAL_NEGLIGENCE_OTHER
+  OTHER
+}
+
+enum Enum10 {
+  INTAKE
+  INVESTIGATION
+  ACTIVE_LITIGATION
+  SETTLEMENT_NEGOTIATION
+  RESOLVED
+  CLOSED
+  ARCHIVED
+}
+
+enum Enum11 {
+  ACTIVE_TREATMENT
+  COMPLETED
+  ONGOING
+  UNKNOWN
+}
+
+enum Enum12 {
+  LIABILITY
+  PIP_NO_FAULT
+  UM_UIM
+  MEDPAY
+  OTHER_COVERAGE
+}
+
+enum Enum13 {
+  INDIVIDUAL
+  CORPORATION
+  GOVERNMENT_ENTITY
+  OTHER_PARTY
+}
+
+enum Enum14 {
+  OPEN
+  IN_PROGRESS
+  COMPLETE
+}
+
+enum Enum15 {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum Enum16 {
+  STATUTE_OF_LIMITATIONS
+  HEARING_DATE
+  DEPOSITION
+  FILING_DEADLINE
+  MEDICAL_APPOINTMENT
+  CUSTOM
+}
+
+enum Enum17 {
+  PLAINTIFF
+  DEFENDANT
+  ATTORNEY_PLAINTIFF
+  ATTORNEY_DEFENSE
+  WITNESS
+  EXPERT_WITNESS
+  MEDICAL_PROVIDER
+  INSURANCE_ADJUSTER
+  JUDGE
+  CUSTOM_ROLE
+}
+
+enum Enum18 {
+  FILING_FEES
+  EXPERT_FEES
+  COURT_COSTS
+  TRAVEL
+  COPYING
+  POSTAGE
+  OTHER_EXPENSE
+}
+
+model Entity19 {
+  id         String   @id @default(uuid()) @map("id") @db.Uuid
+  field_1 String   @map("field_1") @db.VarChar(255)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  relFkId_1     String   @map("rel_fk_id_1") @db.Uuid
+  rel_1       Entity37     @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  status          Enum10 @default(INTAKE) @map("status")
+  field_2 String?    @map("field_2") @db.VarChar(100)
+  field_3     String?    @map("field_3") @db.Text
+  field_4        Enum9?  @map("field_4")
+  field_5  DateTime?  @map("field_5") @db.Timestamp(6)
+  relFkId_2  String?    @map("rel_fk_id_2") @db.Uuid
+  rel_2    Entity74?      @relation("rel_name_2", fields: [relFkId_2], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  field_6 String?    @map("field_6") @db.Text
+  field_7    String?    @map("field_7") @db.Text
+
+  field_8            String?   @map("field_8") @db.VarChar(100)
+  field_9             String?   @map("field_9") @db.VarChar(100)
+  field_10                  DateTime? @map("field_10") @db.Date
+  field_11                String?   @map("field_11") @db.VarChar(20)
+  field_12                String?   @map("field_12") @db.VarChar(255)
+
+  field_13         String?   @map("field_13") @db.VarChar(512)
+
+  field_14 String?   @map("field_14") @db.VarChar(512)
+  field_15         String?   @map("field_15") @db.VarChar(255)
+  field_16         String?   @map("field_16") @db.VarChar(255)
+  field_17                 String?   @map("field_17") @db.VarChar(100)
+  field_18                String?   @map("field_18") @db.VarChar(2)
+  field_19                  String?   @map("field_19") @db.VarChar(10)
+
+  field_20    String?  @map("field_20") @db.VarChar(500)
+  field_21  String?  @map("field_21") @db.VarChar(100)
+  field_22 String?  @map("field_22") @db.Text
+  field_23   String?  @map("field_23") @db.VarChar(255)
+  field_24      Boolean? @map("field_24") @db.Boolean
+  field_25        String?  @map("field_25") @db.Text
+  field_26     Boolean? @map("field_26") @db.Boolean
+  field_27         String?  @map("field_27") @db.Text
+
+  field_28      Json?            @map("field_28") @db.JsonB
+  field_29 String?          @map("field_29") @db.Text
+  field_30    DateTime?        @map("field_30") @db.Date
+  field_31      DateTime?        @map("field_31") @db.Date
+  field_32        Json?            @map("field_32") @db.JsonB
+  field_33      String?          @map("field_33") @db.Text
+  field_34       Enum11? @map("field_34")
+
+  field_35   String?       @map("field_35") @db.VarChar(255)
+  field_36       String?       @map("field_36") @db.VarChar(100)
+  field_37        String?       @map("field_37") @db.VarChar(100)
+  field_38             Enum12? @map("field_38")
+  field_39       Decimal?      @map("field_39") @db.Decimal(12, 2)
+  field_40 String?       @map("field_40") @db.VarChar(255)
+  field_41      String?       @map("field_41") @db.VarChar(100)
+  field_42     Decimal?      @map("field_42") @db.Decimal(12, 2)
+  field_43             String?       @map("field_43") @db.VarChar(255)
+  field_44            String?       @map("field_44") @db.VarChar(20)
+  field_45            String?       @map("field_45") @db.VarChar(255)
+
+  field_46       String?            @map("field_46") @db.VarChar(255)
+  field_47       Enum13? @map("field_47")
+  field_48     String?            @map("field_48") @db.VarChar(255)
+  field_49 String?            @map("field_49") @db.VarChar(255)
+  field_50    String?            @map("field_50") @db.VarChar(20)
+  field_51    String?            @map("field_51") @db.VarChar(255)
+
+  rel_3               Entity29[]
+  rel_4           Entity26[]
+  rel_5              Entity59[]
+  rel_6       Entity13[]
+  rel_7   Entity14?
+  rel_8 Entity27[]
+  rel_9   Entity15[]
+  rel_10      Entity2[]
+  rel_11      Entity64[]
+  rel_12     Entity16[]
+  rel_13                Entity10[]
+
+  rel_14              Entity20[]
+  rel_15              Entity21[]
+  rel_16    Entity22[]
+  rel_17           Entity23[]
+  rel_18 Entity24[]
+  rel_19    Entity25[]
+
+  @@index([relFkId_1], map: "idx_entity19_1")
+  @@index([status], map: "idx_entity19_2")
+  @@index([relFkId_2], map: "idx_entity19_3")
+  @@index([field_4], map: "idx_entity19_4")
+  @@map("table_entity19")
+}
+
+model Entity20 {
+  id        String   @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1    String   @map("rel_fk_id_1") @db.Uuid
+  rel_1      Entity19     @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2    String   @map("rel_fk_id_2") @db.Uuid
+  rel_2      Entity37     @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_3    String   @map("rel_fk_id_3") @db.Uuid
+  rel_3      Entity74     @relation(fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1     String   @map("field_1") @db.VarChar(255)
+  field_2      String   @map("field_2") @db.Text
+  field_3  Boolean  @default(false) @map("field_3") @db.Boolean
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity20_1")
+  @@index([relFkId_2], map: "idx_entity20_2")
+  @@map("table_entity20")
+}
+
+model Entity21 {
+  id          String           @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1      String           @map("rel_fk_id_1") @db.Uuid
+  rel_1        Entity19             @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2      String           @map("rel_fk_id_2") @db.Uuid
+  rel_2        Entity37             @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_3 String           @map("rel_fk_id_3") @db.Uuid
+  rel_3   Entity74             @relation("rel_name_3", fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_4  String?          @map("rel_fk_id_4") @db.Uuid
+  rel_4    Entity74?            @relation("rel_name_4", fields: [relFkId_4], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  field_1       String           @map("field_1") @db.VarChar(255)
+  field_2 String?          @map("field_2") @db.Text
+  status      Enum14   @default(OPEN) @map("status")
+  field_3    Enum15 @default(MEDIUM) @map("field_3")
+  field_4     DateTime?        @map("field_4") @db.Timestamp(6)
+  field_5 DateTime?        @map("field_5") @db.Timestamp(6)
+  createdAt   DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt   DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity21_1")
+  @@index([relFkId_2], map: "idx_entity21_2")
+  @@index([relFkId_4], map: "idx_entity21_3")
+  @@map("table_entity21")
+}
+
+model Entity22 {
+  id          String            @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1      String            @map("rel_fk_id_1") @db.Uuid
+  rel_1        Entity19              @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2      String            @map("rel_fk_id_2") @db.Uuid
+  rel_2        Entity37              @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1   Enum16 @map("field_1")
+  field_2       String            @map("field_2") @db.VarChar(255)
+  field_3 String?           @map("field_3") @db.Text
+  field_4        DateTime          @map("field_4") @db.Timestamp(6)
+  field_5 Boolean           @default(false) @map("field_5") @db.Boolean
+  field_6  DateTime?         @map("field_6") @db.Timestamp(6)
+  createdAt   DateTime          @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt   DateTime          @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity22_1")
+  @@index([relFkId_2], map: "idx_entity22_2")
+  @@index([field_4], map: "idx_entity22_3")
+  @@map("table_entity22")
+}
+
+model Entity23 {
+  id           String      @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1       String      @map("rel_fk_id_1") @db.Uuid
+  rel_1         Entity19        @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2       String      @map("rel_fk_id_2") @db.Uuid
+  rel_2         Entity37        @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1         Enum17 @map("field_1")
+  field_2   String?     @map("field_2") @db.VarChar(100)
+  field_3    String      @map("field_3") @db.VarChar(100)
+  field_4     String      @map("field_4") @db.VarChar(100)
+  field_5 String?     @map("field_5") @db.VarChar(255)
+  email        String?     @map("email") @db.VarChar(255)
+  field_6        String?     @map("field_6") @db.VarChar(20)
+  field_7 String?     @map("field_7") @db.VarChar(255)
+  field_8 String?     @map("field_8") @db.VarChar(255)
+  field_9         String?     @map("field_9") @db.VarChar(100)
+  field_10        String?     @map("field_10") @db.VarChar(2)
+  field_11          String?     @map("field_11") @db.VarChar(10)
+  field_12        String?     @map("field_12") @db.Text
+  createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime    @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity23_1")
+  @@index([relFkId_2], map: "idx_entity23_2")
+  @@map("table_entity23")
+}
+
+model Entity24 {
+  id          String   @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1      String   @map("rel_fk_id_1") @db.Uuid
+  rel_1        Entity19     @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2      String   @map("rel_fk_id_2") @db.Uuid
+  rel_2        Entity37     @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_3      String   @map("rel_fk_id_3") @db.Uuid
+  rel_3        Entity74     @relation(fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1        DateTime @map("field_1") @db.Date
+  field_2       Decimal  @map("field_2") @db.Decimal(5, 2)
+  field_3 String   @map("field_3") @db.Text
+  field_4  Boolean  @default(true) @map("field_4") @db.Boolean
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity24_1")
+  @@index([relFkId_2], map: "idx_entity24_2")
+  @@index([relFkId_3], map: "idx_entity24_3")
+  @@map("table_entity24")
+}
+
+model Entity25 {
+  id          String                 @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1      String                 @map("rel_fk_id_1") @db.Uuid
+  rel_1        Entity19                   @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2      String                 @map("rel_fk_id_2") @db.Uuid
+  rel_2        Entity37                   @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1        DateTime               @map("field_1") @db.Date
+  field_2 String                 @map("field_2") @db.Text
+  field_3      Decimal                @map("field_3") @db.Decimal(10, 2)
+  field_4    Enum18 @map("field_4")
+  createdAt   DateTime               @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt   DateTime               @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity25_1")
+  @@index([relFkId_2], map: "idx_entity25_2")
+  @@map("table_entity25")
+}

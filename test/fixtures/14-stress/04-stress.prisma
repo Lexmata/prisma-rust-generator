@@ -1,0 +1,176 @@
+enum Enum6 {
+  NOT_REQUESTED
+  PENDING
+  PROCESSING
+  COMPLETE
+  ERROR
+}
+
+enum Enum7 {
+  ATTORNEY
+  PARALEGAL
+  MARKETING
+}
+
+enum Enum8 {
+  IDENTIFICATION
+  ORGANIZATION
+  SUMMARIZATION
+}
+
+model Entity13 {
+  id                          Int              @id @default(autoincrement()) @map("id")
+  relFkId_1                  String           @map("rel_fk_id_1") @db.Uuid
+  field_1                     String?          @map("field_1") @db.Uuid
+
+  field_2                 Json             @map("field_2") @db.JsonB
+
+  field_3                 Json?            @map("field_3") @db.JsonB
+  field_4                   Int?             @map("field_4")
+  field_5              Enum8   @default(IDENTIFICATION) @map("field_5")
+  field_6                   Enum6 @default(PENDING) @map("field_6")
+  field_7            Enum6 @default(PENDING) @map("field_7")
+  field_8          Enum6 @default(NOT_REQUESTED) @map("field_8")
+  field_9         Enum6 @default(NOT_REQUESTED) @map("field_9")
+  field_10                   DateTime?        @map("field_10") @db.Timestamp(6)
+  field_11                 DateTime?        @map("field_11") @db.Timestamp(6)
+  field_12       DateTime?        @map("field_12") @db.Timestamp(6)
+  field_13     DateTime?        @map("field_13") @db.Timestamp(6)
+  field_14      DateTime?        @map("field_14") @db.Timestamp(6)
+  field_15    DateTime?        @map("field_15") @db.Timestamp(6)
+  field_16 String?          @map("field_16") @db.VarChar(500)
+
+  field_17           Json?            @map("field_17")
+
+  field_18              Json?            @map("field_18") @db.JsonB
+  createdAt                   DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt                   DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  rel_1                    Entity29         @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_19           String?          @map("field_19") @db.Text
+  relFkId_2                      String?          @map("rel_fk_id_2") @db.Uuid
+  rel_2                        Entity37?            @relation(fields: [relFkId_2], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  relFkId_3                      String?          @map("rel_fk_id_3") @db.Uuid
+  rel_3                        Entity19?            @relation(fields: [relFkId_3], references: [id], onDelete: SetNull, onUpdate: NoAction)
+
+  field_20                  Json?            @map("field_20") @db.JsonB
+
+  @@index([relFkId_2], map: "idx_entity13_1")
+  @@index([relFkId_3], map: "idx_entity13_2")
+  @@map("table_entity13")
+}
+
+model Entity14 {
+  id                      Int              @id @default(autoincrement()) @map("id")
+  relFkId_1                  String           @unique @map("rel_fk_id_1") @db.Uuid
+  rel_1                    Entity19             @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2                  String           @map("rel_fk_id_2") @db.Uuid
+  rel_2                    Entity37             @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_3                  String           @map("rel_fk_id_3") @db.Uuid
+  rel_3                    Entity74             @relation(fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1        Enum6 @default(PENDING) @map("field_1")
+  field_2            String?          @map("field_2") @db.VarChar(255)
+  field_3         String?          @map("field_3") @db.Text
+  field_4          String?          @map("field_4") @db.VarChar(500)
+  field_5               DateTime?        @map("field_5") @db.Timestamp(6)
+  field_6             DateTime?        @map("field_6") @db.Timestamp(6)
+  field_7 String?          @map("field_7") @db.VarChar(255)
+  field_8            String?          @map("field_8") @db.Text
+  createdAt               DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt               DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  field_9        DateTime? @map("field_9") @db.Date
+  field_10              Enum9? @map("field_10")
+  field_11            String?   @map("field_11") @db.VarChar(255)
+
+  field_12      Json?     @map("field_12") @db.JsonB
+  field_13 String?   @map("field_13") @db.Text
+
+  field_14        Json?     @map("field_14") @db.JsonB
+  field_15    DateTime? @map("field_15") @db.Date
+  field_16      DateTime? @map("field_16") @db.Date
+
+  @@index([relFkId_2], map: "idx_entity14_1")
+  @@index([relFkId_3], map: "idx_entity14_2")
+  @@index([field_1], map: "idx_entity14_3")
+  @@map("table_entity14")
+}
+
+model Entity15 {
+  id                      Int                @id @default(autoincrement()) @map("id")
+  relFkId_1                  String             @map("rel_fk_id_1") @db.Uuid
+  rel_1                    Entity19               @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2                  String             @map("rel_fk_id_2") @db.Uuid
+  rel_2                    Entity37               @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1                Enum7 @map("field_1")
+  field_2        Enum6   @default(PENDING) @map("field_2")
+  field_3               DateTime?          @default(now()) @map("field_3") @db.Timestamp(6)
+  field_4             DateTime?          @map("field_4") @db.Timestamp(6)
+  field_5 String?            @map("field_5") @db.VarChar(255)
+  field_6                 String?            @map("field_6") @db.VarChar(1024)
+  field_7          String?            @map("field_7") @db.VarChar(1024)
+  createdAt               DateTime           @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt               DateTime           @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@unique([relFkId_1, field_1], map: "idx_entity15_1")
+  @@index([relFkId_2], map: "idx_entity15_2")
+  @@index([relFkId_1], map: "idx_entity15_3")
+  @@map("table_entity15")
+}
+
+model Entity16 {
+  id                        String                       @id @default(uuid()) @db.Uuid
+  relFkId_1                    String                       @map("rel_fk_id_1") @db.Uuid
+  rel_1                      Entity19                         @relation(fields: [relFkId_1], references: [id])
+  relFkId_2                    String                       @map("rel_fk_id_2") @db.Uuid
+  rel_2                      Entity37                         @relation(fields: [relFkId_2], references: [id])
+  relFkId_3                    String                       @map("rel_fk_id_3") @db.Uuid
+  rel_3                      Entity74                         @relation(fields: [relFkId_3], references: [id])
+  relFkId_4                 String                       @map("rel_fk_id_4") @db.Uuid
+  rel_4                   Entity10                      @relation(fields: [relFkId_4], references: [id])
+  field_1               Boolean                      @default(false) @map("field_1")
+  field_2 Boolean                      @default(true) @map("field_2")
+  field_3                 Int                          @map("field_3")
+  field_4          Enum6             @default(PENDING) @map("field_4")
+  field_5              String?                      @map("field_5") @db.VarChar(255)
+  field_6              String?                      @map("field_6") @db.Text
+  field_7            String?                      @map("field_7") @db.VarChar(1024)
+  field_8             String?                      @map("field_8") @db.VarChar(1024)
+  field_9                 DateTime                     @default(now()) @map("field_9") @db.Timestamp(6)
+  field_10               DateTime?                    @map("field_10") @db.Timestamp(6)
+  createdAt                 DateTime                     @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt                 DateTime                     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  rel_5        Entity17[]
+
+  @@index([relFkId_1], map: "idx_entity16_1")
+  @@index([relFkId_2], map: "idx_entity16_2")
+  @@map("table_entity16")
+}
+
+model Entity17 {
+  id                    String              @id @default(uuid()) @db.Uuid
+  relFkId_1 String              @map("rel_fk_id_1") @db.Uuid
+  rel_1   Entity16 @relation(fields: [relFkId_1], references: [id])
+  relFkId_2            String              @map("rel_fk_id_2") @db.Uuid
+  rel_2              Entity29            @relation(fields: [relFkId_2], references: [id])
+  field_1             Int                 @map("field_1")
+
+  @@unique([relFkId_1, relFkId_2], map: "idx_entity17_1")
+  @@index([relFkId_2], map: "idx_entity17_2")
+  @@map("table_entity17")
+}
+
+model Entity18 {
+  id         String   @id @default(uuid()) @db.Uuid
+  relFkId_1     String   @map("rel_fk_id_1") @db.Uuid
+  rel_1       Entity37     @relation(fields: [relFkId_1], references: [id])
+  field_1   String   @map("field_1") @db.VarChar(255)
+  field_2   String   @map("field_2") @db.VarChar(255)
+  field_3      String   @map("field_3") @db.VarChar(1024)
+  relFkId_2 String   @map("rel_fk_id_2") @db.Uuid
+  rel_2   Entity74     @relation("rel_name_1", fields: [relFkId_2], references: [id])
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1, field_1], map: "idx_entity18_1")
+  @@map("table_entity18")
+}
