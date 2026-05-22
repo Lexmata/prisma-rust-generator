@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { POSTGRES, SQLITE } from "../../../../src/emit/engines/sqlx/backends/index.js";
+import {
+  ANY,
+  POSTGRES,
+  SQLITE,
+} from "../../../../src/emit/engines/sqlx/backends/index.js";
 import { emitFilterPushers } from "../../../../src/emit/engines/sqlx/filter-pushers.js";
 import type { EnumIR, IR } from "../../../../src/ir/types.js";
 
@@ -205,5 +209,40 @@ describe("emitFilterPushers — sqlx-sqlite LOWER_LIKE", () => {
     expect(body).toContain('"{col} LIKE "');
     // The ci flag is still computed from the QueryMode option.
     expect(body).toContain("QueryMode::Insensitive");
+  });
+});
+
+describe("emitFilterPushers — sqlx-any backend", () => {
+  it("uses IN_LIST expansion (no Postgres ANY() shorthand)", () => {
+    const out = emitFilterPushers(emptyIr, ANY);
+    expect(out).toContain('"{col} IN ("');
+    expect(out).toContain('"{col} NOT IN ("');
+    expect(out).not.toContain("= ANY(");
+    expect(out).not.toContain("<> ALL(");
+  });
+
+  it("wraps insensitive string filters in LOWER() (no ILIKE)", () => {
+    const out = emitFilterPushers(emptyIr, ANY);
+    const start = out.indexOf("pub(crate) fn push_string_filter(");
+    const end = out.indexOf("pub(crate) fn push_string_nullable_filter(");
+    expect(start).toBeGreaterThanOrEqual(0);
+    const body = out.slice(start, end);
+    expect(body).not.toContain("ILIKE");
+    expect(body).toContain('"LOWER({col}) LIKE LOWER("');
+  });
+
+  it("omits filter pushers for unsupported families (uuid, datetime, decimal, json)", () => {
+    const out = emitFilterPushers(emptyIr, ANY);
+    expect(out).not.toContain("push_uuid_filter");
+    expect(out).not.toContain("push_datetime_filter");
+    expect(out).not.toContain("push_decimal_filter");
+    expect(out).not.toContain("push_json_filter");
+    // The six supported families are still emitted.
+    expect(out).toContain("push_string_filter");
+    expect(out).toContain("push_int_filter");
+    expect(out).toContain("push_bigint_filter");
+    expect(out).toContain("push_float_filter");
+    expect(out).toContain("push_bool_filter");
+    expect(out).toContain("push_bytes_filter");
   });
 });
