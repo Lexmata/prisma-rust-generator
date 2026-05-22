@@ -1,0 +1,39 @@
+model Entity26 {
+  id               String                  @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1           String                  @map("rel_fk_id_1") @db.Uuid
+  rel_1             Entity37                    @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  field_1       Json                    @map("field_1") @db.Json
+  rel_2        Entity29[]
+  relFkId_3           String                  @map("rel_fk_id_3") @db.Uuid
+  rel_3             Entity19                    @relation(fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_2 Enum6        @default(PENDING) @map("field_2")
+  createdAt        DateTime                @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt        DateTime                @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  rel_4        Entity12[]
+  rel_5       Entity27?
+
+  @@index([relFkId_1], map: "idx_entity26_1")
+  @@index([relFkId_3], map: "idx_entity26_2")
+  @@map("table_entity26")
+}
+
+model Entity27 {
+  id                      Int              @id @default(autoincrement()) @map("id")
+  relFkId_1          String           @unique @map("rel_fk_id_1") @db.Uuid
+  rel_1            Entity26     @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2                  String           @map("rel_fk_id_2") @db.Uuid
+  rel_2                    Entity19             @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_3                  String           @map("rel_fk_id_3") @db.Uuid
+  rel_3                    Entity37             @relation(fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1        Enum6 @default(PENDING) @map("field_1")
+  field_2               DateTime?        @default(now()) @map("field_2") @db.Timestamp(6)
+  field_3             DateTime?        @map("field_3") @db.Timestamp(6)
+  field_4 String?          @map("field_4") @db.VarChar(255)
+  createdAt               DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt               DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_3], map: "idx_entity27_1")
+  @@index([relFkId_2], map: "idx_entity27_2")
+  @@map("table_entity27")
+}

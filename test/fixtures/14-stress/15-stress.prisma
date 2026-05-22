@@ -1,0 +1,157 @@
+model Entity66 {
+  id        String   @id @default(uuid()) @map("id") @db.Uuid
+  field_1     String   @map("field_1") @db.VarChar(255)
+  field_2     String?  @map("field_2") @db.VarChar(255)
+  field_3      String   @map("field_3") @db.VarChar(50)
+  field_4     String   @map("field_4") @db.VarChar(2)
+  field_5       String   @map("field_5") @db.VarChar(10)
+  field_6   String   @map("field_6") @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  rel_1      Entity37?
+
+  @@map("table_entity66")
+}
+
+model Entity67 {
+  id              String                      @id @default(uuid()) @map("id") @db.Uuid
+  field_1            String                      @map("field_1") @db.Text
+
+  field_2        Json                        @map("field_2") @db.JsonB
+  vectorEmbedding Unsupported("vector(1024)") @map("vector_embedding")
+  createdAt       DateTime                    @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt       DateTime                    @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  field_3          String                      @map("field_3") @db.Text
+  field_4      String                      @map("field_4") @db.Text
+  field_5          String                      @map("field_5") @db.Text
+  field_6        String                      @map("field_6") @db.VarChar(255)
+  field_7    String                      @map("field_7") @db.VarChar(255)
+  field_8        String                      @map("field_8") @db.VarChar(255)
+  field_9     String                      @map("field_9") @db.VarChar(255)
+  field_10      String                      @map("field_10") @db.Text
+
+  field_11  String  @default("child") @map("field_11") @db.VarChar(10) // 'parent' or 'child'
+  field_12 Int     @default(0) @map("field_12") // ordering within document
+  relFkId_1   String? @map("rel_fk_id_1") @db.Uuid // null for parent chunks
+  field_13 Int?    @map("field_13") // useful for context budgeting
+
+  rel_1   Entity67?  @relation("rel_name_27", fields: [relFkId_1], references: [id])
+  rel_2 Entity67[] @relation("rel_name_27")
+
+  @@index([relFkId_1])
+  @@index([field_5, field_11])
+  @@index([field_4, field_12])
+  @@map("table_entity67")
+}
+
+enum Enum36 {
+  MEDICARE
+  FL_WC_PHYSICIAN   // FL DWC 69L-7.020 Health Care Provider Reimbursement Manual
+  FL_WC_ASC         // FL DWC 69L-7.100 Ambulatory Surgical Center manual
+  FL_WC_HOSPITAL_OP // FL DWC 69L-7.501 hospital outpatient scheduled portion
+}
+
+model Entity68 {
+  id             String    @id @default(uuid()) @map("id") @db.Uuid
+  field_1          Enum36  @map("field_1")
+  field_2      String    @map("field_2") @db.VarChar(5)
+  field_3       String?   @map("field_3") @db.VarChar(2)
+  field_4    String?   @map("field_4") @db.VarChar(255)
+  field_5 Decimal?  @map("field_5") @db.Decimal(10, 2)
+  field_6    Decimal?  @map("field_6") @db.Decimal(10, 2)
+
+  field_7 DateTime  @map("field_7") @db.Date
+  field_8   DateTime? @map("field_8") @db.Date
+  field_9   String?   @map("field_9") @db.VarChar(2)
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+
+  rel_1  Entity69?
+  rel_2 Entity70?
+
+  @@unique([field_1, field_2, field_3, field_7, field_9], map: "idx_entity68_1")
+  @@index([field_1, field_2], map: "idx_entity68_2")
+  @@index([field_1, field_2, field_3], map: "idx_entity68_3")
+  @@map("table_entity68")
+}
+
+model Entity69 {
+  id               String   @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1       String   @unique @map("rel_fk_id_1") @db.Uuid
+  rel_1         Entity68 @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1       String?  @map("field_1") @db.VarChar(1)
+  field_2          Decimal? @map("field_2") @db.Decimal(8, 4)
+  field_3 Decimal? @map("field_3") @db.Decimal(8, 4)
+  field_4    Decimal? @map("field_4") @db.Decimal(8, 4)
+  field_5   Decimal? @map("field_5") @db.Decimal(8, 4)
+  field_6 Decimal? @map("field_6") @db.Decimal(8, 4)
+  field_7    Decimal? @map("field_7") @db.Decimal(8, 4)
+  field_8 Decimal  @map("field_8") @db.Decimal(8, 4)
+  field_9       String?  @map("field_9") @db.VarChar(3)
+  field_10    Int      @map("field_10") @db.SmallInt
+  field_11 String   @map("field_11") @db.VarChar(2)
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@map("table_entity69")
+}
+
+model Entity70 {
+  id              String   @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1      String   @unique @map("rel_fk_id_1") @db.Uuid
+  rel_1        Entity68 @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1      String   @map("field_1") @db.VarChar(20)
+  field_2   String   @map("field_2") @db.VarChar(20)
+  field_3        String?  @map("field_3") @db.VarChar(40)
+
+  field_4        Boolean  @default(false) @map("field_4")
+  field_5 String?  @map("field_5") @db.VarChar(10)
+  field_6           String?  @map("field_6") @db.Text
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@map("table_entity70")
+}
+
+model Entity71 {
+  id                 String    @id @default(uuid()) @map("id") @db.Uuid
+  field_1             String    @map("field_1") @db.VarChar(50)
+  field_2   String    @map("field_2") @db.VarChar(40)
+  field_3        Decimal   @map("field_3") @db.Decimal(10, 2)
+  field_4  Decimal?  @map("field_4") @db.Decimal(12, 2)
+  field_5 Decimal?  @map("field_5") @db.Decimal(6, 4)
+  field_6     DateTime  @map("field_6") @db.Date
+  field_7       DateTime? @map("field_7") @db.Date
+  field_8         String    @map("field_8") @db.VarChar(20)
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([field_1, field_2], map: "idx_entity71_1")
+  @@index([field_6, field_7], map: "idx_entity71_2")
+  @@map("table_entity71")
+}
+
+model Entity72 {
+  id               String   @id @default(uuid()) @map("id") @db.Uuid
+  field_1             String   @map("field_1") @db.VarChar(7)
+  field_2 String   @map("field_2") @db.VarChar(80)
+  field_3  String   @map("field_3") @db.Text
+  field_4    Int      @map("field_4") @db.SmallInt
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@unique([field_1, field_4], map: "idx_entity72_1")
+  @@index([field_1], map: "idx_entity72_2")
+  @@map("table_entity72")
+}
+
+model Entity73 {
+  id            String   @id @default(uuid()) @map("id") @db.Uuid
+  field_1  String   @map("field_1") @db.VarChar(2)
+  field_2  String   @map("field_2") @db.VarChar(100)
+  field_3         String?  @map("field_3") @db.VarChar(2)
+  field_4      Decimal  @map("field_4") @db.Decimal(6, 4)
+  field_5        Decimal  @map("field_5") @db.Decimal(6, 4)
+  field_6        Decimal  @map("field_6") @db.Decimal(6, 4)
+  field_7 Int      @map("field_7") @db.SmallInt
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@unique([field_1, field_7], map: "idx_entity73_1")
+  @@index([field_3], map: "idx_entity73_2")
+  @@map("table_entity73")
+}

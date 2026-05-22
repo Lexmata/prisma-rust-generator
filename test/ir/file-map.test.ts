@@ -20,6 +20,17 @@ describe("buildFileMap", () => {
     expect(map.get("User")).toBe("a");
   });
 
+  it("prefixes digit-leading file stems so the result is a valid Rust ident", async () => {
+    const dir = await mkdtemp(join(tmpdir(), "file-map-digit-"));
+    try {
+      await writeFile(join(dir, "01-foo.prisma"), "model M { id String @id }\n");
+      const map = await buildFileMap(dir);
+      expect(map.get("M")).toBe("m_01_foo");
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+
   it("rejects duplicate names across files", async () => {
     const dir = await mkdtemp(join(tmpdir(), "file-map-dup-"));
     try {

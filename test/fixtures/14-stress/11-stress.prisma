@@ -1,0 +1,71 @@
+enum Enum29 {
+  FORM_LINK_SENT
+  FORM_SUBMITTED
+  FORM_VERIFIED
+  FORM_REJECTED
+  ASSESSMENT_COMPLETED
+  LINK_EXPIRING
+  LINK_EXPIRED
+}
+
+enum Enum30 {
+  PENDING
+  SENT
+  DELIVERED
+  FAILED
+  BOUNCED
+}
+
+model Entity49 {
+  id           String           @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1       String           @map("rel_fk_id_1") @db.Uuid
+  rel_1         Entity37             @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  relFkId_2       String           @map("rel_fk_id_2") @db.Uuid
+  rel_2         Entity74             @relation("rel_name_21", fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  type         Enum29 @map("type")
+  field_1        String           @map("field_1") @db.VarChar(255)
+  field_2      String           @map("field_2") @db.Text
+  field_3 String?          @map("field_3") @db.VarChar(100)
+  field_4   String?          @map("field_4") @db.Uuid
+  field_5       Boolean          @default(false) @map("field_5") @db.Boolean
+  field_6       DateTime?        @map("field_6") @db.Timestamp(6)
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([relFkId_2, field_5], map: "idx_entity49_1")
+  @@index([relFkId_1], map: "idx_entity49_2")
+  @@map("table_entity49")
+}
+
+model Entity50 {
+  id           String           @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1       String           @map("rel_fk_id_1") @db.Uuid
+  rel_1         Entity74             @relation("rel_name_22", fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  type         Enum29 @map("type")
+  field_1 Boolean          @default(true) @map("field_1") @db.Boolean
+  field_2 Boolean          @default(true) @map("field_2") @db.Boolean
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime         @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@unique([relFkId_1, type], map: "idx_entity50_1")
+  @@map("table_entity50")
+}
+
+model Entity51 {
+  id             String         @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1         String         @map("rel_fk_id_1") @db.Uuid
+  rel_1           Entity37           @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  field_1 String         @map("field_1") @db.VarChar(255)
+  field_2        String         @map("field_2") @db.VarChar(500)
+  field_3   String         @map("field_3") @db.VarChar(100)
+
+  field_4 Json?          @map("field_4") @db.JsonB
+  status         Enum30 @default(PENDING) @map("status")
+  field_5         DateTime?      @map("field_5") @db.Timestamp(6)
+  field_6  String?        @map("field_6") @db.Text
+  field_7     Int            @default(0) @map("field_7") @db.Integer
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity51_1")
+  @@index([status], map: "idx_entity51_2")
+  @@map("table_entity51")
+}

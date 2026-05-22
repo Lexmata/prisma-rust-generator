@@ -1,0 +1,189 @@
+enum Enum24 {
+  AZURE_AD
+  GOOGLE_WORKSPACE
+  LINKEDIN
+  OKTA
+}
+
+model Entity37 {
+  id                          String                            @id @default(uuid()) @map("id") @db.Uuid
+  name                        String                            @map("name") @db.VarChar(255)
+  field_1                 String?                           @map("field_1") @db.VarChar(255)
+  field_2                   String?                           @map("field_2") @db.VarChar(255)
+  createdAt                   DateTime                          @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt                   DateTime                          @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  relFkId_1                   String?                           @unique(map: "uniq_rel_fk_id_1") @map("rel_fk_id_1") @db.Uuid
+  rel_1                     Entity66?                          @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  rel_2                       Entity74[]                            @relation("rel_name_10")
+  relFkId_3                     String?                           @unique @map("rel_fk_id_3") @db.Uuid
+  rel_3                       Entity74?                             @relation("rel_name_11", fields: [relFkId_3], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  field_3                        Enum37                  @default(None)
+  field_4              Boolean                           @default(true) @map("field_4") @db.Boolean
+  field_5   Boolean                           @default(true) @map("field_5") @db.Boolean
+  rel_4                   Entity29[]
+  rel_5                       Entity19[]
+  rel_6               Entity26[]
+  rel_7           Entity13[]
+  rel_8             Entity30[]          @relation("rel_name_8")
+  field_6                  Boolean                           @default(false) @map("field_6") @db.Boolean
+  rel_9                  Entity41[]
+  rel_10                    Entity10[]
+  rel_11      Entity14[]
+  rel_12     Entity27[]
+  rel_13       Entity15[]
+  rel_14               Entity44[]
+  rel_15           Entity46[]
+  rel_16             Entity47[]
+  rel_17                  Entity60[]
+  rel_18               Entity49[]
+  rel_19             Entity51[]
+  rel_20                   Entity38[]
+  relFkId_21               String?                           @map("rel_fk_id_21") @db.Uuid
+  rel_21                 Entity38?                         @relation("rel_name_12", fields: [relFkId_21], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  rel_22            Entity1?
+  rel_23          Entity2[]
+  rel_24      Entity3[]
+  rel_25       Entity63[]
+  rel_26          Entity64[]
+  rel_27               Entity65[]                    @relation("rel_name_13")
+  field_7           Boolean                           @default(false) @map("field_7") @db.Boolean
+  rel_28         Entity16[]
+  rel_29 Entity18[]
+  rel_30             Entity42[]
+  rel_31           Entity43[]
+  rel_32                   Entity20[]
+  rel_33                   Entity21[]
+  rel_34         Entity22[]
+  rel_35                Entity23[]
+  rel_36      Entity24[]
+  rel_37         Entity25[]
+  rel_38 Entity35[]
+
+  @@map("table_entity37")
+}
+
+model Entity38 {
+  id              String               @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1          String               @map("rel_fk_id_1") @db.Uuid
+  rel_1            Entity37                 @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  name            String               @map("name") @db.VarChar(100)
+  field_1     String?              @map("field_1") @db.Text
+  field_2        Boolean              @default(false) @map("field_2") @db.Boolean
+  createdAt       DateTime             @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt       DateTime             @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  rel_2     Entity39[]
+  rel_3           Entity74[]               @relation("rel_name_14")
+  rel_4 Entity37[]               @relation("rel_name_12")
+  rel_5 Entity42[]
+
+  @@unique([relFkId_1, name], map: "idx_entity38_1")
+  @@index([relFkId_1], map: "idx_entity38_2")
+  @@map("table_entity38")
+}
+
+model Entity39 {
+  id         String   @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1 String   @map("rel_fk_id_1") @db.Uuid
+  rel_1   Entity38 @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  field_1     String   @map("field_1") @db.VarChar(50)
+  field_2    String   @map("field_2") @db.VarChar(100)
+  field_3 Json?    @map("field_3") @db.JsonB
+  field_4     Json?    @map("field_4") @db.JsonB
+  field_5   Boolean  @default(false) @map("field_5") @db.Boolean
+  field_6     String?  @map("field_6") @db.VarChar(255)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt  DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity39_1")
+  @@map("table_entity39")
+}
+
+model Entity40 {
+  id       Int    @id @default(autoincrement()) @map("id")
+  field_1 String @map("field_1") @db.VarChar(20)
+
+  @@map("table_entity40")
+}
+
+model Entity41 {
+  id        String      @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1    String      @map("rel_fk_id_1") @db.Uuid
+  field_1  Enum24 @map("field_1")
+  field_2 Boolean     @default(false) @map("field_2")
+
+  field_3        String  @map("field_3") @db.VarChar(255)
+  field_4        String  @map("field_4") @db.VarChar(255)
+  field_5       String? @map("field_5") @db.VarChar(255)
+  field_6 String  @map("field_6") @db.Text
+
+  field_7              String? @map("field_7") @db.VarChar(36)
+  field_8              String? @map("field_8") @db.VarChar(36)
+  field_9 String? @map("field_9") @db.VarChar(1024)
+
+  field_10                String? @map("field_10") @db.VarChar(255)
+  field_11              String? @map("field_11") @db.VarChar(255)
+  field_12 String? @map("field_12") @db.VarChar(1024)
+
+  field_13        String? @map("field_13") @db.VarChar(255)
+  field_14              String? @map("field_14") @db.VarChar(255)
+  field_15 String? @map("field_15") @db.VarChar(1024)
+  field_16                String? @map("field_16") @db.VarChar(255)
+
+  field_17                String? @map("field_17") @db.VarChar(255)
+  field_18                String? @map("field_18") @db.VarChar(255)
+  field_19              String? @map("field_19") @db.VarChar(255)
+  field_20 String? @map("field_20") @db.VarChar(1024)
+  field_21     String? @map("field_21") @db.VarChar(1024)
+  field_22               String? @map("field_22") @db.VarChar(255)
+  field_23                 String? @map("field_23") @db.VarChar(255)
+
+  field_24 Boolean @default(false) @map("field_24") @db.Boolean
+
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt  DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  field_25 DateTime? @map("field_25") @db.Timestamp(6)
+
+  rel_1 Entity37 @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([relFkId_1, field_1], map: "idx_entity41_1")
+  @@index([relFkId_1], map: "idx_entity41_2")
+  @@map("table_entity41")
+}
+
+model Entity42 {
+  id           String    @id @default(uuid()) @db.Uuid
+  relFkId_1       String    @map("rel_fk_id_1") @db.Uuid
+  rel_1         Entity37      @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  email        String    @map("email") @db.VarChar(255)
+  field_1     String    @map("field_1") @db.VarChar(64)
+  relFkId_2       String?   @map("rel_fk_id_2") @db.Uuid
+  rel_2         Entity38? @relation(fields: [relFkId_2], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  relFkId_3  String    @map("rel_fk_id_3") @db.Uuid
+  rel_3    Entity74      @relation("rel_name_15", fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_4 String?   @map("rel_fk_id_4") @db.Uuid
+  rel_4   Entity74?     @relation("rel_name_16", fields: [relFkId_4], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  field_2    DateTime  @map("field_2") @db.Timestamp(6)
+  field_3   DateTime? @map("field_3") @db.Timestamp(6)
+  field_4    DateTime? @map("field_4") @db.Timestamp(6)
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity42_1")
+  @@index([email], map: "idx_entity42_2")
+  @@index([field_2], map: "idx_entity42_3")
+  @@map("table_entity42")
+}
+
+model Entity43 {
+  id        String   @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1    String   @map("rel_fk_id_1") @db.Uuid
+  rel_1      Entity37     @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  name      String   @map("name") @db.VarChar(255)
+  field_1     String?  @map("field_1") @db.VarChar(7)
+  field_2  Boolean  @default(true) @map("field_2") @db.Boolean
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@unique([relFkId_1, name], map: "idx_entity43_1")
+  @@index([relFkId_1], map: "idx_entity43_2")
+  @@map("table_entity43")
+}

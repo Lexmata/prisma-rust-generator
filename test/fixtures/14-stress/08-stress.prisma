@@ -1,0 +1,80 @@
+enum Enum21 {
+  ADVITA
+  CLIO
+  FILEVINE
+  LITIFY
+  SALESFORCE
+  OTHER
+}
+
+enum Enum22 {
+  PENDING
+  SYNCING
+  SYNCED
+  ERROR
+  DISABLED
+}
+
+enum Enum23 {
+  MANUAL
+  HOURLY
+  DAILY
+  WEEKLY
+}
+
+model Entity34 {
+  id              Int     @id @default(autoincrement()) @map("id")
+  field_1        String  @unique(map: "uniq_field_1") @map("field_1") @db.Uuid
+
+  field_2 String  @map("field_2") @db.Text
+  field_3       String? @map("field_3") @db.VarChar(255)
+  field_4 String  @default("standard") @map("field_4") @db.VarChar(15)
+
+  field_5     Json?   @map("field_5")
+  field_6             Boolean @default(false) @map("field_6")
+  field_7 String? @map("field_7") @db.VarChar(255)
+
+  @@map("table_entity34")
+}
+
+model Entity35 {
+  id                   String                  @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1               String                  @map("rel_fk_id_1") @db.Uuid
+  rel_1                 Entity37                    @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1             Enum21        @map("field_1")
+
+  field_2        String?                 @map("field_2") @db.VarChar(100)
+
+  field_3 String                  @map("field_3") @db.Text
+  field_4           Enum22      @default(PENDING) @map("field_4")
+  field_5           DateTime?               @map("field_5") @db.Timestamp(6)
+  field_6        String?                 @map("field_6") @db.Text
+  field_7        Enum23   @default(MANUAL) @map("field_7")
+
+  field_8         Json?                   @map("field_8") @db.JsonB
+  rel_2       Entity36[]
+  createdAt            DateTime                @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt            DateTime                @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity35_1")
+  @@index([field_4], map: "idx_entity35_2")
+  @@map("table_entity35")
+}
+
+model Entity36 {
+  id                 String                     @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1       String                     @map("rel_fk_id_1") @db.Uuid
+  rel_1         Entity35 @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_1 String                     @map("field_1") @db.VarChar(100)
+  field_2   String                     @map("field_2") @db.VarChar(255)
+  field_3 String                     @map("field_3") @db.VarChar(100)
+  field_4   String                     @map("field_4") @db.VarChar(255)
+  field_5         DateTime?                  @map("field_5") @db.Timestamp(6)
+  createdAt          DateTime                   @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt          DateTime                   @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@unique([relFkId_1, field_1, field_2], map: "idx_entity36_1")
+  @@index([relFkId_1], map: "idx_entity36_2")
+  @@index([field_3, field_4], map: "idx_entity36_3")
+  @@map("table_entity36")
+}

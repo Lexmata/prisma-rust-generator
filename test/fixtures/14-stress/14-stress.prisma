@@ -1,0 +1,103 @@
+enum Enum33 {
+  PENDING_INGESTION
+  INGESTED
+  FAILED
+}
+
+enum Enum34 {
+  QUALIFIED
+  NOT_QUALIFIED
+  INSUFFICIENT_EVIDENCE
+}
+
+enum Enum35 {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+
+  @@map("tort_template_status")
+}
+
+model Entity63 {
+  id           String                      @id @default(uuid()) @map("id") @db.Uuid
+  field_1     String                      @map("field_1") @db.VarChar(255)
+  relFkId_1       String?                     @map("rel_fk_id_1") @db.Uuid
+  rel_1         Entity37?                       @relation(fields: [relFkId_1], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  field_2        String                      @map("field_2") @db.VarChar(500)
+  field_3    String?                     @map("field_3") @db.VarChar(2000)
+  field_4        String                      @map("field_4") @db.VarChar(1000)
+  field_5 String?                     @map("field_5") @db.VarChar(255)
+  status       Enum33 @default(PENDING_INGESTION) @map("status")
+  createdAt    DateTime                    @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime                    @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([field_1], map: "idx_entity63_1")
+  @@index([relFkId_1, field_1], map: "idx_entity63_2")
+  @@index([status], map: "idx_entity63_3")
+  @@map("table_entity63")
+}
+
+model Entity64 {
+  id                  String               @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1              String               @map("rel_fk_id_1") @db.Uuid
+  rel_1                Entity19                 @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  relFkId_2              String               @map("rel_fk_id_2") @db.Uuid
+  rel_2                Entity37                 @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  field_1            String               @map("field_1") @db.VarChar(255)
+  field_2             Enum34 @map("field_2")
+  field_3     Float                @map("field_3")
+  field_4             String               @map("field_4") @db.Text
+
+  field_5            Json                 @map("field_5") @db.JsonB
+
+  field_6            Json                 @map("field_6") @db.JsonB
+
+  field_7           Json                 @map("field_7") @db.JsonB
+  field_8         String               @map("field_8") @db.VarChar(1000)
+
+  field_9        Json                 @map("field_9") @db.JsonB
+  field_10       Boolean              @default(false) @map("field_10")
+  field_11       String               @map("field_11") @db.VarChar(64)
+
+  field_12         Json                 @map("field_12") @db.JsonB
+  relFkId_3          String?              @map("rel_fk_id_3") @db.Uuid
+  field_13     String?              @map("field_13") @db.VarChar(64)
+  field_14 String?              @map("field_14") @db.Char(64)
+  rel_3            Entity65?        @relation("rel_name_25", fields: [relFkId_3], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  relFkId_4      String?              @map("rel_fk_id_4") @db.Uuid
+  rel_4        Entity64?   @relation("rel_name_26", fields: [relFkId_4], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  rel_5          Entity64[]  @relation("rel_name_26")
+  createdAt           DateTime             @default(now()) @map("created_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity64_1")
+  @@index([relFkId_1, field_1], map: "idx_entity64_2")
+  @@index([relFkId_2], map: "idx_entity64_3")
+  @@index([relFkId_4], map: "idx_entity64_4")
+  @@map("table_entity64")
+}
+
+model Entity65 {
+  id            String             @id @default(uuid()) @map("id") @db.Uuid
+  field_1      String             @map("field_1") @db.VarChar(255)
+  relFkId_1        String?            @map("rel_fk_id_1") @db.Uuid
+  field_2       String             @map("field_2") @db.VarChar(64)
+  field_3   String             @map("field_3") @db.VarChar(255)
+  field_4 String             @map("field_4") @db.VarChar(16)
+  field_5      String             @map("field_5") @db.VarChar(255)
+  field_6         String             @map("field_6") @db.VarChar(1000)
+  field_7   String             @map("field_7") @db.Char(64)
+  status        Enum35 @map("status")
+  field_8   DateTime?          @map("field_8") @db.Timestamp(6)
+
+  field_9   String?            @map("field_9") @db.VarChar(255)
+  createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt     DateTime           @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  rel_1               Entity37?               @relation("rel_name_13", fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rel_2 Entity64[] @relation("rel_name_25")
+
+  @@unique([field_1, relFkId_1, field_2], map: "idx_entity65_1")
+  @@index([field_1, relFkId_1, status], map: "idx_entity65_2")
+  @@index([field_1, status], map: "idx_entity65_3")
+  @@map("table_entity65")
+}

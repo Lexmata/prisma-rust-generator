@@ -1,0 +1,61 @@
+enum Enum5 {
+  PAID
+  UNPAID
+}
+
+model Entity10 {
+  id                  String                @id @default(uuid()) @map("id") @db.Uuid
+  field_1              Decimal               @default(0.00) @map("field_1") @db.Decimal(16, 2)
+  field_2                 Decimal               @default(0.00) @map("field_2") @db.Decimal(16, 2)
+  field_3               Decimal               @default(0.00) @map("field_3") @db.Decimal(16, 2)
+  status              Enum5         @default(UNPAID) @map("status")
+  field_4      Enum8        @default(IDENTIFICATION) @map("field_4")
+  createdAt           DateTime              @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt           DateTime              @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  field_5              DateTime?             @map("field_5") @db.Timestamp(6)
+  relFkId_1              String                @map("rel_fk_id_1") @db.Uuid
+  rel_1                Entity74                  @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_2              String                @map("rel_fk_id_2") @db.Uuid
+  rel_2                Entity37                  @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_3              String?               @map("rel_fk_id_3") @db.Uuid
+  rel_3                Entity19?                 @relation(fields: [relFkId_3], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  rel_4           Entity29[]
+  rel_5           Entity12[]
+  field_6     String?               @map("field_6") @db.VarChar(255)
+  rel_6 Entity16[]
+
+  @@index([relFkId_2], map: "idx_entity10_1")
+  @@index([relFkId_3], map: "idx_entity10_2")
+  @@map("table_entity10")
+}
+
+model Entity11 {
+  id          Int     @id @default(autoincrement()) @map("id")
+  field_1   String  @map("field_1") @db.VarChar(255)
+  field_2 Decimal @map("field_2") @db.Decimal(16, 2)
+  field_3   Int     @map("field_3")
+
+  @@map("table_entity11")
+}
+
+model Entity12 {
+  id             String        @id @default(uuid()) @map("id") @db.Uuid
+  field_1         Decimal       @map("field_1") @db.Decimal(16, 2)
+
+  relFkId_1     String?       @map("rel_fk_id_1") @db.Uuid
+  rel_1       Entity29?     @relation(fields: [relFkId_1], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  relFkId_2 String?       @map("rel_fk_id_2") @db.Uuid
+  rel_2   Entity26? @relation(fields: [relFkId_2], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  relFkId_3      String?       @map("rel_fk_id_3") @db.Uuid
+  rel_3        Entity10?      @relation(fields: [relFkId_3], references: [id], onDelete: SetNull, onUpdate: Cascade)
+
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt      DateTime      @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@index([relFkId_1], map: "idx_entity12_1")
+  @@index([relFkId_2], map: "idx_entity12_2")
+  @@index([relFkId_3], map: "idx_entity12_3")
+  @@map("table_entity12")
+}

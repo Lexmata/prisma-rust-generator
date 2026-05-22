@@ -1,0 +1,156 @@
+model Entity52 {
+  id             Int       @id @default(autoincrement()) @map("id")
+  field_1         Int?      @map("field_1")
+  field_2        Int?      @map("field_2")
+  field_3     Int?      @map("field_3")
+  field_4   String?   @map("field_4") @db.VarChar(255)
+  field_5   String?   @map("field_5") @db.VarChar(32)
+  field_6    String?   @map("field_6") @db.VarChar(64)
+  field_7  String?   @map("field_7") @db.VarChar(64)
+  field_8 String?   @map("field_8") @db.VarChar(50)
+  field_9    String?   @map("field_9") @db.VarChar(128)
+  field_10 String?   @map("field_10") @db.VarChar(128)
+  field_11      String?   @map("field_11") @db.VarChar(64)
+  field_12      DateTime? @map("field_12") @db.Timestamp(6)
+  field_13 DateTime? @map("field_13") @db.Timestamp(6)
+
+  @@index([field_5], map: "idx_entity52_1")
+  @@index([field_6], map: "idx_entity52_2")
+  @@index([field_4], map: "idx_entity52_3")
+  @@map("table_entity52")
+}
+
+model Entity53 {
+  id                Int             @id @default(autoincrement()) @map("id")
+  field_1     String?         @map("field_1") @db.VarChar(255)
+  field_2        Int?            @map("field_2") @db.Integer
+  field_3           String          @unique(map: "uniq_field_3") @map("field_3") @db.Uuid
+  field_4       String?         @default(dbgenerated("uuid_to_text(order_id)")) @map("field_4") @db.VarChar(36)
+  field_5          String          @map("field_5") @db.Uuid
+  field_6      String?         @default(dbgenerated("uuid_to_text(client_id)")) @map("field_6") @db.VarChar(36)
+  field_7            Int?            @map("field_7")
+  field_8         DateTime        @map("field_8") @db.Timestamp(6)
+  field_9        String?         @map("field_9") @db.VarChar(64)
+  field_10          String?         @map("field_10") @db.VarChar(50)
+  field_11       String?         @map("field_11") @db.VarChar(50)
+  field_12          DateTime?       @map("field_12") @db.Date
+  field_13             String?         @map("field_13") @db.VarChar(2)
+  field_14            Int?            @map("field_14") @db.Integer
+  field_15           String?         @map("field_15")
+  field_16           Boolean         @default(false) @map("field_16")
+  field_17         String?         @map("field_17") @db.VarChar(32)
+  field_18  String?         @map("field_18") @db.VarChar(32)
+  field_19 String?         @map("field_19") @db.VarChar(32)
+  field_20   String?         @map("field_20") @db.VarChar(32)
+  field_21        DateTime        @map("field_21") @db.Date
+  field_22      String?         @map("field_22") @db.VarChar(2048)
+  field_23    String?         @map("field_23")
+  field_24       String?         @map("field_24") @db.VarChar(50)
+  field_25      String?         @map("field_25") @db.VarChar(2)
+  field_26        String?         @map("field_26") @db.VarChar(10)
+
+  field_27         Json?           @map("field_27")
+  field_28            String          @default("web") @map("field_28") @db.VarChar(3)
+  field_29         String?         @map("field_29") @db.VarChar(100)
+  rel_1   Entity54[]
+  rel_2    Entity57[]
+
+  @@index([field_5], map: "idx_entity53_1")
+  @@map("table_entity53")
+}
+
+model Entity54 {
+  id             String    @id @map("id") @db.Uuid
+  field_1         String?   @default(dbgenerated("uuid_to_text(id)")) @map("field_1") @db.VarChar(36)
+  relFkId_1        Int       @map("rel_fk_id_1")
+  field_2       String    @map("field_2") @db.VarChar(200)
+  field_3       String    @map("field_3") @db.VarChar(255)
+  field_4       Int       @map("field_4") @db.Integer
+  field_5      Int?      @map("field_5") @db.Integer
+  field_6     DateTime  @default(now()) @map("field_6") @db.Timestamp(6)
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamp(6)
+  field_7 Boolean?  @map("field_7")
+  rel_1         Entity53     @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, map: "document_orders_id_fk")
+
+  @@index([relFkId_1], map: "idx_entity54_1")
+  @@map("table_entity54")
+}
+
+model Entity55 {
+  id              Int      @id @default(autoincrement()) @map("id")
+  field_1         Int      @map("field_1")
+  field_2        String?  @map("field_2") @db.Uuid
+  field_3    String?  @default(dbgenerated("uuid_to_text(client_id)")) @map("field_3") @db.VarChar(36)
+  field_4     String   @map("field_4") @db.VarChar(25)
+
+  field_5 Json?    @map("field_5")
+  field_6     DateTime @map("field_6") @db.Timestamp(6)
+
+  @@index([field_2], map: "idx_entity55_1")
+  @@index([field_1], map: "idx_entity55_2")
+  @@map("table_entity55")
+}
+
+model Entity56 {
+  id                     Int     @id @default(autoincrement()) @map("id")
+  field_1      Int?    @map("field_1")
+  field_2           String  @map("field_2") @db.VarChar(255)
+  field_3          String? @map("field_3") @db.VarChar(255)
+  field_4                   String? @map("field_4") @db.VarChar(50)
+  field_5                  String? @map("field_5") @db.VarChar(50)
+  field_6                    String? @map("field_6") @db.VarChar(50)
+  field_7                String? @map("field_7") @db.VarChar(100)
+  field_8              String? @map("field_8")
+  field_9          String? @map("field_9")
+  field_10           String? @map("field_10")
+  field_11     String? @map("field_11")
+  field_12               String? @map("field_12") @db.VarChar(50)
+  field_13           String? @map("field_13")
+  field_14            String? @map("field_14")
+  field_15      String? @map("field_15")
+  field_16          String? @map("field_16") @db.VarChar(50)
+  field_17      String? @map("field_17")
+  field_18       String? @map("field_18") @db.VarChar(5)
+  field_19 String? @map("field_19")
+  field_20                    String? @map("field_20")
+  field_21                String? @map("field_21")
+  field_22                 String? @map("field_22")
+  field_23           String? @map("field_23")
+  email                  String? @map("email") @db.VarChar(100)
+  field_24         String? @map("field_24")
+  field_25         String? @map("field_25") @db.VarChar(50)
+  field_26        String? @map("field_26") @db.VarChar(50)
+  field_27                 String? @map("field_27") @db.VarChar(255)
+  field_28        String? @map("field_28") @db.VarChar(50)
+  field_29       String? @map("field_29") @db.VarChar(50)
+  field_30         String? @map("field_30") @db.VarChar(50)
+  field_31            String? @map("field_31") @db.VarChar(50)
+  field_32       String? @map("field_32") @db.VarChar(50)
+  field_33 Boolean @default(false) @map("field_33")
+
+  @@index([field_2, field_4, field_5, field_6], map: "idx_entity56_1")
+  @@map("table_entity56")
+}
+
+model Entity57 {
+  id                 Int       @id @default(autoincrement()) @map("id")
+  relFkId_1            Int       @map("rel_fk_id_1")
+  field_1 Int?      @map("field_1")
+  field_2       String?   @map("field_2") @db.VarChar(255)
+  field_3    String?   @map("field_3") @db.VarChar(255)
+  field_4       String?   @map("field_4") @db.VarChar(50)
+  field_5      String?   @map("field_5") @db.VarChar(2)
+  field_6        String?   @map("field_6") @db.VarChar(10)
+  field_7      String?   @map("field_7") @db.VarChar(50)
+  field_8        String?   @map("field_8") @db.VarChar(50)
+  field_9       DateTime? @map("field_9") @db.Date
+  field_10         DateTime? @map("field_10") @db.Date
+
+  field_11         Json?     @map("field_11")
+
+  field_12        Json?     @map("field_12")
+  field_13      String?   @map("field_13") @db.VarChar(2048)
+  rel_1             Entity53     @relation(fields: [relFkId_1], references: [id], onDelete: Cascade)
+
+  @@map("table_entity57")
+}
