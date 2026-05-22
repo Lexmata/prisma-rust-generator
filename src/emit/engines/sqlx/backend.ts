@@ -7,10 +7,11 @@ import type { DefaultKind } from "../../../ir/types.js";
 
 export interface Backend {
   // Engine variant key — matches cfg.engine for this backend.
-  readonly engine: "sqlx-postgres" | "sqlx-sqlite" | "sqlx-mysql";
+  readonly engine: "sqlx-postgres" | "sqlx-sqlite" | "sqlx-mysql" | "sqlx-any";
 
   // Generated output directory name under `engine/`. Always snake_case
-  // (Rust module convention). `sqlx_postgres` / `sqlx_sqlite`.
+  // (Rust module convention). `sqlx_postgres` / `sqlx_sqlite` /
+  // `sqlx_mysql` / `sqlx_any`.
   readonly dirName: string;
 
   // Rust path of the sqlx database type used in trait bounds:

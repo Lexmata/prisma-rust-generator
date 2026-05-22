@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  ANY,
   MYSQL,
   POSTGRES,
 } from "../../../../src/emit/engines/sqlx/backends/index.js";
@@ -454,6 +455,46 @@ describe("emitWrites — MYSQL requery path — delete", () => {
     );
     expect(mysqlOut).toContain("Ok(row)");
     expect(mysqlOut).not.toContain(" RETURNING ");
+  });
+});
+
+describe("emitWrites — ANY (sqlx-any) requery path", () => {
+  it("create() takes an Acquire bound over sqlx::Any", () => {
+    const anyOut = emitWrites(makeUserModelAutoincrementId(), ANY);
+    expect(anyOut).toContain("pub async fn create<'e, A>(");
+    expect(anyOut).toContain("A: sqlx::Acquire<'e, Database = sqlx::Any>,");
+  });
+
+  it("create() reads back autoincrement id via last_insert_id() with Option<i64> unwrap", () => {
+    const anyOut = emitWrites(makeUserModelAutoincrementId(), ANY);
+    expect(anyOut).toContain(".last_insert_id()");
+    // AnyQueryResult::last_insert_id returns Option<i64>, so the ANY
+    // branch must unwrap before casting; MySQL returns a bare i64.
+    expect(anyOut).toContain(".ok_or(sqlx::Error::RowNotFound)? as i32");
+    expect(anyOut).toContain("let id: i32 = result");
+    expect(anyOut).not.toContain("RETURNING");
+  });
+
+  it("create() mints a client-side uuid for String @id @default(uuid())", () => {
+    const anyOut = emitWrites(makeUserModelStringUuidId(), ANY);
+    expect(anyOut).toContain("uuid::Uuid::new_v4().to_string()");
+    expect(anyOut).toContain("let id: String = _generated_id;");
+  });
+
+  it("create() uses double-quote identifier quoting (portable across drivers)", () => {
+    const anyOut = emitWrites(makeUserModelAutoincrementId(), ANY);
+    expect(anyOut).toContain(`INSERT INTO "User"`);
+    expect(anyOut).not.toContain("INSERT INTO `User`");
+  });
+
+  it("update() / delete() follow the requery path with no RETURNING", () => {
+    const anyOut = emitWrites(makeUserModelAutoincrementId(), ANY);
+    expect(anyOut).toContain(`UPDATE "User" SET`);
+    expect(anyOut).toContain(`DELETE FROM "User"`);
+    expect(anyOut).not.toContain(" RETURNING ");
+    expect(anyOut).toContain(
+      "Self::find_unique(&mut *conn, w).await?.ok_or(sqlx::Error::RowNotFound)",
+    );
   });
 });
 

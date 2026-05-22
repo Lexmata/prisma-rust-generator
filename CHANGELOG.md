@@ -7,7 +7,31 @@ source will be a major-version bump.
 
 ## Unreleased
 
-_No changes yet._
+### Added
+
+- **`engine = "sqlx-any"`** as the fourth backend variant. Targets
+  sqlx's runtime-pluggable `Any` driver (Postgres / MySQL / SQLite
+  picked at connect time via `AnyPool`). Generated Rust uses
+  `sqlx::Any` type bounds, `sqlx::any::AnyRow` rows, double-quote
+  identifier quoting, `IN (?, ?, ?)` array binding,
+  `LOWER(col) LIKE LOWER(?)` case-insensitive matching, and
+  `CAST(... AS REAL)` / `CAST(... AS INTEGER)` aggregate casts.
+  Reuses the MySQL requery path for writes (`Acquire` bound, no
+  `RETURNING`, `last_insert_id()` for autoincrement, client-side
+  `uuid::Uuid::new_v4()` for `String @id @default(uuid())`).
+  Supports `outputLayout = "per-file"` (default) and `"per-model"`;
+  combining with `"single"` raises a config validation error.
+  - **Restricted type surface.** `sqlx::Any` provides
+    `sqlx::Type` / `Encode` / `Decode` impls only for the
+    cross-driver intersection: `bool`, `i16`, `i32`, `i64`, `f32`,
+    `f64`, `String`, `Vec<u8>`. There are no `Any` impls for
+    `chrono::DateTime`, `uuid::Uuid`, `rust_decimal::Decimal`, or
+    `serde_json::Value`, so the engine restricts its filter /
+    aggregate surface to `string` / `int` / `bigint` / `float` /
+    `bool` / `bytes`. Schemas with `DateTime` / `Json` / `Decimal`
+    / `Uuid` columns still emit the model struct fields, but the
+    engine omits the corresponding filter pushers and Avg/Sum
+    aggregate result fields.
 
 ## 0.4.0 — 2026-05-21
 
