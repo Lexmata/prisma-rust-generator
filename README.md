@@ -103,7 +103,7 @@ generator rust {
   bytesCrate       = "std"              // "std" | "bytes"
   jsonCrate        = "serde_json"       // "serde_json" | "string"
   serde            = "true"             // emit Serialize/Deserialize derives
-  engine           = ""                  // "" | "sqlx-postgres" | "sqlx-sqlite" | "sqlx-mysql"
+  engine           = ""                  // "" | "sqlx-postgres" | "sqlx-sqlite" | "sqlx-mysql" | "sqlx-any"
   edition          = "2021"             // "2021" | "2024" (passed to rustfmt)
   runRustfmt       = "true"
   requireRustfmt   = "true"
@@ -115,7 +115,8 @@ generator rust {
 
 ## Engine (pre-generated integration layer)
 
-Set `engine = "sqlx-postgres"`, `"sqlx-sqlite"`, or `"sqlx-mysql"` to
+Set `engine = "sqlx-postgres"`, `"sqlx-sqlite"`, `"sqlx-mysql"`, or
+`"sqlx-any"` to
 add a parallel `engine/<backend>/` subtree to the generated output. Each
 model gains inherent methods that implement the full CRUD +
 aggregation surface on top of `sqlx`'s `QueryBuilder`:
@@ -185,6 +186,28 @@ uuid = { version = "1", features = ["serde", "v4"] }
 (`uuid v4` feature lets `uuid::Uuid::new_v4()` resolve — needed by the
 MySQL requery path for `String @id @default(uuid())` fields.)
 
+`engine = "sqlx-any"`:
+
+```toml
+sqlx = { version = "0.8", default-features = false, features = [
+  "runtime-tokio", "any",
+  "macros",
+] }
+uuid = { version = "1", features = ["serde", "v4"] }
+```
+
+Note: `sqlx::Any` provides `sqlx::Type` / `Encode` / `Decode` impls only
+for the cross-driver intersection — `bool`, `i16`, `i32`, `i64`, `f32`,
+`f64`, `String`, `Vec<u8>`. There are no `Any` impls for
+`chrono::DateTime`, `uuid::Uuid`, `rust_decimal::Decimal`, or
+`serde_json::Value`, so the engine restricts its filter / aggregate
+surface to the six supported families (`string`, `int`, `bigint`,
+`float`, `bool`, `bytes`). Models with `DateTime`/`Json`/`Decimal`/`Uuid`
+columns still emit struct fields, but the engine omits the corresponding
+filter pushers and Avg/Sum aggregate result fields. The `uuid` crate dep
+is only needed if any `@id @default(uuid())` field lands in your schema
+(the requery path still calls `uuid::Uuid::new_v4().to_string()`).
+
 ### SQLite specifics
 
 - **No native enums.** Prisma's SQLite connector rejects `enum`
@@ -233,6 +256,32 @@ MySQL requery path for `String @id @default(uuid())` fields.)
   array binding, `LOWER(col) LIKE LOWER(?)` case-insensitive
   matching, `CAST(... AS DOUBLE)` / `CAST(... AS SIGNED)` aggregate
   casts.
+
+### sqlx-any specifics
+
+- **Runtime-pluggable driver.** `sqlx::Any` wraps a Postgres / MySQL /
+  SQLite driver chosen at runtime via the `AnyPool` connect URL. The
+  generated engine emits the widest-compatible dialect so the same
+  binary works against any of those backends.
+
+- **Restricted type surface.** Only `bool`, `i16`, `i32`, `i64`, `f32`,
+  `f64`, `String`, `Vec<u8>` have `sqlx::Type<Any>` impls. Models with
+  `DateTime`, `Uuid`, `Decimal`, or `Json` columns still emit struct
+  fields, but the engine omits the engine-side filter pushers and
+  Avg/Sum aggregate result fields for those families — schemas using
+  them compile, the corresponding engine surface is simply absent.
+
+- **No portable `RETURNING`.** Same requery pattern as MySQL —
+  `create` / `update` / `delete` issue the mutation followed by a
+  `find_unique` SELECT and take an
+  `A: sqlx::Acquire<'e, Database = sqlx::Any>` bound. Autoincrement ids
+  resolve via `AnyQueryResult::last_insert_id()`; `String @id
+  @default(uuid())` mints client-side via `uuid::Uuid::new_v4()`.
+
+- **Dialect output:** double-quote identifier quoting (Postgres +
+  SQLite native, MySQL with `ANSI_QUOTES`), `IN (?, ?, ?)` array
+  binding, `LOWER(col) LIKE LOWER(?)` case-insensitive matching,
+  `CAST(... AS REAL)` / `CAST(... AS INTEGER)` aggregate casts.
 
 The five integration guides ([sqlx](docs/sqlx.md),
 [raw-postgres](docs/raw-postgres.md), etc.) remain useful as
