@@ -7,6 +7,40 @@ source will be a major-version bump.
 
 ## Unreleased
 
+_No changes yet._
+
+## 0.4.0 — 2026-05-21
+
+### Added
+
+- **`engine = "sqlx-mysql"`** as the third backend variant. Targets
+  MySQL 8.0+ and MariaDB via sqlx's `mysql` feature. Generated Rust
+  uses `sqlx::MySql` type bounds, `sqlx::mysql::MySqlRow` rows,
+  backtick identifier quoting, `IN (?, ?, ?)` array binding,
+  `LOWER(col) LIKE LOWER(?)` case-insensitive matching, and
+  `CAST(... AS DOUBLE)` / `CAST(... AS SIGNED)` aggregate casts.
+  Supported on `outputLayout = "per-file"` (default) and
+  `"per-model"`; combining with `"single"` raises a config
+  validation error (same as the other engines).
+  - **No portable `RETURNING`.** Writes (`create` / `update` /
+    `delete`) emit the mutation followed by a `find_unique` SELECT
+    — one extra round-trip per write. Consumers needing
+    single-round-trip writes drop to raw sqlx.
+  - **`Acquire` bound on writes.** `create` / `update` / `delete`
+    take `A: sqlx::Acquire<'e, Database = sqlx::MySql>` instead of
+    `Executor`. `&Pool` works directly; raw `&mut Connection` needs
+    `&mut *conn`.
+  - **Inserted id discovery.** Integer `@id @default(autoincrement())`
+    reads back via `LAST_INSERT_ID()`. `String @id @default(uuid())`
+    generates client-side via `uuid::Uuid::new_v4()`. User-supplied
+    ids come from the input. Composite ids,
+    `@default(dbgenerated(...))` on the @id, and `@default(now())`
+    on the @id remain unsupported (`todo!()` in the generated body).
+  - **Enums work.** Unlike Prisma's sqlite connector, the mysql
+    connector accepts `enum` declarations and maps them to
+    `ENUM('A','B')` columns. The engine's `enumStorage: "text"`
+    path wire-encodes them as strings.
+
 ### Fixed
 
 - `defaultKindFor()` (in `src/ir/build.ts`) now strips the `(N)`
