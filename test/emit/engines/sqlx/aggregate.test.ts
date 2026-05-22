@@ -14,6 +14,7 @@ const idField: FieldIR = {
   isId: true,
   isUnique: true,
   hasDefault: true,
+  defaultKind: "uuid",
   docs: [],
   serdeRenameOverride: null,
 };
@@ -29,6 +30,7 @@ const emailField: FieldIR = {
   isId: false,
   isUnique: true,
   hasDefault: false,
+  defaultKind: null,
   docs: [],
   serdeRenameOverride: null,
 };
@@ -44,6 +46,7 @@ const loginCountField: FieldIR = {
   isId: false,
   isUnique: false,
   hasDefault: true,
+  defaultKind: "literal",
   docs: [],
   serdeRenameOverride: null,
 };
@@ -64,6 +67,7 @@ const createdAtField: FieldIR = {
   isId: false,
   isUnique: false,
   hasDefault: true,
+  defaultKind: "literal",
   docs: [],
   serdeRenameOverride: null,
 };

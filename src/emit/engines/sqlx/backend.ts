@@ -3,9 +3,11 @@
 // future MySQL). See docs/superpowers/specs/2026-05-21-engine-sqlx-sqlite.md
 // section 2 for the full design.
 
+import type { DefaultKind } from "../../../ir/types.js";
+
 export interface Backend {
   // Engine variant key — matches cfg.engine for this backend.
-  readonly engine: "sqlx-postgres" | "sqlx-sqlite";
+  readonly engine: "sqlx-postgres" | "sqlx-sqlite" | "sqlx-mysql";
 
   // Generated output directory name under `engine/`. Always snake_case
   // (Rust module convention). `sqlx_postgres` / `sqlx_sqlite`.
@@ -58,4 +60,24 @@ export interface Backend {
   // decimal, datetime, bool, bytes, json (plus enums via native).
   // SQLite supports all of those except decimal.
   readonly scalarFamilies: ReadonlySet<string>;
+
+  // Write-result strategy. Postgres + SQLite use RETURNING to fetch
+  // the affected row in one round-trip; MySQL has no portable
+  // RETURNING so writes emit an INSERT/UPDATE/DELETE followed by a
+  // find_unique fetch.
+  //   "returning" — append `RETURNING <cols>` to INSERT/UPDATE/DELETE
+  //   "requery"   — issue a follow-up SELECT via find_unique
+  readonly writeStrategy: "returning" | "requery";
+
+  // How to discover a freshly-inserted row's id when writeStrategy is
+  // "requery". Called per @id field at emit time. Backends that never
+  // hit this path (Postgres, SQLite — returning short-circuits)
+  // return "unsupported" uniformly.
+  //   "last-insert-id"   — call sqlx::Executor::last_insert_id().
+  //   "client-generated" — generate the id client-side BEFORE the
+  //                        INSERT and inject it into the column list.
+  //   "unsupported"      — emit todo!() and document the limitation.
+  insertedIdStrategy(
+    defaultKind: Extract<DefaultKind, "autoincrement" | "uuid" | "cuid">,
+  ): "last-insert-id" | "client-generated" | "unsupported";
 }

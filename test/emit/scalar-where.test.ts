@@ -13,6 +13,7 @@ const idField: FieldIR = {
   isId: true,
   isUnique: true,
   hasDefault: true,
+  defaultKind: "uuid",
   docs: [],
   serdeRenameOverride: null,
 };
@@ -28,6 +29,7 @@ const nameField: FieldIR = {
   isId: false,
   isUnique: false,
   hasDefault: false,
+  defaultKind: null,
   docs: [],
   serdeRenameOverride: null,
 };

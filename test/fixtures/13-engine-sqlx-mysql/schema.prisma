@@ -1,0 +1,39 @@
+datasource db {
+  provider = "mysql"
+  url      = "mysql://app:app@localhost:3306/app"
+}
+
+generator rust {
+  provider = "node ../../../dist/index.js"
+  output   = "../../compile/13-engine-sqlx-mysql/src"
+  engine   = "sqlx-mysql"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id      String  @id @default(uuid())
+  email   String  @unique
+  role    Role    @default(USER)
+  firmId  String
+  firm    Firm    @relation(fields: [firmId], references: [id])
+  posts   Post[]
+}
+
+model Firm {
+  id    String @id @default(uuid())
+  name  String
+  users User[]
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  body      String?
+  createdAt DateTime @default(now())
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+}

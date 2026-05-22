@@ -47,6 +47,7 @@ describe("emitSingle", () => {
               isId: true,
               isUnique: true,
               hasDefault: true,
+              defaultKind: "uuid",
               docs: [],
               serdeRenameOverride: null,
             },

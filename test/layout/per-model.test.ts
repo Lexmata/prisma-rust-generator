@@ -20,6 +20,7 @@ function stubModel(name: string, module: string): ModelIR {
         isId: true,
         isUnique: true,
         hasDefault: true,
+        defaultKind: "uuid",
         docs: [],
         serdeRenameOverride: null,
       },

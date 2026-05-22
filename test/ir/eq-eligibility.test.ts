@@ -13,6 +13,7 @@ const stringField = (n: string): FieldIR => ({
   isId: false,
   isUnique: false,
   hasDefault: false,
+  defaultKind: null,
   docs: [],
   serdeRenameOverride: null,
 });

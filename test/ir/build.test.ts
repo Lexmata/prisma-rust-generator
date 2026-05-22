@@ -189,3 +189,103 @@ describe("buildIR — dbName lifting", () => {
     expect(ir.models[0]!.scalarFields[0]!.dbName).toBe("created_at");
   });
 });
+
+describe("buildIR — defaultKind lifting", () => {
+  function makeDmmf(opts: { field: Partial<DMMF.Field> }): DMMF.Document {
+    const base: Partial<DMMF.Field> = {
+      name: "id",
+      kind: "scalar",
+      isList: false,
+      isRequired: true,
+      isUnique: false,
+      isId: true,
+      isReadOnly: false,
+      hasDefaultValue: true,
+      type: "String",
+      isGenerated: false,
+      isUpdatedAt: false,
+    };
+    const field = { ...base, ...opts.field } as DMMF.Field;
+    return {
+      datamodel: {
+        models: [
+          {
+            name: "User",
+            dbName: null,
+            fields: [field],
+            primaryKey: { name: null, fields: [field.name ?? "id"] },
+            uniqueFields: [],
+            uniqueIndexes: [],
+            isGenerated: false,
+          } as unknown as DMMF.Model,
+        ],
+        enums: [],
+        types: [],
+        indexes: [],
+      },
+      schema: {
+        inputObjectTypes: { prisma: [] },
+        outputObjectTypes: { prisma: [], model: [] },
+        enumTypes: { prisma: [] },
+        fieldRefTypes: { prisma: [] },
+      },
+      mappings: { modelOperations: [], otherOperations: { read: [], write: [] } },
+    };
+  }
+
+  it("uses null when no default is set", async () => {
+    const ir = await buildIR(
+      makeDmmf({
+        field: { name: "email", isId: false, hasDefaultValue: false, default: undefined },
+      }),
+      new Map(),
+      cfg,
+    );
+    expect(ir.models[0]!.scalarFields[0]!.defaultKind).toBeNull();
+  });
+
+  it("maps @default(autoincrement()) to 'autoincrement'", async () => {
+    const ir = await buildIR(
+      makeDmmf({
+        field: {
+          name: "id",
+          type: "Int",
+          default: { name: "autoincrement", args: [] },
+        },
+      }),
+      new Map(),
+      cfg,
+    );
+    expect(ir.models[0]!.scalarFields[0]!.defaultKind).toBe("autoincrement");
+  });
+
+  it("maps @default(uuid()) to 'uuid'", async () => {
+    const ir = await buildIR(
+      makeDmmf({
+        field: {
+          name: "id",
+          default: { name: "uuid", args: [] },
+        },
+      }),
+      new Map(),
+      cfg,
+    );
+    expect(ir.models[0]!.scalarFields[0]!.defaultKind).toBe("uuid");
+  });
+
+  it("maps literal defaults to 'literal'", async () => {
+    const ir = await buildIR(
+      makeDmmf({
+        field: {
+          name: "count",
+          type: "Int",
+          isId: false,
+          default: 0,
+        },
+      }),
+      new Map(),
+      cfg,
+    );
+    expect(ir.models[0]!.scalarFields[0]!.defaultKind).toBe("literal");
+  });
+});

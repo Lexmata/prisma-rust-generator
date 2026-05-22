@@ -116,3 +116,18 @@ describe("parseGeneratorConfig — sqlx-sqlite engine", () => {
     ).toThrow(/sqlx-sqlite.*single|single.*sqlx-sqlite/);
   });
 });
+
+describe("parseGeneratorConfig — sqlx-mysql engine", () => {
+  it("accepts engine = 'sqlx-mysql'", () => {
+    const cfg = parseGeneratorConfig(makeOpts({ engine: "sqlx-mysql" }));
+    expect(cfg.engine).toBe("sqlx-mysql");
+  });
+
+  it("rejects engine = 'sqlx-mysql' with outputLayout = 'single'", () => {
+    expect(() =>
+      parseGeneratorConfig(
+        makeOpts({ engine: "sqlx-mysql", outputLayout: "single" }),
+      ),
+    ).toThrow(/sqlx-mysql.*single|single.*sqlx-mysql/);
+  });
+});

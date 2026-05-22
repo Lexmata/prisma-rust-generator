@@ -4,6 +4,7 @@ import { computeEqEligibility } from "./eq-eligibility.js";
 import { mapPrismaScalar } from "./type-mapping.js";
 import { rustFieldIdent, toPascalCase } from "./names.js";
 import type {
+  DefaultKind,
   IR,
   ModelIR,
   EnumIR,
@@ -130,9 +131,43 @@ function makeField(f: DMMF.Field, type: RustTypeRef): FieldIR {
     isId: f.isId,
     isUnique: f.isUnique,
     hasDefault: f.hasDefaultValue,
+    defaultKind: defaultKindFor(f),
     docs: splitDocs(f.documentation ?? null),
     serdeRenameOverride: null,
   };
+}
+
+function defaultKindFor(f: DMMF.Field): DefaultKind | null {
+  const def = f.default;
+  if (def == null) return null;
+  // DMMF: function defaults are `{ name: string, args: unknown[] }`.
+  // Literal defaults are primitive values or arrays.
+  if (typeof def === "object" && !Array.isArray(def) && "name" in def) {
+    const name = (def as { name: string }).name;
+    // Prisma 5.x emits parameterized variants for UUID/CUID — e.g.
+    // `uuid(4)`, `uuid(7)`, `cuid(2)` — alongside the bare `uuid` /
+    // `cuid` legacy names. Strip the `(N)` suffix so downstream
+    // consumers (e.g. write-path id-discovery selection) see the
+    // family rather than the version. The version itself is not
+    // load-bearing for our emission (we always client-generate a
+    // value via `uuid::Uuid::new_v4()`).
+    const family = name.replace(/\(\d+\)$/, "");
+    switch (family) {
+    case "autoincrement": { return "autoincrement";
+    }
+    case "uuid": { return "uuid";
+    }
+    case "cuid": { return "cuid";
+    }
+    case "now": { return "now";
+    }
+    case "dbgenerated": { return "dbgenerated";
+    }
+    default: { return "other";
+    }
+    }
+  }
+  return "literal";
 }
 
 function extractNativeType(f: DMMF.Field): string | null {
