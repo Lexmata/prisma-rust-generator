@@ -13,15 +13,15 @@ pnpm build              # tsc -p tsconfig.json → dist/
 pnpm dev                # tsc --watch
 pnpm typecheck          # tsc --noEmit
 pnpm lint               # eslint src test --max-warnings=0
-pnpm test               # vitest run (full suite; ~75s with the lexmata e2e)
+pnpm test               # vitest run (full suite; ~75s with the stress e2e)
 pnpm test:watch         # vitest in watch mode
-pnpm test -- <pattern>  # run a subset (e.g. pnpm test -- 08-lexmata)
+pnpm test -- <pattern>  # run a subset (e.g. pnpm test -- 14-stress)
 pnpm test:rust          # bash scripts/verify-rust.sh — cargo fmt/clippy/check across every test/compile/* fixture
 ```
 
 To run a single test file: `pnpm vitest run test/path/to/file.test.ts`.
 
-To regenerate a fixture's Rust output without running the cargo phase, run the file's e2e test — `runFixture()` writes to `test/compile/<id>/src/`. The slow part of `pnpm test` is `cargo check`/`clippy` on lexmata (~73s); everything else is sub-second.
+To regenerate a fixture's Rust output without running the cargo phase, run the file's e2e test — `runFixture()` writes to `test/compile/<id>/src/`. The slow part of `pnpm test` is `cargo check`/`clippy` on the `14-stress` fixture (~73s); everything else is sub-second.
 
 ## Pipeline
 
@@ -87,7 +87,7 @@ Named imports compile but fail at runtime.
 
 Every test fixture in `test/compile/*` must pass `cargo fmt --check`, `cargo clippy -- -D warnings`, and `cargo check`. The clippy allow-list is intentionally narrow (`clippy::upper_case_acronyms`, `dead_code`) — anything else has to be addressed in the emitter, not allowed away. Pedantic/nursery/restriction lint groups are out of scope.
 
-The lexmata fixture (`test/fixtures/08-lexmata/`) is the canonical stress test: 17 `.prisma` files, ~80 models, hundreds of relations. If a change breaks it, it's a regression — don't skip the test.
+The `14-stress` fixture (`test/fixtures/14-stress/`) is the canonical stress test: 17 `.prisma` files, ~75 models, hundreds of relations. It's name-anonymized synthetic output produced by `scripts/anonymize-stress-fixture.mjs`. If a change breaks it, it's a regression — don't skip the test.
 
 ## Output-format stability
 

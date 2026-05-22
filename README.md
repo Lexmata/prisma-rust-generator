@@ -324,10 +324,10 @@ Modifiers compose: `T?` → `Option<T>`, `T[]` → `Vec<T>`.
 
 ## Schema support
 
-Verified end-to-end against the full 80-model lexmata-models schema (17
-.prisma files, hundreds of relations including multi-relations through the
-same model pair) plus focused fixtures covering scalar mapping, enums,
-relations, Rust keyword field names, and the time-crate option matrix.
+Verified end-to-end against a 75-model synthetic stress schema (17 .prisma
+files, hundreds of relations including multi-relations through the same
+model pair) plus focused fixtures covering scalar mapping, enums, relations,
+Rust keyword field names, and the time-crate option matrix.
 
 If your schema uses the `prismaSchemaFolder` preview feature with custom
 generators inline, strip the input you pass to the DMMF parser to just

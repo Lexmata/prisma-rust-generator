@@ -1,0 +1,145 @@
+enum Enum19 {
+  PENDING
+  ACCEPTED
+  CORRECTED
+  REJECTED
+}
+
+enum Enum20 {
+  MEDICAL_RECORDS
+  POLICE_REPORT
+  CALCULATED_FUTURE_MEDICAL_EXPENSES
+  LOST_WAGES
+  PAIN_AND_SUFFERING
+  OTHER_DAMAGES
+  UNKNOWN
+}
+
+model Entity28 {
+  id               Int       @id @default(autoincrement()) @map("id") @db.Integer
+  relFkId_1       String?   @map("rel_fk_id_1") @db.Uuid
+  field_1       Int?      @map("field_1") @db.Integer
+  field_2        String    @map("field_2") @db.VarChar(32)
+  field_3       Decimal?  @map("field_3") @db.Decimal(16, 2)
+  field_4        String?   @map("field_4") @db.Text
+  field_5   String?   @map("field_5") @db.Text
+  field_6    String?   @map("field_6") @db.VarChar(11)
+
+  field_7    Json      @map("field_7")
+  field_8          String    @map("field_8") @db.VarChar(36)
+
+  field_9    Json?     @map("field_9")
+  field_10 String?   @map("field_10")
+
+  field_11         Json?     @map("field_11")
+  field_12    Int       @default(0) @map("field_12") @db.Integer
+  field_13 Int       @default(0) @map("field_13") @db.Integer
+  rel_1         Entity29? @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "document_blocks_document_id_fk")
+
+  @@index([relFkId_1, field_1, field_5], map: "idx_entity28_1")
+  @@map("table_entity28")
+}
+
+model Entity29 {
+  id                          String                       @id @map("id") @db.Uuid
+  relFkId_1                      String                       @map("rel_fk_id_1") @db.Uuid
+  rel_1                        Entity74                         @relation("rel_name_5", fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade, map: "documents_user_id_fkey")
+  field_1                    String                       @map("field_1") @db.VarChar(200)
+  field_2                    String                       @map("field_2") @db.VarChar(100)
+
+  field_3                    BigInt                       @default(0) @map("field_3") @db.BigInt
+  field_4                   Int                          @default(0) @map("field_4") @db.Integer
+  createdAt                   DateTime                     @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt                   DateTime                     @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  field_5                  DateTime                     @default(now()) @map("field_5") @db.Timestamp(6)
+  field_6                    DateTime?                    @map("field_6") @db.Timestamp(6)
+  deletedAt                   DateTime?                    @map("deleted_at") @db.Timestamp(6)
+  field_7              Boolean                      @default(false) @map("field_7") @db.Boolean
+  field_8                    Boolean                      @default(false) @map("field_8") @db.Boolean
+  field_9                        Boolean                      @default(false) @map("field_9") @db.Boolean
+  relFkId_2                   String                       @map("rel_fk_id_2") @db.Uuid
+  rel_2                     Entity10                      @relation(fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  relFkId_3              String?                      @map("rel_fk_id_3") @db.Uuid
+  rel_3                Entity26?                @relation(fields: [relFkId_3], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_10                Enum20                 @default(MEDICAL_RECORDS) @map("field_10")
+  relFkId_4                      String                       @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("rel_fk_id_4") @db.Uuid
+  rel_4                        Entity19?                        @relation(fields: [relFkId_4], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  rel_5              Entity28[]
+  rel_6            Entity13[]
+  rel_7                        Entity37                         @relation(fields: [relFkId_7], references: [id])
+  relFkId_7                      String                       @default(dbgenerated("'00000000-0000-0000-0000-000000000000'::uuid")) @map("rel_fk_id_7") @db.Uuid
+
+  field_11              Json                         @default("[]") @map("field_11") @db.JsonB
+
+  field_12                        Json?                        @db.JsonB
+  rel_8                   Entity12[]
+
+  rel_9              Entity33[]           @relation("rel_name_6")
+  rel_10             Entity33[]           @relation("rel_name_7")
+  rel_11      Entity3[]
+  rel_12 Entity17[]
+
+  @@unique([id, relFkId_1], map: "idx_entity29_1")
+  @@index([relFkId_2], map: "idx_entity29_2")
+  @@index([relFkId_4], map: "idx_entity29_3")
+  @@map("table_entity29")
+}
+
+model Entity30 {
+  id           Int      @id @default(autoincrement())
+  field_1 String   @map("field_1") @db.VarChar(100)
+
+  field_2        Json     @map("field_2") @db.JsonB
+  field_3     String?  @map("field_3") @db.VarChar(7)
+  relFkId_1       String?  @map("rel_fk_id_1") @db.Uuid
+  rel_1         Entity74?    @relation("rel_name_8", fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "document_search_templates_user_id_fkey")
+  relFkId_2       String?  @map("rel_fk_id_2") @db.Uuid
+  rel_2         Entity37?    @relation("rel_name_8", fields: [relFkId_2], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  field_4       Boolean  @default(false) @map("field_4")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@map("table_entity30")
+}
+
+model Entity31 {
+  id           Int      @id @default(autoincrement()) @map("id")
+  field_1 String   @map("field_1") @db.VarChar(128)
+
+  field_2        Json?    @map("field_2")
+  field_3     String?  @map("field_3") @db.VarChar(7)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@map("table_entity31")
+}
+
+model Entity32 {
+  id             Int     @id @default(autoincrement()) @map("id")
+  relFkId_1         String  @map("rel_fk_id_1") @db.Uuid
+  field_1        String  @unique @map("field_1") @db.VarChar(255)
+  field_2 String? @map("field_2") @db.VarChar(255)
+  rel_1           Entity74    @relation("rel_name_9", fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "document_tags_user_id_fkey")
+
+  @@unique([relFkId_1, field_1], map: "idx_entity32_1")
+  @@map("table_entity32")
+}
+
+model Entity33 {
+  id               String   @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1 String   @map("rel_fk_id_1") @db.Uuid
+  relFkId_2  String   @map("rel_fk_id_2") @db.Uuid
+  field_1       Int      @map("field_1") @db.Integer
+  field_2        Int      @map("field_2") @db.Integer
+  field_3          Int      @map("field_3") @db.Integer
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  rel_1 Entity29 @relation("rel_name_6", fields: [relFkId_1], references: [id], onDelete: Cascade)
+  rel_2  Entity29 @relation("rel_name_7", fields: [relFkId_2], references: [id], onDelete: Cascade)
+
+  @@unique([relFkId_1, field_1], map: "idx_entity33_1")
+  @@index([relFkId_1], map: "idx_entity33_2")
+  @@index([relFkId_2], map: "idx_entity33_3")
+  @@map("table_entity33")
+}

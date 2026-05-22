@@ -4,9 +4,12 @@ import { basename, extname, join, resolve } from "node:path";
 const DECL_RE = /^\s*(model|enum)\s+([A-Za-z_][A-Za-z0-9_]*)\s*\{/gm;
 
 // File stems may contain characters valid in filenames but not in Rust module
-// idents (hyphens, leading underscores). Normalize to a snake_case-ish form.
+// idents (hyphens, leading underscores, leading digits). Normalize to a
+// snake_case-ish form, prefixing with `m_` when the result would start with a
+// digit (Rust idents can't begin with one).
 function normalizeStem(stem: string): string {
-  return stem.replace(/^_+/, "").replaceAll(/[^A-Za-z0-9_]+/g, "_").toLowerCase();
+  const cleaned = stem.replace(/^_+/, "").replaceAll(/[^A-Za-z0-9_]+/g, "_").toLowerCase();
+  return /^[0-9]/.test(cleaned) ? `m_${cleaned}` : cleaned;
 }
 
 export async function buildFileMap(schemaPath: string): Promise<Map<string, string>> {

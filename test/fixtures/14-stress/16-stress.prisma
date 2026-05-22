@@ -1,0 +1,83 @@
+enum Enum37 {
+  None
+  Small
+  Medium
+  Large
+  BigLaw
+  Unlimited
+}
+
+model Entity74 {
+  id                               String                            @id @default(uuid()) @map("id") @db.Uuid
+  field_1                        String                            @map("field_1") @db.VarChar(50)
+  field_2                         String                            @map("field_2") @db.VarChar(50)
+  field_3                      String                            @map("field_3") @db.Char(10)
+  email                            String                            @unique(map: "uniq_email") @map("email") @db.VarChar(50)
+  field_4                  Boolean                           @default(false) @map("field_4") @db.Boolean
+  field_5                            String?                           @map("field_5") @db.VarChar(32)
+  field_6                       Boolean                           @default(true) @map("field_6")
+  field_7                           Int?                              @default(5) @map("field_7") @db.Integer
+  field_8                         Int?                              @map("field_8") @db.Integer
+  createdAt                        DateTime                          @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt                        DateTime                          @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+  field_9                      DateTime?                         @map("field_9") @db.Timestamp(6)
+  field_10                 String?                           @map("field_10") @db.VarChar(45)
+  field_11                      Int                               @default(0) @map("field_11") @db.Integer
+  rel_1                        Entity59[]                       @relation("rel_name_23")
+  rel_2                         Entity29[]                        @relation("rel_name_5")
+  rel_3          Entity30[]          @relation("rel_name_8")
+  rel_4                     Entity32[]                     @relation("rel_name_9")
+  field_12                      Boolean                           @default(false) @map("field_12")
+  field_13              Boolean                           @default(false) @map("field_13") @db.Boolean
+  field_14            DateTime?                         @map("field_14") @db.Timestamp(6)
+  field_15                       Boolean                           @default(false) @map("field_15") @db.Boolean
+  field_16              DateTime?                         @map("field_16") @db.Timestamp(6)
+  field_17           DateTime?                         @map("field_17") @db.Timestamp(6)
+  field_18                       String?                           @map("field_18") @db.VarChar(255)
+  relFkId_5                           String?                           @map("rel_fk_id_5") @db.Uuid
+  rel_5                             Entity37?                             @relation("rel_name_10", fields: [relFkId_5], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  relFkId_6                       String?                           @map("rel_fk_id_6") @db.Uuid
+  rel_6                         Entity38?                         @relation("rel_name_14", fields: [relFkId_6], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  rel_7                        Entity37?                             @relation("rel_name_11")
+  rel_8                         Entity10[]
+  rel_9                 Entity5[]
+  rel_10 Entity14[]
+  rel_11               Entity75[]
+  rel_12                 Entity6[]
+  rel_13                    Entity44[]                    @relation("rel_name_17")
+  rel_14                Entity46[]                @relation("rel_name_18")
+  rel_15              Entity47[]                  @relation("rel_name_19")
+  rel_16                  Entity48[]                  @relation("rel_name_20")
+  rel_17                     Entity62[]            @relation("rel_name_24")
+  rel_18                    Entity49[]                    @relation("rel_name_21")
+  rel_19          Entity50[]          @relation("rel_name_22")
+  rel_20               Entity7[]
+  rel_21              Entity16[]
+  rel_22                 Entity18[]      @relation("rel_name_1")
+  rel_23              Entity42[]                  @relation("rel_name_15")
+  rel_24          Entity42[]                  @relation("rel_name_16")
+  rel_25                    Entity19[]                            @relation("rel_name_2")
+  rel_26                        Entity20[]
+  rel_27                 Entity21[]                        @relation("rel_name_3")
+  rel_28                Entity21[]                        @relation("rel_name_4")
+  rel_29           Entity24[]
+
+  @@index([relFkId_6], map: "idx_entity74_1")
+  @@map("table_entity74")
+}
+
+model Entity75 {
+  id          String    @id @default(uuid()) @map("id") @db.Uuid
+  relFkId_1      String    @map("rel_fk_id_1") @db.Uuid
+  rel_1        Entity74      @relation(fields: [relFkId_1], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  field_1  String    @map("field_1") @db.VarChar(100)
+  field_2   Boolean   @default(false) @map("field_2") @db.Boolean
+  field_3 DateTime? @map("field_3") @db.Timestamp(6)
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt   DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@unique([relFkId_1, field_1], map: "idx_entity75_1")
+  @@index([relFkId_1], map: "idx_entity75_2")
+  @@index([field_1], map: "idx_entity75_3")
+  @@map("table_entity75")
+}
