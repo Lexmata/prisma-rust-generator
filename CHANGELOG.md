@@ -7,6 +7,8 @@ source will be a major-version bump.
 
 ## Unreleased
 
+## 0.5.0 — 2026-05-22
+
 ### Added
 
 - **`engine = "sqlx-any"`** as the fourth backend variant. Targets
